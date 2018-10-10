@@ -51,6 +51,18 @@ namespace Timetable {
         }
 
         construct {
+            var settings = AppSettings.get_default ();
+            int x = settings.window_x;
+            int y = settings.window_y;
+            int h = settings.window_height;
+            int w = settings.window_width;
+            if (x != -1 && y != -1) {
+                this.move (x, y);
+            }
+            if (w != 0 && h != 0) {
+                this.resize (w, h);
+            }
+
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/com/github/lainsce/timetable/stylesheet.css");
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -136,15 +148,7 @@ namespace Timetable {
             grid.attach (friday_column, 13, 0, 1, 1);
             grid.show_all ();
             this.add (grid);
-
             this.show_all ();
-
-            var settings = AppSettings.get_default ();
-            int x = settings.window_x;
-            int y = settings.window_y;
-            if (x != -1 && y != -1) {
-                move (x, y);
-            }
         }
 
         private void action_settings () {
@@ -173,11 +177,15 @@ namespace Timetable {
         }
 
         public override bool delete_event (Gdk.EventAny event) {
-            var settings = AppSettings.get_default ();
-            int x, y;
+            int x, y, w, h;
             get_position (out x, out y);
+            get_size (out w, out h);
+
+            var settings = AppSettings.get_default ();
             settings.window_x = x;
             settings.window_y = y;
+            settings.window_width = w;
+            settings.window_height = h;
             return false;
         }
     }

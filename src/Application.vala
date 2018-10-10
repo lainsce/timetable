@@ -19,7 +19,7 @@
 */
 namespace Timetable {
     public class Application : Gtk.Application {
-        public MainWindow app_window;
+        public MainWindow window;
 
         public Application () {
             Object (flags: ApplicationFlags.FLAGS_NONE,
@@ -27,13 +27,11 @@ namespace Timetable {
         }
 
         protected override void activate () {
-            if (get_windows ().length () > 0) {
-                app_window.present ();
+            if (window != null) {
+                window.present ();
                 return;
             }
-
-            app_window = new MainWindow (this);
-            app_window.show_all ();
+            window = new MainWindow (this);
         }
 
         public static int main (string[] args) {
