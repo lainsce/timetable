@@ -1,0 +1,39 @@
+@define-color colorPrimary #267ec6;
+@define-color textColorPrimary #333333;
+
+.titlebar {
+    color: @textColorPrimary;
+}
+
+.tt-toolbar {
+    color: @textColorPrimary;
+}
+
+.tt-label {
+    font-size: 1.66em;
+    color: @colorPrimary;
+}
+
+.tt-column {
+    background-color: #FFFFFF;
+    border: 1px solid #BBBBBB;
+}
+
+.tt-button {
+    background-image: none;
+    background-color: #EEEEEE;
+    border-bottom: 1px solid #BBBBBB;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+}
+.tt-button image {
+    color: #AAAAAA;
+    -gtk-icon-shadow: none;
+}
+.tt-button:focus {
+    box-shadow:
+        0 1px 3px alpha (@colorPrimary,0.12),
+        0 1px 2px alpha (@colorPrimary,0.24);
+}
