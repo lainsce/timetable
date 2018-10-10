@@ -1,39 +1,31 @@
-@define-color colorPrimary #267ec6;
-@define-color textColorPrimary #333333;
-
-.titlebar {
-    color: @textColorPrimary;
-}
-
-.tt-toolbar {
-    color: @textColorPrimary;
-}
-
 .tt-label {
     font-size: 1.66em;
-    color: @colorPrimary;
+    color: #3689e6;
 }
 
 .tt-column {
-    background-color: #FFFFFF;
-    border: 1px solid #BBBBBB;
+    background-color: #fafafa;
+    border: 1px solid #ccc;
 }
 
 .tt-button {
-    background-image: none;
-    background-color: #EEEEEE;
-    border-bottom: 1px solid #BBBBBB;
+    background-image: linear-gradient(
+        to bottom,
+        #fff,
+        #fafafa
+        );
+    border-bottom: 1px solid #ccc;
     border-top: none;
     border-left: none;
     border-right: none;
     border-radius: 0;
 }
 .tt-button image {
-    color: #AAAAAA;
+    color: #888888;
     -gtk-icon-shadow: none;
 }
 .tt-button:focus {
     box-shadow:
-        0 1px 3px alpha (@colorPrimary,0.12),
-        0 1px 2px alpha (@colorPrimary,0.24);
+        0 1px 3px alpha (#3689e6, 0.12),
+        0 1px 2px alpha (#3689e6, 0.24);
 }

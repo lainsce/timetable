@@ -18,6 +18,17 @@
 */
 namespace Timetable {
     public class MainWindow : Gtk.Window {
+        public const string ACTION_PREFIX = "win.";
+        public const string ACTION_SETTINGS = "action_settings";
+        public const string ACTION_EXPORT = "action_export";
+        public SimpleActionGroup actions { get; construct; }
+        public static Gee.MultiMap<string, string> action_accelerators = new Gee.HashMultiMap<string, string> ();
+
+        private const GLib.ActionEntry[] action_entries = {
+            { ACTION_SETTINGS,              action_settings              },
+            { ACTION_EXPORT,                action_export                }
+        };
+
         public MainWindow (Gtk.Application application) {
             GLib.Object (
                 application: application,
@@ -26,12 +37,25 @@ namespace Timetable {
                 width_request: 800,
                 title: (_("Timetable"))
             );
+
+            key_press_event.connect ((e) => {
+                uint keycode = e.hardware_keycode;
+
+                if ((e.state & Gdk.ModifierType.CONTROL_MASK) != 0) {
+                    if (match_keycode (Gdk.Key.q, keycode)) {
+                        this.destroy ();
+                    }
+                }
+                return false;
+            });
         }
 
         construct {
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/com/github/lainsce/timetable/stylesheet.css");
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+            this.get_style_context ().add_class ("rounded");
 
             var titlebar = new Gtk.HeaderBar ();
             titlebar.show_close_button = true;
@@ -48,7 +72,50 @@ namespace Timetable {
                 //
             });
 
+            var export_tt = new Gtk.ModelButton ();
+            export_tt.text = (_("Export Timetable…"));
+            export_tt.action_name = ACTION_PREFIX + ACTION_EXPORT;
+
+            var export_menu_grid = new Gtk.Grid ();
+            export_menu_grid.margin = 6;
+            export_menu_grid.row_spacing = 6;
+            export_menu_grid.column_spacing = 12;
+            export_menu_grid.orientation = Gtk.Orientation.VERTICAL;
+            export_menu_grid.add (export_tt);
+            export_menu_grid.show_all ();
+
+            var export_menu = new Gtk.Popover (null);
+            export_menu.add (export_menu_grid);
+
+            var export_button = new Gtk.MenuButton ();
+            export_button.tooltip_text = _("Export");
+            export_button.image = new Gtk.Image.from_icon_name ("document-export", Gtk.IconSize.LARGE_TOOLBAR);
+            export_button.popover = export_menu;
+
+            var settings_button = new Gtk.ModelButton ();
+            settings_button.text = (_("Preferences"));
+            settings_button.action_name = ACTION_PREFIX + ACTION_SETTINGS;
+
+            var menu_grid = new Gtk.Grid ();
+            menu_grid.margin = 6;
+            menu_grid.row_spacing = 6;
+            menu_grid.column_spacing = 12;
+            menu_grid.orientation = Gtk.Orientation.VERTICAL;
+            menu_grid.add (settings_button);
+            menu_grid.show_all ();
+
+            var menu = new Gtk.Popover (null);
+            menu.add (menu_grid);
+
+            var menu_button = new Gtk.MenuButton ();
+            menu_button.set_image (new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR));
+            menu_button.has_tooltip = true;
+            menu_button.tooltip_text = (_("Settings"));
+            menu_button.popover = menu;
+
             titlebar.pack_start (new_button);
+            titlebar.pack_end (menu_button);
+            titlebar.pack_end (export_button);
 
             // Day Columns
             var monday_column = new DayColumn (_("MON"));
@@ -78,6 +145,31 @@ namespace Timetable {
             if (x != -1 && y != -1) {
                 move (x, y);
             }
+        }
+
+        private void action_settings () {
+            //
+        }
+
+        private void action_export () {
+            //
+        }
+
+        #if VALA_0_42
+        protected bool match_keycode (uint keyval, uint code) {
+        #else
+        protected bool match_keycode (int keyval, uint code) {
+        #endif
+            Gdk.KeymapKey [] keys;
+            Gdk.Keymap keymap = Gdk.Keymap.get_for_display (Gdk.Display.get_default ());
+            if (keymap.get_entries_for_keyval (keyval, out keys)) {
+                foreach (var key in keys) {
+                    if (code == key.keycode)
+                        return true;
+                    }
+                }
+
+            return false;
         }
 
         public override bool delete_event (Gdk.EventAny event) {
