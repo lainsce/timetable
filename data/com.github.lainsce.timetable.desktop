@@ -7,4 +7,4 @@ Keywords=Plot;Week;Planning;Timetable;
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=GTK;Utility;Office;Timetable;Plotting
+Categories=GTK;Utility;Office;Timetable;Plotting;
