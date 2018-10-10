@@ -46,6 +46,7 @@ executable(
     'src/MainWindow.vala',
     'src/Widgets/DayColumn.vala',
     'src/Widgets/EditableLable.vala',
+    'src/Widgets/TaskBox.vala',
     'src/Constants/AppSettings.vala',
     asresources,
     c_args: c_args,

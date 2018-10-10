@@ -14,18 +14,31 @@
         #fff,
         #fafafa
         );
-    border-bottom: 1px solid #ccc;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 .tt-button image {
     color: #888888;
     -gtk-icon-shadow: none;
 }
-.tt-button:focus {
+.tt-button:focus,
+.tt-button:hover {
     box-shadow:
         0 1px 3px alpha (#3689e6, 0.12),
         0 1px 2px alpha (#3689e6, 0.24);
+}
+.tt-button:active {
+    background-image: linear-gradient(
+        to bottom,
+        #fafafa,
+        #fff
+        );
+}
+
+.tt-box {
+    border-bottom: 1px solid #ccc;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
 }

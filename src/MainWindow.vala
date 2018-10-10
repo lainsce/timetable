@@ -33,8 +33,8 @@ namespace Timetable {
             GLib.Object (
                 application: application,
                 icon_name: "com.github.lainsce.timetable",
-                height_request: 700,
-                width_request: 800,
+                height_request: 750,
+                width_request: 900,
                 title: (_("Timetable"))
             );
 
@@ -78,11 +78,7 @@ namespace Timetable {
             var new_button = new Gtk.Button ();
             new_button.set_image (new Gtk.Image.from_icon_name ("document-new", Gtk.IconSize.LARGE_TOOLBAR));
             new_button.has_tooltip = true;
-            new_button.tooltip_text = (_("New timetable"));
-
-            new_button.clicked.connect (() => {
-                //
-            });
+            new_button.tooltip_text = (_("New Timetable"));
 
             var export_tt = new Gtk.ModelButton ();
             export_tt.text = (_("Export Timetable…"));
@@ -142,11 +138,16 @@ namespace Timetable {
             grid.set_column_homogeneous (true);
             grid.hexpand = false;
             grid.attach (monday_column, 0, 0, 1, 1);
-            grid.attach (tuesday_column, 4, 0, 1, 1);
-            grid.attach (wednesday_column, 7, 0, 1, 1);
-            grid.attach (thursday_column, 10, 0, 1, 1);
-            grid.attach (friday_column, 13, 0, 1, 1);
+            grid.attach (tuesday_column, 1, 0, 1, 1);
+            grid.attach (wednesday_column, 2, 0, 1, 1);
+            grid.attach (thursday_column, 3, 0, 1, 1);
+            grid.attach (friday_column, 4, 0, 1, 1);
             grid.show_all ();
+
+            new_button.clicked.connect (() => {
+                //
+            });
+
             this.add (grid);
             this.show_all ();
         }

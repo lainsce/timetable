@@ -61,7 +61,7 @@ public class Timetable.EditableLabel : Gtk.EventBox {
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
 
         title = new Gtk.Label (title_name);
-        title.hexpand = false;
+        title.hexpand = true;
         title.ellipsize = Pango.EllipsizeMode.END;
 
         var edit_button = new Gtk.Button ();
@@ -81,7 +81,7 @@ public class Timetable.EditableLabel : Gtk.EventBox {
         grid = new Gtk.Grid ();
         grid.valign = Gtk.Align.CENTER;
         grid.column_spacing = 6;
-        grid.hexpand = false;
+        grid.hexpand = true;
         grid.add (dummy_spacer);
         grid.add (title);
         grid.add (button_revealer);
@@ -102,7 +102,6 @@ public class Timetable.EditableLabel : Gtk.EventBox {
         enter_notify_event.connect ((event) => {
             if (event.detail != Gdk.NotifyType.INFERIOR) {
                 button_revealer.set_reveal_child (true);
-                event.window.set_cursor (new Gdk.Cursor.from_name (Gdk.Display.get_default(), "text"));
             }
 
             return false;
@@ -112,7 +111,6 @@ public class Timetable.EditableLabel : Gtk.EventBox {
             if (event.detail != Gdk.NotifyType.INFERIOR) {
                 button_revealer.set_reveal_child (false);
             }
-            event.window.set_cursor (new Gdk.Cursor.from_name (Gdk.Display.get_default(), "default"));
 
             return false;
         });
