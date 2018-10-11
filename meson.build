@@ -46,6 +46,7 @@ executable(
     'src/MainWindow.vala',
     'src/Services/DialogServices.vala',
     'src/Services/FileManager.vala',
+    'src/Services/TaskManager.vala',
     'src/Widgets/DayColumn.vala',
     'src/Widgets/EditableLable.vala',
     'src/Widgets/Preferences.vala',
@@ -56,6 +57,8 @@ executable(
     dependencies: [
         dependency('granite'),
         dependency('gobject-2.0'),
+        dependency('json-glib-1.0'),
+        dependency('gee-0.8'),
         dependency('gtk+-3.0')
     ],
     vala_args: [

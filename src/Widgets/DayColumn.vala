@@ -1,13 +1,13 @@
 namespace Timetable {
     public class DayColumn : Gtk.Grid {
+        public TaskManager tm;
         public Gtk.ListBox column;
         public string day_header;
         public int day;
-        public Gee.LinkedList<TaskBox> tasks;
         public bool is_modified {get; set; default = false;}
-        public bool task_removed {get; set; default = false;}
 
         public DayColumn (int day) {
+            is_modified = false;
             column = new Gtk.ListBox ();
             column.hexpand = true;
             column.vexpand = true;
@@ -56,15 +56,10 @@ namespace Timetable {
             column_button_style_context.add_class ("image-button");
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
-            is_modified = false;
-            task_removed = false;
-            tasks = new Gee.LinkedList<TaskBox> ();
-
             column_button.clicked.connect (() => {
                 var taskbox = new TaskBox ();
                 column.insert (taskbox, -1);
-                tasks.add (taskbox);
-                warning ("N° of tasks: " + tasks.size.to_string ());
+                tm.save_notes ();
                 is_modified = true;
             });
 
@@ -79,15 +74,16 @@ namespace Timetable {
         public void clear_column () {
             foreach (Gtk.Widget item in column.get_children ()) {
                 item.destroy ();
+                tm.save_notes ();
             }
-            tasks.clear ();
         }
 
-        public void remove_task (TaskBox task) {
-            if (task_removed) {
-                tasks.remove (task);
+        public Gee.ArrayList<TaskBox> get_tasks () {
+            var tasks = new Gee.ArrayList<TaskBox> ();
+            foreach (Gtk.Widget item in this.get_children ()) {
+	            tasks.add ((TaskBox)item);
             }
-            warning ("N° of tasks: " + tasks.size.to_string ());
+            return tasks;
         }
     }
 }
