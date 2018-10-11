@@ -21,6 +21,7 @@ namespace Timetable {
     public class TaskManager {
         public MainWindow? win;
         public DayColumn dc;
+        public Json.Builder builder;
         private string app_dir = Environment.get_user_cache_dir () + "/com.github.lainsce.timetable";
         private string file_name;
 
@@ -50,41 +51,14 @@ namespace Timetable {
         }
 
         private string prepare_json_from_notes () {
-            Json.Builder builder = new Json.Builder ();
+            builder = new Json.Builder ();
 
-            var mon_tasks = win.monday_column.get_tasks ();
             builder.begin_array ();
-            foreach (var task in mon_tasks) {
-	            builder.add_string_value (task.name);
-            }
-            builder.end_array ();
-
-            var tues_tasks = win.tuesday_column.get_tasks ();
-            builder.begin_array ();
-            foreach (var task in tues_tasks) {
-	            builder.add_string_value (task.name);
-            }
-            builder.end_array ();
-
-            var wednes_tasks = win.wednesday_column.get_tasks ();
-            builder.begin_array ();
-            foreach (var task in wednes_tasks) {
-	            builder.add_string_value (task.name);
-            }
-            builder.end_array ();
-
-            var thurs_tasks = win.thursday_column.get_tasks ();
-            builder.begin_array ();
-            foreach (var task in thurs_tasks) {
-	            builder.add_string_value (task.name);
-            }
-            builder.end_array ();
-
-            var fri_tasks = win.friday_column.get_tasks ();
-            builder.begin_array ();
-            foreach (var task in fri_tasks) {
-	            builder.add_string_value (task.name);
-            }
+            save_column (builder, win.monday_column);
+            save_column (builder, win.tuesday_column);
+            save_column (builder, win.wednesday_column);
+            save_column (builder, win.thursday_column);
+            save_column (builder, win.friday_column);
             builder.end_array ();
 
             Json.Generator generator = new Json.Generator ();
@@ -92,6 +66,15 @@ namespace Timetable {
             generator.set_root (root);
             string str = generator.to_data (null);
             return str;
+        }
+
+        private static void save_column (Json.Builder builder, DayColumn column) {
+	        builder.begin_array ();
+	        foreach (var task in column.get_tasks ()) {
+		        builder.add_string_value (task.name);
+	        }
+
+	        builder.end_array ();
         }
 
         /*

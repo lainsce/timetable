@@ -7,6 +7,7 @@ namespace Timetable {
         public bool is_modified {get; set; default = false;}
 
         public DayColumn (int day) {
+            var tm = new TaskManager ();
             is_modified = false;
             column = new Gtk.ListBox ();
             column.hexpand = true;
