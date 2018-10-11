@@ -162,7 +162,7 @@ namespace Timetable {
             grid.show_all ();
 
             new_button.clicked.connect (() => {
-                FileManager.new_tt ();
+                FileManager.new_tt (this);
             });
 
             this.add (grid);

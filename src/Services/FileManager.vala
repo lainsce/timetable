@@ -1,6 +1,6 @@
 namespace Timetable.FileManager {
-    public MainWindow? win;
-    public void new_tt () {
+    public MainWindow win;
+    public void new_tt (MainWindow win) {
         debug ("New button pressed.");
         debug ("Buffer was modified. Asking user to save first.");
         var dialog = new Dialog.display_save_confirm (win);
