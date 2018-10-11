@@ -19,13 +19,13 @@
 
 namespace Timetable {
     public class TaskManager {
-        public MainWindow? win;
-        public DayColumn dc;
+        public MainWindow win;
         public Json.Builder builder;
         private string app_dir = Environment.get_user_cache_dir () + "/com.github.lainsce.timetable";
         private string file_name;
 
-        public TaskManager () {
+        public TaskManager (MainWindow win) {
+            this.win = win;
             file_name = this.app_dir + "/saved_tasks.json";
             debug ("%s".printf(file_name));
         }
@@ -71,13 +71,11 @@ namespace Timetable {
         private static void save_column (Json.Builder builder, DayColumn column) {
 	        builder.begin_array ();
 	        foreach (var task in column.get_tasks ()) {
-		        builder.add_string_value (task.name);
+		        builder.add_string_value (task.task_name);
 	        }
-
 	        builder.end_array ();
         }
 
-        /*
         public void load_from_file() {
             try {
                 var file = File.new_for_path(file_name);
@@ -93,9 +91,13 @@ namespace Timetable {
                     var root = parser.get_root();
                     var array = root.get_array();
                     foreach (var column in array.get_elements()) {
-                        var tasks = column.get_object();
-                        foreach (var task in tasks) {
-                            string name = node.get_string_member("name");
+                        var tasks = column.get_array();
+                        foreach (var task in tasks.get_elements()) {
+                            var node = task.get_object();
+                            string task_node_name = node.get_string_member("task_name");
+
+                            var taskbox = new TaskBox (this.win);
+                            taskbox.task_name = task_node_name;
                         }
                     }
                 }
@@ -103,6 +105,5 @@ namespace Timetable {
                 warning ("Failed to load file: %s\n", e.message);
             }
         }
-        */
     }
 }

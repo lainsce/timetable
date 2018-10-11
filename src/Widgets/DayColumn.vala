@@ -6,7 +6,8 @@ namespace Timetable {
         public int day;
         public bool is_modified {get; set; default = false;}
 
-        public DayColumn (int day) {
+        public DayColumn (int day, MainWindow win) {
+            this.win = win;
             is_modified = false;
             column = new Gtk.ListBox ();
             column.hexpand = true;
@@ -39,7 +40,7 @@ namespace Timetable {
             var column_label_style_context = column_label.get_style_context ();
             column_label_style_context.add_class ("tt-label");
 
-            var no_tasks = new Gtk.Label (_("No tasks."));
+            var no_tasks = new Gtk.Label (_("No tasks…"));
             no_tasks.halign = Gtk.Align.CENTER;
             var no_tasks_style_context = no_tasks.get_style_context ();
             no_tasks_style_context.add_class ("h2");
@@ -57,7 +58,7 @@ namespace Timetable {
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
             column_button.clicked.connect (() => {
-                var taskbox = new TaskBox ();
+                var taskbox = new TaskBox (this.win);
                 column.insert (taskbox, -1);
                 win.tm.save_notes ();
                 is_modified = true;
@@ -74,13 +75,13 @@ namespace Timetable {
         public void clear_column () {
             foreach (Gtk.Widget item in column.get_children ()) {
                 item.destroy ();
-                win.tm.save_notes ();
             }
+            win.tm.save_notes ();
         }
 
         public Gee.ArrayList<TaskBox> get_tasks () {
             var tasks = new Gee.ArrayList<TaskBox> ();
-            foreach (Gtk.Widget item in this.get_children ()) {
+            foreach (Gtk.Widget item in column.get_children ()) {
 	            tasks.add ((TaskBox)item);
             }
             return tasks;

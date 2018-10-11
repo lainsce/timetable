@@ -61,7 +61,7 @@ namespace Timetable {
         }
 
         construct {
-            tm = new TaskManager ();
+            tm = new TaskManager (this);
             actions = new SimpleActionGroup ();
             actions.add_action_entries (action_entries, this);
             insert_action_group ("win", actions);
@@ -77,6 +77,8 @@ namespace Timetable {
             if (w != 0 && h != 0) {
                 this.resize (w, h);
             }
+
+            tm.load_from_file ();
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/com/github/lainsce/timetable/stylesheet.css");
@@ -141,11 +143,11 @@ namespace Timetable {
             titlebar.pack_end (export_button);
 
             // Day Columns
-            monday_column = new DayColumn (0);
-            tuesday_column = new DayColumn (1);
-            wednesday_column = new DayColumn (2);
-            thursday_column = new DayColumn (3);
-            friday_column = new DayColumn (4);
+            monday_column = new DayColumn (0, this);
+            tuesday_column = new DayColumn (1, this);
+            wednesday_column = new DayColumn (2, this);
+            thursday_column = new DayColumn (3, this);
+            friday_column = new DayColumn (4, this);
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 12;
