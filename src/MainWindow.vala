@@ -25,6 +25,8 @@ namespace Timetable {
         public DayColumn thursday_column;
         public DayColumn friday_column;
 
+        public TaskManager tm;
+
         // Actions
         public const string ACTION_PREFIX = "win.";
         public const string ACTION_SETTINGS = "action_settings";
@@ -59,6 +61,7 @@ namespace Timetable {
         }
 
         construct {
+            tm = new TaskManager ();
             actions = new SimpleActionGroup ();
             actions.add_action_entries (action_entries, this);
             insert_action_group ("win", actions);

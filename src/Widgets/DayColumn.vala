@@ -1,13 +1,12 @@
 namespace Timetable {
     public class DayColumn : Gtk.Grid {
-        public TaskManager tm;
+        public MainWindow win;
         public Gtk.ListBox column;
         public string day_header;
         public int day;
         public bool is_modified {get; set; default = false;}
 
         public DayColumn (int day) {
-            var tm = new TaskManager ();
             is_modified = false;
             column = new Gtk.ListBox ();
             column.hexpand = true;
@@ -60,7 +59,7 @@ namespace Timetable {
             column_button.clicked.connect (() => {
                 var taskbox = new TaskBox ();
                 column.insert (taskbox, -1);
-                tm.save_notes ();
+                win.tm.save_notes ();
                 is_modified = true;
             });
 
@@ -75,7 +74,7 @@ namespace Timetable {
         public void clear_column () {
             foreach (Gtk.Widget item in column.get_children ()) {
                 item.destroy ();
-                tm.save_notes ();
+                win.tm.save_notes ();
             }
         }
 
