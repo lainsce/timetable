@@ -1,9 +1,13 @@
 namespace Timetable {
     public class DayColumn : Gtk.Grid {
         public Gtk.ListBox column;
+        public string day_header;
+        public int day;
+        public Gee.LinkedList<TaskBox> tasks;
         public bool is_modified {get; set; default = false;}
+        public bool task_removed {get; set; default = false;}
 
-        public DayColumn (string day) {
+        public DayColumn (int day) {
             column = new Gtk.ListBox ();
             column.hexpand = true;
             column.vexpand = true;
@@ -12,7 +16,25 @@ namespace Timetable {
             var column_style_context = column.get_style_context ();
             column_style_context.add_class ("tt-column");
 
-            var column_label = new Gtk.Label (day);
+            switch (day) {
+                case 0:
+                    day_header = _("MON");
+                    break;
+                case 1:
+                    day_header = _("TUE");
+                    break;
+                case 2:
+                    day_header = _("WED");
+                    break;
+                case 3:
+                    day_header = _("THU");
+                    break;
+                case 4:
+                    day_header = _("FRI");
+                    break;
+            }
+
+            var column_label = new Gtk.Label (day_header);
             column_label.halign = Gtk.Align.START;
             var column_label_style_context = column_label.get_style_context ();
             column_label_style_context.add_class ("tt-label");
@@ -35,10 +57,14 @@ namespace Timetable {
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
             is_modified = false;
+            task_removed = false;
+            tasks = new Gee.LinkedList<TaskBox> ();
 
             column_button.clicked.connect (() => {
                 var taskbox = new TaskBox ();
                 column.insert (taskbox, -1);
+                tasks.add (taskbox);
+                warning ("N° of tasks: " + tasks.size.to_string ());
                 is_modified = true;
             });
 
@@ -52,8 +78,16 @@ namespace Timetable {
 
         public void clear_column () {
             foreach (Gtk.Widget item in column.get_children ()) {
-                item.destroy();
+                item.destroy ();
             }
+            tasks.clear ();
+        }
+
+        public void remove_task (TaskBox task) {
+            if (task_removed) {
+                tasks.remove (task);
+            }
+            warning ("N° of tasks: " + tasks.size.to_string ());
         }
     }
 }

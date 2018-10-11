@@ -45,6 +45,7 @@ executable(
     'src/Application.vala',
     'src/MainWindow.vala',
     'src/Services/DialogServices.vala',
+    'src/Services/FileManager.vala',
     'src/Widgets/DayColumn.vala',
     'src/Widgets/EditableLable.vala',
     'src/Widgets/Preferences.vala',

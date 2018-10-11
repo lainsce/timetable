@@ -18,6 +18,14 @@
 */
 namespace Timetable {
     public class MainWindow : Gtk.Window {
+        // Widgets
+        public DayColumn monday_column;
+        public DayColumn tuesday_column;
+        public DayColumn wednesday_column;
+        public DayColumn thursday_column;
+        public DayColumn friday_column;
+
+        // Actions
         public const string ACTION_PREFIX = "win.";
         public const string ACTION_SETTINGS = "action_settings";
         public const string ACTION_EXPORT = "action_export";
@@ -130,11 +138,11 @@ namespace Timetable {
             titlebar.pack_end (export_button);
 
             // Day Columns
-            var monday_column = new DayColumn (_("MON"));
-            var tuesday_column = new DayColumn (_("TUE"));
-            var wednesday_column = new DayColumn (_("WED"));
-            var thursday_column = new DayColumn (_("THU"));
-            var friday_column = new DayColumn (_("FRI"));
+            monday_column = new DayColumn (0);
+            tuesday_column = new DayColumn (1);
+            wednesday_column = new DayColumn (2);
+            thursday_column = new DayColumn (3);
+            friday_column = new DayColumn (4);
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 12;
@@ -149,37 +157,7 @@ namespace Timetable {
             grid.show_all ();
 
             new_button.clicked.connect (() => {
-                debug ("New button pressed.");
-                debug ("Buffer was modified. Asking user to save first.");
-                var dialog = new Dialog.display_save_confirm (this);
-                dialog.response.connect ((response_id) => {
-                    switch (response_id) {
-                        case Gtk.ResponseType.YES:
-                            debug ("User saves the file.");
-                            //TODO: Save file
-                            break;
-                        case Gtk.ResponseType.NO:
-                            debug ("User doesn't care about the file, shoot it to space.");
-                            monday_column.clear_column ();
-                            tuesday_column.clear_column ();
-                            wednesday_column.clear_column ();
-                            thursday_column.clear_column ();
-                            friday_column.clear_column ();
-                            break;
-                        case Gtk.ResponseType.CANCEL:
-                            debug ("User cancelled, don't do anything.");
-                            break;
-                        case Gtk.ResponseType.DELETE_EVENT:
-                            debug ("User cancelled, don't do anything.");
-                            break;
-                    }
-                    dialog.destroy();
-                });
-
-                if (monday_column.is_modified == true || tuesday_column.is_modified == true || wednesday_column.is_modified == true || thursday_column.is_modified == true || friday_column.is_modified == true) {
-                    dialog.show ();
-                    monday_column.is_modified = false; tuesday_column.is_modified = false; wednesday_column.is_modified = false; thursday_column.is_modified = false; friday_column.is_modified = false;
-                }
+                FileManager.new_tt ();
             });
 
             this.add (grid);

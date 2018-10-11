@@ -1,5 +1,6 @@
 namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
+        public DayColumn dc;
         public TaskBox () {
             var task_box_style_context = this.get_style_context ();
             task_box_style_context.add_class ("tt-box");
@@ -17,12 +18,17 @@ namespace Timetable {
             task_grid.attach (task_delete_button, 1, 0, 1, 1);
 
             task_delete_button.clicked.connect (() => {
-                this.destroy ();
+                dc.task_removed = true;
+                delete_task ();
             });
 
             this.add (task_grid);
             this.hexpand = false;
             this.show_all ();
+        }
+
+        public void delete_task () {
+            this.destroy ();
         }
     }
 }

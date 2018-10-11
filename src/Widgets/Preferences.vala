@@ -47,17 +47,17 @@ namespace Timetable {
         }
 
         private Gtk.Widget main_grid () {
-            var settings = AppSettings.get_default ();
+            //var settings = AppSettings.get_default ();
             var main_grid = new Gtk.Grid ();
             main_grid.orientation = Gtk.Orientation.VERTICAL;
             main_grid.row_spacing = 6;
             main_grid.column_spacing = 12;
 
             var main_header = new Granite.HeaderLabel (_("Work In Progress"));
-            var geo_header = new Granite.HeaderLabel (_("Watch This Space"));
+            var second_header = new Granite.HeaderLabel (_("Watch This Space"));
 
             main_grid.attach (main_header, 0, 1, 3, 1);
-            main_grid.attach (geo_header, 0, 4, 3, 1);
+            main_grid.attach (second_header, 0, 2, 3, 1);
 
             return main_grid;
         }
