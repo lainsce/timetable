@@ -1,6 +1,7 @@
 namespace Timetable {
     public class DayColumn : Gtk.Grid {
         public Gtk.ListBox column;
+        public bool is_modified {get; set; default = false;}
 
         public DayColumn (string day) {
             column = new Gtk.ListBox ();
@@ -33,9 +34,12 @@ namespace Timetable {
             column_button_style_context.add_class ("image-button");
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
+            is_modified = false;
+
             column_button.clicked.connect (() => {
                 var taskbox = new TaskBox ();
                 column.insert (taskbox, -1);
+                is_modified = true;
             });
 
             this.row_spacing = 6;
@@ -44,6 +48,12 @@ namespace Timetable {
             this.attach (column_button, 1, 0, 1, 1);
 
             this.show_all ();
+        }
+
+        public void clear_column () {
+            foreach (Gtk.Widget item in column.get_children ()) {
+                item.destroy();
+            }
         }
     }
 }

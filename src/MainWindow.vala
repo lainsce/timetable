@@ -51,6 +51,10 @@ namespace Timetable {
         }
 
         construct {
+            actions = new SimpleActionGroup ();
+            actions.add_action_entries (action_entries, this);
+            insert_action_group ("win", actions);
+
             var settings = AppSettings.get_default ();
             int x = settings.window_x;
             int y = settings.window_y;
@@ -145,7 +149,37 @@ namespace Timetable {
             grid.show_all ();
 
             new_button.clicked.connect (() => {
-                //
+                debug ("New button pressed.");
+                debug ("Buffer was modified. Asking user to save first.");
+                var dialog = new Dialog.display_save_confirm (this);
+                dialog.response.connect ((response_id) => {
+                    switch (response_id) {
+                        case Gtk.ResponseType.YES:
+                            debug ("User saves the file.");
+                            //TODO: Save file
+                            break;
+                        case Gtk.ResponseType.NO:
+                            debug ("User doesn't care about the file, shoot it to space.");
+                            monday_column.clear_column ();
+                            tuesday_column.clear_column ();
+                            wednesday_column.clear_column ();
+                            thursday_column.clear_column ();
+                            friday_column.clear_column ();
+                            break;
+                        case Gtk.ResponseType.CANCEL:
+                            debug ("User cancelled, don't do anything.");
+                            break;
+                        case Gtk.ResponseType.DELETE_EVENT:
+                            debug ("User cancelled, don't do anything.");
+                            break;
+                    }
+                    dialog.destroy();
+                });
+
+                if (monday_column.is_modified == true || tuesday_column.is_modified == true || wednesday_column.is_modified == true || thursday_column.is_modified == true || friday_column.is_modified == true) {
+                    dialog.show ();
+                    monday_column.is_modified = false; tuesday_column.is_modified = false; wednesday_column.is_modified = false; thursday_column.is_modified = false; friday_column.is_modified = false;
+                }
             });
 
             this.add (grid);
@@ -153,11 +187,15 @@ namespace Timetable {
         }
 
         private void action_settings () {
-            //
+            var dialog = new Preferences (this);
+            dialog.set_modal (true);
+            dialog.show_all ();
         }
 
         private void action_export () {
-            //
+            var dialog = new Preferences (this);
+            dialog.set_modal (true);
+            dialog.show_all ();
         }
 
         #if VALA_0_42
