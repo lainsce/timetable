@@ -58,10 +58,7 @@ namespace Timetable {
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
             column_button.clicked.connect (() => {
-                var taskbox = new TaskBox (this.win);
-                column.insert (taskbox, -1);
-                win.tm.save_notes ();
-                is_modified = true;
+                add_task (_("Task..."));
             });
 
             this.row_spacing = 6;
@@ -70,6 +67,13 @@ namespace Timetable {
             this.attach (column_button, 1, 0, 1, 1);
 
             this.show_all ();
+        }
+
+        public void add_task (string name) {
+            var taskbox = new TaskBox (this.win, name);
+            column.insert (taskbox, -1);
+            win.tm.save_notes ();
+            is_modified = true;
         }
 
         public void clear_column () {

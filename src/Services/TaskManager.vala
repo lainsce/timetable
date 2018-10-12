@@ -96,8 +96,7 @@ namespace Timetable {
                             var node = task.get_object();
                             string task_node_name = node.get_string_member("task_name");
 
-                            var taskbox = new TaskBox (this.win);
-                            taskbox.task_name = task_node_name;
+                            //TODO: Make each column's tasks.
                         }
                     }
                 }

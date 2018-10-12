@@ -2,8 +2,9 @@ namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
         public MainWindow win;
         public string task_name = _("Task…");
-        public TaskBox (MainWindow win) {
+        public TaskBox (MainWindow win, string task_name) {
             this.win = win;
+            this.task_name = task_name;
             var task_box_style_context = this.get_style_context ();
             task_box_style_context.add_class ("tt-box");
 
