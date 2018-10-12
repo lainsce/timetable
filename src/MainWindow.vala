@@ -203,8 +203,6 @@ namespace Timetable {
             get_position (out x, out y);
             get_size (out w, out h);
 
-            tm.save_notes ();
-
             var settings = AppSettings.get_default ();
             settings.window_x = x;
             settings.window_y = y;

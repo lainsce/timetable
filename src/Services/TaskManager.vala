@@ -93,8 +93,7 @@ namespace Timetable {
                     foreach (var column in array.get_elements()) {
                         var tasks = column.get_array();
                         foreach (var task in tasks.get_elements()) {
-                            var node = task.get_object();
-                            string task_node_name = node.get_string_member("task_name");
+                            string task_node_name = task.get_string ();
 
                             //TODO: Make each column's tasks.
                         }
