@@ -2,15 +2,15 @@ namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
         public MainWindow win;
         public string task_name;
-        public EdtableLabel task_label;
+        public EditableLabel task_label;
         public TaskBox (MainWindow win, string task_name) {
             this.win = win;
-            task_label.title.label = task_name;
-            this.task_name = task_label.title.label;
+            this.task_name = task_name;
             var task_box_style_context = this.get_style_context ();
             task_box_style_context.add_class ("tt-box");
 
-            task_label = new EditableLabel (task_name);
+            task_label = new EditableLabel (this.task_name);
+
             var task_delete_button = new Gtk.Button ();
             var task_delete_button_style_context = task_delete_button.get_style_context ();
             task_delete_button_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
@@ -25,6 +25,11 @@ namespace Timetable {
 
             task_delete_button.clicked.connect (() => {
                 delete_task ();
+                win.tm.save_notes ();
+            });
+
+            task_label.changed.connect (() => {
+                this.task_name = task_label.text;
                 win.tm.save_notes ();
             });
 

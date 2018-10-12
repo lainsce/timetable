@@ -54,13 +54,13 @@ public class Timetable.EditableLabel : Gtk.EventBox {
         }
     }
 
-    public EditableLabel (string title_name) {
+    public EditableLabel (string? text) {
         valign = Gtk.Align.CENTER;
         events |= Gdk.EventMask.ENTER_NOTIFY_MASK;
         events |= Gdk.EventMask.LEAVE_NOTIFY_MASK;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
 
-        title = new Gtk.Label (title_name);
+        title = new Gtk.Label (text);
         title.margin_start = 6;
 
         var edit_button = new Gtk.Button ();
