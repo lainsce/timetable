@@ -175,9 +175,11 @@ namespace Timetable {
         }
 
         private void action_export () {
-            var dialog = new Preferences (this);
-            dialog.set_modal (true);
-            dialog.show_all ();
+            try {
+                FileManager.save_as (this);
+            } catch (Error e) {
+                warning ("Unexpected error during export: " + e.message);
+            }
         }
 
         #if VALA_0_42

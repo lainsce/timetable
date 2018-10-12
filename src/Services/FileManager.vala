@@ -1,5 +1,7 @@
 namespace Timetable.FileManager {
     public MainWindow win;
+    public File file;
+
     public void new_tt (MainWindow win) {
         debug ("New button pressed.");
         debug ("Buffer was modified. Asking user to save first.");
@@ -36,5 +38,60 @@ namespace Timetable.FileManager {
             win.thursday_column.is_modified = false;
             win.friday_column.is_modified = false;
         }
+    }
+
+    public void save_file (File file, uint8[] buffer) throws Error {
+        var output = new DataOutputStream (file.create(FileCreateFlags.REPLACE_DESTINATION));
+        long written = 0;
+        while (written < buffer.length)
+            written += output.write (buffer[written:buffer.length]);
+    }
+
+    public void save_as (MainWindow win) throws Error {
+        debug ("Save as button pressed.");
+        var dialog = new Dialog ();
+        var file = dialog.display_save_dialog ();
+
+        try {
+            debug ("Saving file…");
+            if (file == null) {
+                debug ("User cancelled operation. Aborting.");
+            } else {
+                if (file.query_exists ()) {
+                    file.delete ();
+                }
+
+                if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true) {
+                    string buffer_text = "";
+                    buffer_text += "* Monday\n";
+                    foreach (var task in win.monday_column.get_tasks ()) {
+                        buffer_text += "\t-" + task.task_name + "\n";
+                    }
+                    buffer_text += "* Tuesday\n";
+                    foreach (var task in win.tuesday_column.get_tasks ()) {
+                        buffer_text += "\t-" + task.task_name + "\n";
+                    }
+                    buffer_text += "* Wednesday\n";
+                    foreach (var task in win.wednesday_column.get_tasks ()) {
+                        buffer_text += "\t-" + task.task_name + "\n";
+                    }
+                    buffer_text += "* Thursday\n";
+                    foreach (var task in win.thursday_column.get_tasks ()) {
+                        buffer_text += "\t-" + task.task_name + "\n";
+                    }
+                    buffer_text += "* Friday\n";
+                    foreach (var task in win.friday_column.get_tasks ()) {
+                        buffer_text += "\t-" + task.task_name + "\n";
+                    }
+                    var buffer = buffer_text;
+                    uint8[] binbuffer = buffer.data;
+                    save_file (file, binbuffer);
+                }
+            }
+        } catch (Error e) {
+            warning ("Unexpected error during save: " + e.message);
+        }
+
+        file = null;
     }
 }

@@ -71,7 +71,10 @@ namespace Timetable {
         private static void save_column (Json.Builder builder, DayColumn column) {
 	        builder.begin_array ();
 	        foreach (var task in column.get_tasks ()) {
+                builder.begin_array ();
 		        builder.add_string_value (task.task_name);
+                builder.add_string_value (task.color);
+                builder.end_array ();
 	        }
 	        builder.end_array ();
         }
@@ -91,38 +94,48 @@ namespace Timetable {
                     var root = parser.get_root();
                     var array = root.get_array();
                     var monday_columns = array.get_array_element (0);
-                    foreach (var task in monday_columns.get_elements()) {
-                        string task_name = task.get_string();
+                    foreach (var tasks in monday_columns.get_elements()) {
+                        var task = tasks.get_array ();
+                        string task_name = task.get_string_element(0);
+                        string color = task.get_string_element(1);
 
-                        win.monday_column.add_task (task_name);
+                        win.monday_column.add_task (task_name, color);
                     }
 
                     var tuesday_columns = array.get_array_element (1);
-                    foreach (var task in tuesday_columns.get_elements()) {
-                        string task_name = task.get_string();
+                    foreach (var tasks in tuesday_columns.get_elements()) {
+                        var task = tasks.get_array();
+                        string task_name = task.get_string_element(0);
+                        string color = task.get_string_element(1);
 
-                        win.tuesday_column.add_task (task_name);
+                        win.tuesday_column.add_task (task_name, color);
                     }
 
                     var wednesday_columns = array.get_array_element (2);
-                    foreach (var task in wednesday_columns.get_elements()) {
-                        string task_name = task.get_string();
+                    foreach (var tasks in wednesday_columns.get_elements()) {
+                        var task = tasks.get_array();
+                        string task_name = task.get_string_element(0);
+                        string color = task.get_string_element(1);
 
-                        win.wednesday_column.add_task (task_name);
+                        win.wednesday_column.add_task (task_name, color);
                     }
 
                     var thursday_columns = array.get_array_element (3);
-                    foreach (var task in thursday_columns.get_elements()) {
-                        string task_name = task.get_string();
+                    foreach (var tasks in thursday_columns.get_elements()) {
+                        var task = tasks.get_array();
+                        string task_name = task.get_string_element(0);
+                        string color = task.get_string_element(1);
 
-                        win.thursday_column.add_task (task_name);
+                        win.thursday_column.add_task (task_name, color);
                     }
 
                     var friday_columns = array.get_array_element (4);
-                    foreach (var task in friday_columns.get_elements()) {
-                        string task_name = task.get_string();
+                    foreach (var tasks in friday_columns.get_elements()) {
+                        var task = tasks.get_array();
+                        string task_name = task.get_string_element(0);
+                        string color = task.get_string_element(1);
 
-                        win.friday_column.add_task (task_name);
+                        win.friday_column.add_task (task_name, color);
                     }
                 }
             } catch (Error e) {
