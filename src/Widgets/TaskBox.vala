@@ -8,10 +8,17 @@ namespace Timetable {
         public string color;
 
         public TaskBox (MainWindow win, string task_name, string color) {
+            var settings = AppSettings.get_default ();
             this.win = win;
             this.uid = uid_counter++;
             this.task_name = task_name;
             this.color = color;
+
+            settings.changed.connect (() => {
+                update_theme();
+                win.tm.save_notes ();
+            });
+
             update_theme ();
 
             task_label = new EditableLabel (this.task_name);
@@ -130,7 +137,7 @@ namespace Timetable {
             });
 
             color_button_yellow.clicked.connect (() => {
-                this.color = "#fff394";
+                this.color = "#ffe16b";
                 update_theme();
                 win.tm.save_notes ();
             });
@@ -183,20 +190,41 @@ namespace Timetable {
         public void update_theme () {
             var css_provider = new Gtk.CssProvider();
             this.get_style_context ().add_class ("tt-box-%d".printf(uid));
-
+            var settings = AppSettings.get_default ();
             string style = null;
             string selcolor = this.color;
-            style = (N_("""
-                .tt-box-%d {
-                    border-bottom: 1px solid #ccc;
-                    border-top: none;
-                    border-right: none;
-                    border-radius: 0;
-                    border-left: 4px solid %s;
-                    background-color: alpha (%s, 0.3);
-                }
-                """)).printf(uid, selcolor, selcolor);
+            if (settings.high_contrast) {
+                style = (N_("""
+                    .tt-box-%d {
+                        border-bottom: 1px solid #ccc;
+                        border-top: none;
+                        border-right: none;
+                        border-radius: 0;
+                        border-left: 4px solid shade (%s, 0.5);
+                        background-color: shade (%s, 0.6);
+                        color: #FFFFFF;
+                    }
 
+                    .tt-box-%d image {
+                        color: #FFFFFF;
+                    }
+                """)).printf(uid, selcolor, selcolor, uid);
+            } else {
+                style = (N_("""
+                    .tt-box-%d {
+                        border-bottom: 1px solid #ccc;
+                        border-top: none;
+                        border-right: none;
+                        border-radius: 0;
+                        border-left: 4px solid %s;
+                        background-color: alpha (%s, 0.5);
+                        color: #333;
+                    }
+                    .tt-box-%d image {
+                        color: #333;
+                    }
+                """)).printf(uid, selcolor, selcolor, uid);
+            }
             try {
                 css_provider.load_from_data(style, -1);
             } catch (GLib.Error e) {

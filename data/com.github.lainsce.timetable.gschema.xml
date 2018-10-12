@@ -20,5 +20,10 @@
 				<summary>Window position</summary>
 				<description>The width of the window</description>
 		</key>
+        <key name="high-contrast" type="b">
+				<default>false</default>
+				<summary>Task high contrast</summary>
+				<description>Tasks color contrast</description>
+		</key>
 	</schema>
 </schemalist>
