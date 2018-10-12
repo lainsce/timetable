@@ -5,7 +5,8 @@ namespace Timetable {
         public EdtableLabel task_label;
         public TaskBox (MainWindow win, string task_name) {
             this.win = win;
-            this.task_name = task_name;
+            task_label.title.label = task_name;
+            this.task_name = task_label.title.label;
             var task_box_style_context = this.get_style_context ();
             task_box_style_context.add_class ("tt-box");
 
