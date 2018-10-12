@@ -1,7 +1,7 @@
 namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
         public MainWindow win;
-        public string task_name = _("Task…");
+        public string task_name;
         public TaskBox (MainWindow win, string task_name) {
             this.win = win;
             this.task_name = task_name;
@@ -16,7 +16,8 @@ namespace Timetable {
 
             var task_grid = new Gtk.Grid ();
             task_grid.hexpand = false;
-            task_grid.margin = 12;
+            task_grid.margin_top = task_grid.margin_bottom = 12;
+            task_grid.margin_start = task_grid.margin_end = 6;
             task_grid.attach (task_label, 0, 0, 1, 1);
             task_grid.attach (task_delete_button, 1, 0, 1, 1);
 

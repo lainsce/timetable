@@ -54,25 +54,26 @@ public class Timetable.EditableLabel : Gtk.EventBox {
         }
     }
 
-    public EditableLabel (string? title_name) {
+    public EditableLabel (string title_name) {
         valign = Gtk.Align.CENTER;
         events |= Gdk.EventMask.ENTER_NOTIFY_MASK;
         events |= Gdk.EventMask.LEAVE_NOTIFY_MASK;
         events |= Gdk.EventMask.BUTTON_PRESS_MASK;
 
         title = new Gtk.Label (title_name);
-        title.hexpand = true;
-        title.ellipsize = Pango.EllipsizeMode.END;
+        title.margin_start = 6;
 
         var edit_button = new Gtk.Button ();
         edit_button.image = new Gtk.Image.from_icon_name ("edit-symbolic", Gtk.IconSize.MENU);
         edit_button.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
         var button_revealer = new Gtk.Revealer ();
         button_revealer.valign = Gtk.Align.CENTER;
+        button_revealer.halign = Gtk.Align.END;
         button_revealer.transition_type = Gtk.RevealerTransitionType.CROSSFADE;
         button_revealer.add (edit_button);
 
         var dummy_spacer = new Gtk.Grid ();
+        dummy_spacer.hexpand = true;
 
         var size_group = new Gtk.SizeGroup (Gtk.SizeGroupMode.HORIZONTAL);
         size_group.add_widget (dummy_spacer);
@@ -81,13 +82,13 @@ public class Timetable.EditableLabel : Gtk.EventBox {
         grid = new Gtk.Grid ();
         grid.valign = Gtk.Align.CENTER;
         grid.column_spacing = 6;
-        grid.hexpand = true;
-        grid.add (dummy_spacer);
         grid.add (title);
+        grid.add (dummy_spacer);
         grid.add (button_revealer);
 
         entry = new Gtk.Entry ();
-        entry.xalign = 0.5f;
+        entry.hexpand = true;
+        entry.margin_start = 3;
 
         var entry_style_context = entry.get_style_context ();
         entry_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
