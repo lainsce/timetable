@@ -53,7 +53,7 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
-        <release version="1.0.0" date="2018-10-20">
+        <release version="1.0.0" date="2018-10-15">
             <description>
                 <p>Release: Initial Plotting</p>
                 <ul>
