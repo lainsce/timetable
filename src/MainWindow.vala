@@ -78,8 +78,6 @@ namespace Timetable {
                 this.resize (w, h);
             }
 
-            tm.load_from_file ();
-
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/com/github/lainsce/timetable/stylesheet.css");
             Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
@@ -148,6 +146,8 @@ namespace Timetable {
             wednesday_column = new DayColumn (2, this);
             thursday_column = new DayColumn (3, this);
             friday_column = new DayColumn (4, this);
+
+            tm.load_from_file ();
 
             var grid = new Gtk.Grid ();
             grid.column_spacing = 12;

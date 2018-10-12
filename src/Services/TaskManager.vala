@@ -90,13 +90,39 @@ namespace Timetable {
                     parser.load_from_data(json_string);
                     var root = parser.get_root();
                     var array = root.get_array();
-                    foreach (var column in array.get_elements()) {
-                        var tasks = column.get_array();
-                        foreach (var task in tasks.get_elements()) {
-                            string task_node_name = task.get_string ();
+                    var monday_columns = array.get_array_element (0);
+                    foreach (var task in monday_columns.get_elements()) {
+                        string task_name = task.get_string();
 
-                            //TODO: Make each column's tasks.
-                        }
+                        win.monday_column.add_task (task_name);
+                    }
+
+                    var tuesday_columns = array.get_array_element (1);
+                    foreach (var task in tuesday_columns.get_elements()) {
+                        string task_name = task.get_string();
+
+                        win.tuesday_column.add_task (task_name);
+                    }
+
+                    var wednesday_columns = array.get_array_element (2);
+                    foreach (var task in wednesday_columns.get_elements()) {
+                        string task_name = task.get_string();
+
+                        win.wednesday_column.add_task (task_name);
+                    }
+
+                    var thursday_columns = array.get_array_element (3);
+                    foreach (var task in thursday_columns.get_elements()) {
+                        string task_name = task.get_string();
+
+                        win.thursday_column.add_task (task_name);
+                    }
+
+                    var friday_columns = array.get_array_element (4);
+                    foreach (var task in friday_columns.get_elements()) {
+                        string task_name = task.get_string();
+
+                        win.friday_column.add_task (task_name);
                     }
                 }
             } catch (Error e) {
