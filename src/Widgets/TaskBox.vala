@@ -283,7 +283,7 @@ namespace Timetable {
             string style = null;
             string selcolor = this.color;
             if (settings.high_contrast) {
-                style = (N_("""
+                style = ("""
                     .tt-box-%d {
                         border-bottom: 1px solid #333;
                         border-top: none;
@@ -297,9 +297,9 @@ namespace Timetable {
                     .tt-box-%d image {
                         color: #FFFFFF;
                     }
-                """)).printf(uid, selcolor, selcolor, uid);
+                """).printf(uid, selcolor, selcolor, uid);
             } else {
-                style = (N_("""
+                style = ("""
                     .tt-box-%d {
                         border-bottom: 1px solid #ccc;
                         border-top: none;
@@ -312,7 +312,7 @@ namespace Timetable {
                     .tt-box-%d image {
                         color: #333;
                     }
-                """)).printf(uid, selcolor, selcolor, uid);
+                """).printf(uid, selcolor, selcolor, uid);
             }
             try {
                 css_provider.load_from_data(style, -1);

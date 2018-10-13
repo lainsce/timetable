@@ -1,3 +1,7 @@
 src/Application.vala
 src/MainWindow.vala
 src/Constants/AppSettings.vala
+src/Services/DialogServices.vala
+src/Widgets/DayColumn.vala
+src/Widgets/Preferences.vala
+src/Widgets/TaskBox.vala
