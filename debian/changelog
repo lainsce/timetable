@@ -1,11 +1,11 @@
-com.github.lainsce.timetable (1.0.1) xenial; urgency=low
+com.github.lainsce.timetable (1.0.0) xenial; urgency=low
 
   * New: Set tasks times from and to.
   * Fix: Task clear color button, for when you want no color in your task.
 
  -- Lains <lainsce@airmail.cc>  Mon, 22 Oct 2018 12:20:00 -0300
 
-com.github.lainsce.timetable (1.0.0) xenial; urgency=low
+com.github.lainsce.timetable (0.0.1) xenial; urgency=low
 
   * New initial release.
 

@@ -2,7 +2,7 @@ namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
         public MainWindow win;
         public string task_name;
-        public EditableLabel task_label;
+        public Gtk.Label task_label;
         public int uid;
         public static int uid_counter;
         public string color;
@@ -25,7 +25,23 @@ namespace Timetable {
 
             update_theme ();
 
-            task_label = new EditableLabel (this.task_name);
+            var task_name_label = new Granite.HeaderLabel (_("Task Name"));
+            var task_name_entry_buffer = new Gtk.EntryBuffer ();
+            var task_name_entry = new Gtk.Entry.with_buffer (task_name_entry_buffer);
+            task_name_entry.set_text (this.task_name);
+            this.task_name = task_name_entry.get_text ();
+
+            task_label = new Gtk.Label ("");
+            task_label.margin_start = 6;
+            task_label.halign = Gtk.Align.START;
+            task_label.hexpand = true;
+            task_label.label = this.task_name;
+
+            task_name_entry_buffer.inserted_text.connect (() => {
+                task_label.label = task_name_entry.get_text ();
+                this.task_name = task_name_entry.get_text ();
+                win.tm.save_notes ();
+            });
 
             var task_delete_button = new Gtk.Button ();
             var task_delete_button_style_context = task_delete_button.get_style_context ();
@@ -169,10 +185,12 @@ namespace Timetable {
             setting_grid.column_spacing = 6;
             setting_grid.row_spacing = 6;
             setting_grid.orientation = Gtk.Orientation.VERTICAL;
-            setting_grid.attach (color_button_label, 0, 0, 1, 1);
-            setting_grid.attach (color_button_box, 0, 1, 1, 1);
-            setting_grid.attach (time_label, 0, 2, 1, 1);
-            setting_grid.attach (time_box, 0, 3, 1, 1);
+            setting_grid.attach (task_name_label, 0, 0, 1, 1);
+            setting_grid.attach (task_name_entry, 0, 1, 1, 1);
+            setting_grid.attach (color_button_label, 0, 2, 1, 1);
+            setting_grid.attach (color_button_box, 0, 3, 1, 1);
+            setting_grid.attach (time_label, 0, 4, 1, 1);
+            setting_grid.attach (time_box, 0, 5, 1, 1);
             setting_grid.show_all ();
 
             var popover = new Gtk.Popover (null);
@@ -246,11 +264,6 @@ namespace Timetable {
 
             task_delete_button.clicked.connect (() => {
                 delete_task ();
-                win.tm.save_notes ();
-            });
-
-            task_label.changed.connect (() => {
-                this.task_name = task_label.text;
                 win.tm.save_notes ();
             });
 

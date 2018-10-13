@@ -1,6 +1,6 @@
 # Name our project
 project('com.github.lainsce.timetable', ['vala', 'c'],
-    version: '1.0.1'
+    version: '1.0.0'
 )
 
 # Import main lib files
@@ -48,7 +48,6 @@ executable(
     'src/Services/FileManager.vala',
     'src/Services/TaskManager.vala',
     'src/Widgets/DayColumn.vala',
-    'src/Widgets/EditableLable.vala',
     'src/Widgets/Preferences.vala',
     'src/Widgets/TaskBox.vala',
     'src/Constants/AppSettings.vala',
