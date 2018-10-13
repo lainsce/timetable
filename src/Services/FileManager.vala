@@ -65,23 +65,23 @@ namespace Timetable.FileManager {
                     string buffer_text = "";
                     buffer_text += "* Monday\n";
                     foreach (var task in win.monday_column.get_tasks ()) {
-                        buffer_text += "\t-" + task.task_name + "\n";
+                        buffer_text += "\t- " + task.task_name + " <" + task.time_from_text + " - " + task.time_to_text + ">\n";
                     }
                     buffer_text += "* Tuesday\n";
                     foreach (var task in win.tuesday_column.get_tasks ()) {
-                        buffer_text += "\t-" + task.task_name + "\n";
+                        buffer_text += "\t- " + task.task_name + " <" + task.time_from_text + " - " + task.time_to_text + ">\n";
                     }
                     buffer_text += "* Wednesday\n";
                     foreach (var task in win.wednesday_column.get_tasks ()) {
-                        buffer_text += "\t-" + task.task_name + "\n";
+                        buffer_text += "\t- " + task.task_name + " <" + task.time_from_text + " - " + task.time_to_text + ">\n";
                     }
                     buffer_text += "* Thursday\n";
                     foreach (var task in win.thursday_column.get_tasks ()) {
-                        buffer_text += "\t-" + task.task_name + "\n";
+                        buffer_text += "\t- " + task.task_name + " <" + task.time_from_text + " - " + task.time_to_text + ">\n";
                     }
                     buffer_text += "* Friday\n";
                     foreach (var task in win.friday_column.get_tasks ()) {
-                        buffer_text += "\t-" + task.task_name + "\n";
+                        buffer_text += "\t- " + task.task_name + " <" + task.time_from_text + " - " + task.time_to_text + ">\n";
                     }
                     var buffer = buffer_text;
                     uint8[] binbuffer = buffer.data;

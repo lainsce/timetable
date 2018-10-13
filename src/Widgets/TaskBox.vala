@@ -6,13 +6,17 @@ namespace Timetable {
         public int uid;
         public static int uid_counter;
         public string color;
+        public string time_to_text;
+        public string time_from_text;
 
-        public TaskBox (MainWindow win, string task_name, string color) {
+        public TaskBox (MainWindow win, string task_name, string color, string time_from_text, string time_to_text) {
             var settings = AppSettings.get_default ();
             this.win = win;
             this.uid = uid_counter++;
             this.task_name = task_name;
             this.color = color;
+            this.time_to_text = time_to_text;
+            this.time_from_text = time_from_text;
 
             settings.changed.connect (() => {
                 update_theme();
@@ -27,6 +31,8 @@ namespace Timetable {
             var task_delete_button_style_context = task_delete_button.get_style_context ();
             task_delete_button_style_context.add_class (Gtk.STYLE_CLASS_FLAT);
             task_delete_button.set_image (new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
+
+            var color_button_label = new Granite.HeaderLabel (_("Task Color"));
 
             var color_button_red = new Gtk.Button ();
             color_button_red.has_focus = false;
@@ -94,6 +100,17 @@ namespace Timetable {
             color_button_indigo_context.add_class ("color-button");
             color_button_indigo_context.add_class ("color-indigo");
 
+            var color_button_clear = new Gtk.Button ();
+            color_button_clear.has_focus = false;
+            color_button_clear.height_request = 24;
+            color_button_clear.width_request = 24;
+            color_button_clear.halign = Gtk.Align.CENTER;
+            color_button_clear.tooltip_text = _("Clear color");
+
+            var color_button_clear_context = color_button_clear.get_style_context ();
+            color_button_clear_context.add_class ("color-button");
+            color_button_clear_context.add_class (Gtk.STYLE_CLASS_FLAT);
+
             var color_button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
             color_button_box.pack_start (color_button_red, false, true, 0);
             color_button_box.pack_start (color_button_orange, false, true, 0);
@@ -101,8 +118,51 @@ namespace Timetable {
             color_button_box.pack_start (color_button_green, false, true, 0);
             color_button_box.pack_start (color_button_blue, false, true, 0);
             color_button_box.pack_start (color_button_indigo, false, true, 0);
+            color_button_box.pack_start (color_button_clear, false, true, 0);
 
-            var color_button_label = new Granite.HeaderLabel (_("Task Color"));
+            var time_label = new Granite.HeaderLabel (_("Task Time"));
+
+            var task_time_from_pop_label = new Gtk.Label ("From:");
+            task_time_from_pop_label.halign = Gtk.Align.START;
+
+            var time_from_picker = new Granite.Widgets.TimePicker.with_format ("%H:%M", "%H:%M");
+            time_from_picker.text = this.time_from_text;
+
+            var task_time_from_label = new Gtk.Label ("");
+            task_time_from_label.margin_start = 6;
+            task_time_from_label.halign = Gtk.Align.START;
+            task_time_from_label.label = this.time_from_text;
+
+            time_from_picker.time_changed.connect (() => {
+                task_time_from_label.label = time_from_picker.time.format ("%H:%M").to_string ();
+                this.time_from_text = time_from_picker.time.format ("%H:%M").to_string ();
+                win.tm.save_notes ();
+            });
+
+            var task_time_to_pop_label = new Gtk.Label ("To:");
+            task_time_to_pop_label.halign = Gtk.Align.START;
+
+            var time_to_picker = new Granite.Widgets.TimePicker.with_format ("%H:%M", "%H:%M");
+            time_to_picker.text = this.time_to_text;
+
+            var task_time_to_label = new Gtk.Label ("");
+            task_time_to_label.halign = Gtk.Align.START;
+            task_time_to_label.label = this.time_to_text;
+
+            time_to_picker.time_changed.connect (() => {
+                task_time_to_label.label = time_to_picker.time.format ("%H:%M").to_string ();
+                this.time_to_text = time_to_picker.time.format ("%H:%M").to_string ();
+                win.tm.save_notes ();
+            });
+
+            var time_box = new Gtk.Grid ();
+            time_box.hexpand = false;
+            time_box.column_spacing = 6;
+            time_box.row_spacing = 6;
+            time_box.attach (task_time_from_pop_label, 0, 0, 1, 1);
+            time_box.attach (time_from_picker, 0, 1, 1, 1);
+            time_box.attach (task_time_to_pop_label, 1, 0, 1, 1);
+            time_box.attach (time_to_picker, 1, 1, 1, 1);
 
             var setting_grid = new Gtk.Grid ();
             setting_grid.margin = 12;
@@ -111,6 +171,8 @@ namespace Timetable {
             setting_grid.orientation = Gtk.Orientation.VERTICAL;
             setting_grid.attach (color_button_label, 0, 0, 1, 1);
             setting_grid.attach (color_button_box, 0, 1, 1, 1);
+            setting_grid.attach (time_label, 0, 2, 1, 1);
+            setting_grid.attach (time_box, 0, 3, 1, 1);
             setting_grid.show_all ();
 
             var popover = new Gtk.Popover (null);
@@ -160,11 +222,25 @@ namespace Timetable {
                 win.tm.save_notes ();
             });
 
+            color_button_clear.clicked.connect (() => {
+                this.color = "#EEE";
+                update_theme();
+                win.tm.save_notes ();
+            });
+
+            var task_time_sep_label = new Gtk.Label ("-");
+
+            var date_time_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
+            date_time_box.pack_start (task_time_from_label, false, true, 0);
+            date_time_box.pack_start (task_time_sep_label, false, true, 0);
+            date_time_box.pack_start (task_time_to_label, false, true, 0);
+
             var task_grid = new Gtk.Grid ();
             task_grid.hexpand = false;
             task_grid.margin_top = task_grid.margin_bottom = 12;
             task_grid.margin_start = task_grid.margin_end = 6;
             task_grid.attach (task_label, 0, 0, 1, 1);
+            task_grid.attach (date_time_box, 0, 1, 1, 1);
             task_grid.attach (app_button, 1, 0, 1, 1);
             task_grid.attach (task_delete_button, 2, 0, 1, 1);
 
@@ -196,7 +272,7 @@ namespace Timetable {
             if (settings.high_contrast) {
                 style = (N_("""
                     .tt-box-%d {
-                        border-bottom: 1px solid #ccc;
+                        border-bottom: 1px solid #333;
                         border-top: none;
                         border-right: none;
                         border-radius: 0;

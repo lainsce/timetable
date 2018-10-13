@@ -55,6 +55,15 @@
     <releases>
         <release version="1.0.0" date="2018-10-15">
             <description>
+                <p>Release: Tasks Have Time</p>
+                <ul>
+                    <li>New: Set tasks times from and to.</li>
+                    <li>Fix: Task clear color button, for when you want no color in your task.</li>
+                </ul>
+            </description>
+        </release>
+        <release version="1.0.0" date="2018-10-15">
+            <description>
                 <p>Release: Initial Plotting</p>
                 <ul>
                     <li>First stable release.</li>

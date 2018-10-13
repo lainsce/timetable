@@ -74,6 +74,8 @@ namespace Timetable {
                 builder.begin_array ();
 		        builder.add_string_value (task.task_name);
                 builder.add_string_value (task.color);
+                builder.add_string_value (task.time_from_text);
+                builder.add_string_value (task.time_to_text);
                 builder.end_array ();
 	        }
 	        builder.end_array ();
@@ -98,8 +100,10 @@ namespace Timetable {
                         var task = tasks.get_array ();
                         string task_name = task.get_string_element(0);
                         string color = task.get_string_element(1);
+                        string time_from_text = task.get_string_element(2);
+                        string time_to_text = task.get_string_element(3);
 
-                        win.monday_column.add_task (task_name, color);
+                        win.monday_column.add_task (task_name, color, time_from_text, time_to_text);
                     }
 
                     var tuesday_columns = array.get_array_element (1);
@@ -107,8 +111,10 @@ namespace Timetable {
                         var task = tasks.get_array();
                         string task_name = task.get_string_element(0);
                         string color = task.get_string_element(1);
+                        string time_from_text = task.get_string_element(2);
+                        string time_to_text = task.get_string_element(3);
 
-                        win.tuesday_column.add_task (task_name, color);
+                        win.tuesday_column.add_task (task_name, color, time_from_text, time_to_text);
                     }
 
                     var wednesday_columns = array.get_array_element (2);
@@ -116,8 +122,10 @@ namespace Timetable {
                         var task = tasks.get_array();
                         string task_name = task.get_string_element(0);
                         string color = task.get_string_element(1);
+                        string time_from_text = task.get_string_element(2);
+                        string time_to_text = task.get_string_element(3);
 
-                        win.wednesday_column.add_task (task_name, color);
+                        win.wednesday_column.add_task (task_name, color, time_from_text, time_to_text);
                     }
 
                     var thursday_columns = array.get_array_element (3);
@@ -125,8 +133,10 @@ namespace Timetable {
                         var task = tasks.get_array();
                         string task_name = task.get_string_element(0);
                         string color = task.get_string_element(1);
+                        string time_from_text = task.get_string_element(2);
+                        string time_to_text = task.get_string_element(3);
 
-                        win.thursday_column.add_task (task_name, color);
+                        win.thursday_column.add_task (task_name, color, time_from_text, time_to_text);
                     }
 
                     var friday_columns = array.get_array_element (4);
@@ -134,8 +144,10 @@ namespace Timetable {
                         var task = tasks.get_array();
                         string task_name = task.get_string_element(0);
                         string color = task.get_string_element(1);
+                        string time_from_text = task.get_string_element(2);
+                        string time_to_text = task.get_string_element(3);
 
-                        win.friday_column.add_task (task_name, color);
+                        win.friday_column.add_task (task_name, color, time_from_text, time_to_text);
                     }
                 }
             } catch (Error e) {
