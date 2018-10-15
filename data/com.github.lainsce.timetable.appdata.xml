@@ -53,6 +53,15 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
+        <release version="1.0.1" date="2018-10-19">
+            <description>
+                <p>Release: Weekend Taskin'</p>
+                <ul>
+                    <li>New: Weekend column to plot tasks, show it or not.</li>
+                    <li>Fix: Tasks are now by start time instead of haphazardly placed.</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.0" date="2018-10-15">
             <description>
                 <p>Release: Tasks Have Time</p>

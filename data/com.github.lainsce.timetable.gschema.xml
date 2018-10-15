@@ -20,6 +20,11 @@
 				<summary>Window position</summary>
 				<description>The width of the window</description>
 		</key>
+        <key name="weekend-show" type="b">
+				<default>false</default>
+				<summary>Show the Weekend</summary>
+				<description>Display the weekend in the UI</description>
+		</key>
         <key name="high-contrast" type="b">
 				<default>false</default>
 				<summary>Task high contrast</summary>

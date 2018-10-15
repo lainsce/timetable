@@ -24,6 +24,8 @@ namespace Timetable {
         public DayColumn wednesday_column;
         public DayColumn thursday_column;
         public DayColumn friday_column;
+        public DayColumn weekend_column;
+        public Gtk.Grid grid;
 
         public TaskManager tm;
 
@@ -141,14 +143,15 @@ namespace Timetable {
             titlebar.pack_end (export_button);
 
             // Day Columns
-            monday_column = new DayColumn (0, this);
-            tuesday_column = new DayColumn (1, this);
-            wednesday_column = new DayColumn (2, this);
-            thursday_column = new DayColumn (3, this);
-            friday_column = new DayColumn (4, this);
+            monday_column = new DayColumn (1, this);
+            tuesday_column = new DayColumn (2, this);
+            wednesday_column = new DayColumn (3, this);
+            thursday_column = new DayColumn (4, this);
+            friday_column = new DayColumn (5, this);
+            weekend_column = new DayColumn (6, this);
             tm.load_from_file ();
 
-            var grid = new Gtk.Grid ();
+            grid = new Gtk.Grid ();
             grid.column_spacing = 12;
             grid.margin = 12;
             grid.set_column_homogeneous (true);
@@ -158,6 +161,10 @@ namespace Timetable {
             grid.attach (wednesday_column, 2, 0, 1, 1);
             grid.attach (thursday_column, 3, 0, 1, 1);
             grid.attach (friday_column, 4, 0, 1, 1);
+            show_the_weekend ();
+            settings.changed.connect (() => {
+                show_the_weekend ();
+            });
             grid.show_all ();
 
             new_button.clicked.connect (() => {
@@ -166,6 +173,16 @@ namespace Timetable {
 
             this.add (grid);
             this.show_all ();
+        }
+
+        private void show_the_weekend () {
+            var settings = AppSettings.get_default ();
+            if (settings.weekend_show == true) {
+                grid.attach (weekend_column, 5, 0, 1, 1);
+            } else {
+                grid.remove (weekend_column);
+            }
+            weekend_column.visible = settings.weekend_show;
         }
 
         private void action_settings () {

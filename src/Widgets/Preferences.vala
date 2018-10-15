@@ -52,14 +52,22 @@ namespace Timetable {
             main_grid.row_spacing = 6;
             main_grid.column_spacing = 12;
 
-            var main_header = new Granite.HeaderLabel (_("Tasks Coloring"));
+            var interface_header = new Granite.HeaderLabel (_("Interface"));
+            var weekend_label = new SettingsLabel (_("Show weekends:"));
+            weekend_label.set_halign (Gtk.Align.END);
+            var weekend = new SettingsSwitch ("weekend-show");
+
+            var tasks_header = new Granite.HeaderLabel (_("Tasks"));
             var high_contrast_label = new SettingsLabel (_("High contrast colors:"));
             high_contrast_label.set_halign (Gtk.Align.END);
             var high_contrast = new SettingsSwitch ("high-contrast");
 
-            main_grid.attach (main_header, 0, 1, 3, 1);
-            main_grid.attach (high_contrast_label, 0, 2, 1, 1);
-            main_grid.attach (high_contrast, 1, 2, 1, 1);
+            main_grid.attach (interface_header, 0, 1, 3, 1);
+            main_grid.attach (weekend_label, 0, 2, 1, 1);
+            main_grid.attach (weekend, 1, 2, 1, 1);
+            main_grid.attach (tasks_header, 0, 3, 3, 1);
+            main_grid.attach (high_contrast_label, 0, 4, 1, 1);
+            main_grid.attach (high_contrast, 1, 4, 1, 1);
 
             return main_grid;
         }

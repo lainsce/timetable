@@ -14,24 +14,54 @@ namespace Timetable {
             column.vexpand = true;
             column.activate_on_single_click = false;
             column.selection_mode = Gtk.SelectionMode.NONE;
+            column.set_sort_func (list_sort);
             var column_style_context = column.get_style_context ();
             column_style_context.add_class ("tt-column");
 
+            var time = new GLib.DateTime.now_local ();
+
             switch (day) {
-                case 0:
-                    day_header = _("MON");
-                    break;
                 case 1:
-                    day_header = _("TUE");
+                    if (time.get_day_of_week () == day) {
+                        day_header = _("◉ MON");
+                    } else {
+                        day_header = _("MON");
+                    }
                     break;
                 case 2:
-                    day_header = _("WED");
+                    if (time.get_day_of_week () == day) {
+                        day_header = _("◉ TUE");
+                    } else {
+                        day_header = _("TUE");
+                    }
                     break;
                 case 3:
-                    day_header = _("THU");
+                    if (time.get_day_of_week () == day) {
+                        day_header = _("◉ WED");
+                    } else {
+                        day_header = _("WED");
+                    }
                     break;
                 case 4:
-                    day_header = _("FRI");
+                    if (time.get_day_of_week () == day) {
+                        day_header = _("◉ THU");
+                    } else {
+                        day_header = _("THU");
+                    }
+                    break;
+                case 5:
+                    if (time.get_day_of_week () == day) {
+                        day_header = _("◉ FRI");
+                    } else {
+                        day_header = _("FRI");
+                    }
+                    break;
+                case 6:
+                    if (time.get_day_of_week () == day || time.get_day_of_week () == 7) {
+                        day_header = _("◉ SAT/SUN");
+                    } else {
+                        day_header = _("SAT/SUN");
+                    }
                     break;
             }
 
@@ -91,5 +121,16 @@ namespace Timetable {
             }
             return tasks;
         }
+
+        public int list_sort (Gtk.ListBoxRow first_row, Gtk.ListBoxRow second_row) {
+            var row_1 = (TaskBox) first_row;
+            var row_2 = (TaskBox) second_row;
+
+            string name_1 = row_1.time_from_text;
+            string name_2 = row_2.time_from_text;
+
+            return name_1.collate (name_2);
+        }
+
     }
 }

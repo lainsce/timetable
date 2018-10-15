@@ -59,6 +59,7 @@ namespace Timetable {
             save_column (builder, win.wednesday_column);
             save_column (builder, win.thursday_column);
             save_column (builder, win.friday_column);
+            save_column (builder, win.weekend_column);
             builder.end_array ();
 
             Json.Generator generator = new Json.Generator ();
@@ -148,6 +149,17 @@ namespace Timetable {
                         string time_to_text = task.get_string_element(3);
 
                         win.friday_column.add_task (task_name, color, time_from_text, time_to_text);
+                    }
+
+                    var weekend_columns = array.get_array_element (5);
+                    foreach (var tasks in weekend_columns.get_elements()) {
+                        var task = tasks.get_array();
+                        string task_name = task.get_string_element(0);
+                        string color = task.get_string_element(1);
+                        string time_from_text = task.get_string_element(2);
+                        string time_to_text = task.get_string_element(3);
+
+                        win.weekend_column.add_task (task_name, color, time_from_text, time_to_text);
                     }
                 }
             } catch (Error e) {
