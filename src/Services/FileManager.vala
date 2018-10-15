@@ -10,7 +10,11 @@ namespace Timetable.FileManager {
             switch (response_id) {
                 case Gtk.ResponseType.YES:
                     debug ("User saves the file.");
-                    save_as (win);
+                    try {
+                        save_as (win);
+                    } catch (Error e) {
+                        warning ("Unexpected error during save: " + e.message);
+                    } 
                     break;
                 case Gtk.ResponseType.NO:
                     debug ("User doesn't care about the file.");
