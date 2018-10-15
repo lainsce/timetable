@@ -30,13 +30,14 @@ namespace Timetable.FileManager {
             dialog.destroy();
         });
 
-        if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true) {
+        if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.weekend_column.is_modified == true) {
             dialog.show ();
             win.monday_column.is_modified = false;
             win.tuesday_column.is_modified = false;
             win.wednesday_column.is_modified = false;
             win.thursday_column.is_modified = false;
             win.friday_column.is_modified = false;
+            win.weekend_column.is_modified = false;
         }
     }
 
@@ -61,7 +62,7 @@ namespace Timetable.FileManager {
                     file.delete ();
                 }
 
-                if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true) {
+                if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.weekend_column.is_modified == true) {
                     string buffer_text = "";
                     buffer_text += "* Monday\n";
                     foreach (var task in win.monday_column.get_tasks ()) {
