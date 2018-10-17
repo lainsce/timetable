@@ -1,9 +1,23 @@
+com.github.lainsce.timetable (1.0.2) xenial; urgency=low
+
+  * New: Tasks can now be set to be an all-day task.
+  * Fix: Tasks have been rejigged to not expand the app as well as make each task look nicer.
+
+ -- Lains <lainsce@airmail.cc>  Fri, 19 Oct 2018 12:20:00 -0300
+
+com.github.lainsce.timetable (1.0.1) xenial; urgency=low
+
+  * New: Weekend column to plot tasks, show it or not.
+  * Fix: Tasks are now by start time instead of haphazardly placed.
+
+ -- Lains <lainsce@airmail.cc>  Fri, 19 Oct 2018 12:20:00 -0300
+
 com.github.lainsce.timetable (1.0.0) xenial; urgency=low
 
   * New: Set tasks times from and to.
   * Fix: Task clear color button, for when you want no color in your task.
 
- -- Lains <lainsce@airmail.cc>  Mon, 22 Oct 2018 12:20:00 -0300
+ -- Lains <lainsce@airmail.cc>  Fri, 15 Oct 2018 12:20:00 -0300
 
 com.github.lainsce.timetable (0.0.1) xenial; urgency=low
 

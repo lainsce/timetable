@@ -82,13 +82,15 @@ namespace Timetable {
             var column_button = new Gtk.Button ();
             column_button.can_focus = false;
             column_button.halign = Gtk.Align.END;
+            column_button.width_request = 38;
+            column_button.height_request = 32;
             var column_button_style_context = column_button.get_style_context ();
             column_button_style_context.add_class ("tt-button");
             column_button_style_context.add_class ("image-button");
-            column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
+            column_button.set_image (new Gtk.Image.from_icon_name ("list-add", Gtk.IconSize.SMALL_TOOLBAR));
 
             column_button.clicked.connect (() => {
-                add_task (_("Task…"), "#EEEEEE", "12:00", "12:00");
+                add_task (_("Task…"), "#EEEEEE", "12:00", "12:00", false);
             });
 
             this.row_spacing = 6;
@@ -99,8 +101,8 @@ namespace Timetable {
             this.show_all ();
         }
 
-        public void add_task (string name, string color, string time_from_text, string time_to_text) {
-            var taskbox = new TaskBox (this.win, name, color, time_from_text, time_to_text);
+        public void add_task (string name, string color, string time_from_text, string time_to_text, bool task_allday) {
+            var taskbox = new TaskBox (this.win, name, color, time_from_text, time_to_text, task_allday);
             taskbox.update_theme ();
             column.insert (taskbox, -1);
             win.tm.save_notes ();

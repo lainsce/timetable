@@ -12,9 +12,14 @@ namespace Timetable.FileManager {
                     debug ("User saves the file.");
                     try {
                         save_as (win);
+                        win.monday_column.clear_column ();
+                        win.tuesday_column.clear_column ();
+                        win.wednesday_column.clear_column ();
+                        win.thursday_column.clear_column ();
+                        win.friday_column.clear_column ();
                     } catch (Error e) {
                         warning ("Unexpected error during save: " + e.message);
-                    } 
+                    }
                     break;
                 case Gtk.ResponseType.NO:
                     debug ("User doesn't care about the file.");
