@@ -295,7 +295,7 @@ namespace Timetable {
             });
 
             color_button_green.clicked.connect (() => {
-                this.color = "#d1ff82";
+                this.color = "#c6f96f";
                 update_theme();
                 win.tm.save_notes ();
             });
