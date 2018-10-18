@@ -1,23 +1,20 @@
+@define-color colorAccent #3689e6;
+
 .tt-label {
     font-size: 1.66em;
     color: #3689e6;
 }
 
 .tt-column {
-    background-color: @bg_color;
-    background-image: linear-gradient(
-        to bottom,
-        shade(@bg_color, 1.5),
-        @base_color
-        );
+    background-color: @base_color;
     border: 1px solid alpha(#000, 0.25);
 }
 
 .tt-button {
     background-image: linear-gradient(
         to bottom,
-        #faffff,
-        #f0f5f5
+        #fff,
+        #fafafa
         );
     border: 1px solid alpha(#000, 0.25);
     border-radius: 8px;
@@ -38,8 +35,8 @@
 .tt-button:active {
     background-image: linear-gradient(
         to bottom,
-        #f0f5f5,
-        #faffff
+        #fafafa,
+        #fff
         );
 }
 
@@ -55,25 +52,4 @@
 .color-button:hover,
 .color_button:focus {
     border: 1px solid alpha(#000, 0.5);
-}
-.color-white {
-    background-color: #fafafa;
-}
-.color-red {
-    background-color: #ff8c82;
-}
-.color-orange {
-    background-color: #ffc27d;
-}
-.color-yellow {
-    background-color: #ffe16b;
-}
-.color-green {
-    background-color: #c6f96f;
-}
-.color-blue {
-    background-color: #8cd5ff;
-}
-.color-violet {
-    background-color: #aca9fd;
 }

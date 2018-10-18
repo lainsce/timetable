@@ -21,6 +21,7 @@ namespace Timetable {
         public int window_y { get; set; }
         public int window_height { get; set; }
         public int window_width { get; set; }
+        public int theme { get; set; }
         public bool high_contrast { get; set; }
         public bool weekend_show { get; set; }
 

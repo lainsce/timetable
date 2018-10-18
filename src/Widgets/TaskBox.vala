@@ -20,12 +20,14 @@ namespace Timetable {
             this.time_from_text = time_from_text;
             this.task_allday = task_allday;
 
+            update_theme ();
+            change_theme ();
+
             settings.changed.connect (() => {
                 update_theme();
+                settings.theme = change_theme ();
                 win.tm.save_notes ();
             });
-
-            update_theme ();
 
             var task_name_label = new Granite.HeaderLabel (_("Task Name"));
             var task_name_entry_buffer = new Gtk.EntryBuffer ();
@@ -277,37 +279,73 @@ namespace Timetable {
             app_button.popover = popover;
 
             color_button_red.clicked.connect (() => {
-                this.color = "#ff8c82";
+                if (settings.theme == 0) {
+                    this.color = "#ff8c82";
+                } else if (settings.theme == 1) {
+                    this.color = "#ff4757";
+                } else if (settings.theme == 2) {
+                    this.color = "#eb2f06";
+                }
                 update_theme();
                 win.tm.save_notes ();
             });
 
             color_button_orange.clicked.connect (() => {
-                this.color = "#ffc27d";
+                if (settings.theme == 0) {
+                    this.color = "#ffc27d";
+                } else if (settings.theme == 1) {
+                    this.color = "#ff6348";
+                } else if (settings.theme == 2) {
+                    this.color = "#fa983a";
+                }
                 update_theme();
                 win.tm.save_notes ();
             });
 
             color_button_yellow.clicked.connect (() => {
-                this.color = "#ffe16b";
+                if (settings.theme == 0) {
+                    this.color = "#ffe16b";
+                } else if (settings.theme == 1) {
+                    this.color = "#ffcc33";
+                } else if (settings.theme == 2) {
+                    this.color = "#f6b93b";
+                }
                 update_theme();
                 win.tm.save_notes ();
             });
 
             color_button_green.clicked.connect (() => {
-                this.color = "#c6f96f";
+                if (settings.theme == 0) {
+                    this.color = "#c6f96f";
+                } else if (settings.theme == 1) {
+                    this.color = "#2ed573";
+                } else if (settings.theme == 2) {
+                    this.color = "#78e08f";
+                }
                 update_theme();
                 win.tm.save_notes ();
             });
 
             color_button_blue.clicked.connect (() => {
-                this.color = "#8cd5ff";
+                if (settings.theme == 0) {
+                    this.color = "#8cd5ff";
+                } else if (settings.theme == 1) {
+                    this.color = "#1e90ff";
+                } else if (settings.theme == 2) {
+                    this.color = "#82ccdd";
+                }
                 update_theme();
                 win.tm.save_notes ();
             });
 
             color_button_violet.clicked.connect (() => {
-                this.color = "#aca9fd";
+                if (settings.theme == 0) {
+                    this.color = "#aca9fd";
+                } else if (settings.theme == 1) {
+                    this.color = "#5352ed";
+                } else if (settings.theme == 2) {
+                    this.color = "#8498e6";
+                }
                 update_theme();
                 win.tm.save_notes ();
             });
@@ -336,6 +374,26 @@ namespace Timetable {
             this.add (task_grid);
             this.hexpand = false;
             this.show_all ();
+        }
+
+        private int change_theme () {
+            var settings = AppSettings.get_default ();
+            if (settings.theme == 1) {
+                var provider = new Gtk.CssProvider ();
+                provider.load_from_resource ("/com/github/lainsce/timetable/flat.css");
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                return 1;
+            } else if (settings.theme == 2) {
+                var provider = new Gtk.CssProvider ();
+                provider.load_from_resource ("/com/github/lainsce/timetable/nature.css");
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                return 2;
+            } else {
+                var provider = new Gtk.CssProvider ();
+                provider.load_from_resource ("/com/github/lainsce/timetable/elementary.css");
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+                return 0;
+            }
         }
 
         public void delete_task () {

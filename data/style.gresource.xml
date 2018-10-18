@@ -2,5 +2,8 @@
 <gresources>
     <gresource prefix="/com/github/lainsce/timetable">
         <file alias="stylesheet.css" compressed="true">stylesheet.css</file>
+        <file alias="elementary.css" compressed="true">styles/elementary.css</file>
+        <file alias="flat.css" compressed="true">styles/flat.css</file>
+        <file alias="nature.css" compressed="true">styles/nature.css</file>
     </gresource>
 </gresources>

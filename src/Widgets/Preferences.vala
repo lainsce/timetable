@@ -18,7 +18,7 @@
 */
 namespace Timetable {
     public class Preferences : Gtk.Dialog {
-        public Preferences (Gtk.Window? parent) {
+        public Preferences (MainWindow? parent) {
             Object (
                 border_width: 6,
                 deletable: false,
@@ -31,22 +31,7 @@ namespace Timetable {
         }
 
         construct {
-            var main_stack = new Gtk.Stack ();
-            main_stack.margin = 12;
-            main_stack.margin_top = 0;
-            main_stack.add (main_grid ());
-
-            var close_button = add_button (_("Close"), Gtk.ResponseType.CLOSE);
-            ((Gtk.Button) close_button).clicked.connect (() => destroy ());
-
-            var grid = new Gtk.Grid ();
-            grid.margin_top = 0;
-            grid.attach (main_stack, 0, 1, 1, 1);
-
-            ((Gtk.Container) get_content_area ()).add (grid);
-        }
-
-        private Gtk.Widget main_grid () {
+            var settings = AppSettings.get_default ();
             var main_grid = new Gtk.Grid ();
             main_grid.orientation = Gtk.Orientation.VERTICAL;
             main_grid.row_spacing = 6;
@@ -62,14 +47,65 @@ namespace Timetable {
             high_contrast_label.set_halign (Gtk.Align.END);
             var high_contrast = new SettingsSwitch ("high-contrast");
 
+            var theme_label = new SettingsLabel (_("Tasks Theming:"));
+            var theme_type = new Gtk.ComboBoxText();
+            theme_type.append_text(_("elementary"));
+            theme_type.append_text(_("Flat"));
+            theme_type.append_text(_("Nature"));
+            switch (settings.theme) {
+                case 0:
+                    theme_type.set_active(0);
+                    break;
+                case 1:
+                    theme_type.set_active(1);
+                    break;
+                case 2:
+                    theme_type.set_active(2);
+                    break;
+                default:
+                    theme_type.set_active(0);
+                    break;
+            }
+
+            theme_type.changed.connect (() => {
+                switch (theme_type.active) {
+                    case 0:
+                        settings.theme = 0;
+                        break;
+                    case 1:
+                        settings.theme = 1;
+                        break;
+                    case 2:
+                        settings.theme = 2;
+                        break;
+                    case 3:
+                        settings.theme = 0;
+                        break;
+                }
+            });
+
             main_grid.attach (interface_header, 0, 1, 3, 1);
             main_grid.attach (weekend_label, 0, 2, 1, 1);
             main_grid.attach (weekend, 1, 2, 1, 1);
             main_grid.attach (tasks_header, 0, 3, 3, 1);
             main_grid.attach (high_contrast_label, 0, 4, 1, 1);
             main_grid.attach (high_contrast, 1, 4, 1, 1);
+            main_grid.attach (theme_label, 0, 5, 1, 1);
+            main_grid.attach (theme_type, 1, 5, 1, 1);
 
-            return main_grid;
+            var main_stack = new Gtk.Stack ();
+            main_stack.margin = 12;
+            main_stack.margin_top = 0;
+            main_stack.add (main_grid);
+
+            var close_button = add_button (_("Close"), Gtk.ResponseType.CLOSE);
+            ((Gtk.Button) close_button).clicked.connect (() => destroy ());
+
+            var grid = new Gtk.Grid ();
+            grid.margin_top = 0;
+            grid.attach (main_stack, 0, 1, 1, 1);
+
+            ((Gtk.Container) get_content_area ()).add (grid);
         }
 
         private class SettingsLabel : Gtk.Label {
