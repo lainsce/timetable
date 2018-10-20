@@ -4,24 +4,28 @@
     font-size: 1.66em;
     color: #3689e6;
 }
+.tt-label:backdrop {
+    color: #7ab1ee;
+}
 
 .tt-column {
-    background-color: @base_color;
+    background-color: shade (@bg_color, 1.05);
     border: 1px solid alpha(#000, 0.25);
+}
+.tt-column:backdrop {
+    background-color: alpha (shade (@bg_color, 1.05), 0.24);
 }
 
 .tt-button {
     background-image: linear-gradient(
         to bottom,
-        #fff,
-        #fafafa
+        shade (@bg_color, 1.05),
+        shade (@base_color, 0.9)
         );
     border: 1px solid alpha(#000, 0.25);
     border-radius: 8px;
-    -gtk-icon-shadow: alpha(#000, 0.25);
 }
 .tt-button image {
-    color: #444;
     -gtk-icon-shadow: none;
     border-image-width: 0;
     box-shadow: transparent;
@@ -35,9 +39,19 @@
 .tt-button:active {
     background-image: linear-gradient(
         to bottom,
-        #fafafa,
-        #fff
+        shade (@base_color, 0.9),
+        shade (@bg_color, 1.05)
         );
+}
+.tt-button:backdrop {
+    background-image: linear-gradient(
+        to bottom,
+        alpha (shade (@bg_color, 1.05), 0.24),
+        alpha (shade (@base_color, 0.9), 0.24)
+        );
+}
+.tt-button image:backdrop {
+    color: #666;
 }
 
 .color-button {

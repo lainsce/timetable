@@ -6,7 +6,7 @@ namespace Timetable {
         public int uid;
         public static int uid_counter;
         public string color;
-        public string selcolor;
+        public string tcolor;
         public string time_to_text;
         public string time_from_text;
         public bool task_allday;
@@ -17,19 +17,17 @@ namespace Timetable {
             this.uid = uid_counter++;
             this.task_name = task_name;
             this.color = color;
+            this.tcolor = color;
             this.time_to_text = time_to_text;
             this.time_from_text = time_from_text;
             this.task_allday = task_allday;
 
             change_theme ();
-            settings.theme = change_theme ();
-            sync_colors ();
             update_theme ();
+            win.tm.save_notes ();
 
             settings.changed.connect (() => {
                 change_theme ();
-                settings.theme = change_theme ();
-                sync_colors ();
                 update_theme ();
                 win.tm.save_notes ();
             });
@@ -286,13 +284,13 @@ namespace Timetable {
             color_button_red.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#ff8c82";
-                    selcolor = this.color;
+                    this.tcolor = "#ff8c82";
                 } else if (settings.theme == 1) {
-                    this.color = "#ff4757";
-                    selcolor = this.color;
+                    this.color = "#ff3030";
+                    this.tcolor = "#ff3030";
                 } else if (settings.theme == 2) {
-                    this.color = "#eb2f06";
-                    selcolor = this.color;
+                    this.color = "#ff5656";
+                    this.tcolor = "#ff5656";
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -301,13 +299,13 @@ namespace Timetable {
             color_button_orange.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#ffc27d";
-                    selcolor = this.color;
+                    this.tcolor = "#ffc27d";
                 } else if (settings.theme == 1) {
-                    this.color = "#ff6348";
-                    selcolor = this.color;
+                    this.color = "#ff7308";
+                    this.tcolor = "#ff7308";
                 } else if (settings.theme == 2) {
                     this.color = "#fa983a";
-                    selcolor = this.color;
+                    this.tcolor = "#fa983a";
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -316,13 +314,13 @@ namespace Timetable {
             color_button_yellow.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#ffe16b";
-                    selcolor = this.color;
+                    this.tcolor = "#ffe16b";
                 } else if (settings.theme == 1) {
                     this.color = "#ffcc33";
-                    selcolor = this.color;
+                    this.tcolor = "#ffcc33";
                 } else if (settings.theme == 2) {
                     this.color = "#f6b93b";
-                    selcolor = this.color;
+                    this.tcolor = "#f6b93b";
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -331,13 +329,13 @@ namespace Timetable {
             color_button_green.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#c6f96f";
-                    selcolor = this.color;
+                    this.tcolor = "#c6f96f";
                 } else if (settings.theme == 1) {
                     this.color = "#2ed573";
-                    selcolor = this.color;
+                    this.tcolor = "#2ed573";
                 } else if (settings.theme == 2) {
                     this.color = "#78e08f";
-                    selcolor = this.color;
+                    this.tcolor = "#78e08f";
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -346,13 +344,13 @@ namespace Timetable {
             color_button_blue.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#8cd5ff";
-                    selcolor = this.color;
+                    this.tcolor = "#8cd5ff";
                 } else if (settings.theme == 1) {
                     this.color = "#1e90ff";
-                    selcolor = this.color;
+                    this.tcolor = "#1e90ff";
                 } else if (settings.theme == 2) {
                     this.color = "#82ccdd";
-                    selcolor = this.color;
+                    this.tcolor = "#82ccdd";
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -361,13 +359,13 @@ namespace Timetable {
             color_button_violet.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#aca9fd";
-                    selcolor = this.color;
+                    this.tcolor = "#aca9fd";
                 } else if (settings.theme == 1) {
                     this.color = "#5352ed";
-                    selcolor = this.color;
+                    this.tcolor = "#aca9fd";
                 } else if (settings.theme == 2) {
                     this.color = "#8498e6";
-                    selcolor = this.color;
+                    this.tcolor = "#8498e6";
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -375,7 +373,6 @@ namespace Timetable {
 
             color_button_clear.clicked.connect (() => {
                 this.color = "#EEEEEE";
-                selcolor = this.color;
                 update_theme();
                 win.tm.save_notes ();
             });
@@ -400,23 +397,20 @@ namespace Timetable {
             this.show_all ();
         }
 
-        private int change_theme () {
+        private void change_theme () {
             var settings = AppSettings.get_default ();
-            if (settings.theme == 1) {
+            if (settings.theme == 0) {
+                var provider = new Gtk.CssProvider ();
+                provider.load_from_resource ("/com/github/lainsce/timetable/elementary.css");
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } else if (settings.theme == 1) {
                 var provider = new Gtk.CssProvider ();
                 provider.load_from_resource ("/com/github/lainsce/timetable/flat.css");
                 Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-                return 1;
             } else if (settings.theme == 2) {
                 var provider = new Gtk.CssProvider ();
                 provider.load_from_resource ("/com/github/lainsce/timetable/nature.css");
                 Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-                return 2;
-            } else {
-                var provider = new Gtk.CssProvider ();
-                provider.load_from_resource ("/com/github/lainsce/timetable/elementary.css");
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-                return 0;
             }
         }
 
@@ -429,7 +423,182 @@ namespace Timetable {
             this.get_style_context ().add_class ("tt-box-%d".printf(uid));
             var settings = AppSettings.get_default ();
             string style = null;
-            selcolor = this.color;
+            string tcolor = null;
+            if (settings.theme == 0) {
+                // Coming from Flat
+                if (color == "#ff3030") {
+                    tcolor = "#ff8c82";
+                }
+                if (color == "#ff7308") {
+                    tcolor = "#ffc27d";
+                }
+                if (color == "#ffcc33") {
+                    tcolor = "#ffe16b";
+                }
+                if (color == "#2ed573") {
+                    tcolor = "#c6f96f";
+                }
+                if (color == "#1e90ff") {
+                    tcolor = "#8cd5ff";
+                }
+                if (color == "#5352ed") {
+                    tcolor = "#aca9fd";
+                }
+                // Coming from Nature
+                if (color == "#ff5656") {
+                    tcolor = "#ff8c82";
+                }
+                if (color == "#fa983a") {
+                    tcolor = "#ffc27d";
+                }
+                if (color == "#f6b93b") {
+                    tcolor = "#ffe16b";
+                }
+                if (color == "#2ed573") {
+                    tcolor = "#c6f96f";
+                }
+                if (color == "#1e90ff") {
+                    tcolor = "#8cd5ff";
+                }
+                if (color == "#aca9fd") {
+                    tcolor = "#aca9fd";
+                }
+                // Going to elementary
+                if (color == "#ff8c82") {
+                    tcolor = "#ff8c82";
+                }
+                if (color == "#ffc27d") {
+                    tcolor = "#ffc27d";
+                }
+                if (color == "#ffe16b") {
+                    tcolor = "#ffe16b";
+                }
+                if (color == "#c6f96f") {
+                    tcolor = "#c6f96f";
+                }
+                if (color == "#8cd5ff") {
+                    tcolor = "#8cd5ff";
+                }
+                if (color == "#aca9fd") {
+                    tcolor = "#aca9fd";
+                }
+            } else if (settings.theme == 1) {
+                // Coming from elementary
+                if (color == "#ff8c82") {
+                    tcolor = "#ff3030";
+                }
+                if (color == "#ffc27d") {
+                    tcolor = "#ff7308";
+                }
+                if (color == "#ffe16b") {
+                    tcolor = "#ffcc33";
+                }
+                if (color == "#c6f96f") {
+                    tcolor = "#2ed573";
+                }
+                if (color == "#8cd5ff") {
+                    tcolor = "#1e90ff";
+                }
+                if (color == "#aca9fd") {
+                    tcolor = "#5352ed";
+                }
+                // Coming from Nature
+                if (color == "#ff5656") {
+                    tcolor = "#ff3030";
+                }
+                if (color == "#fa983a") {
+                    tcolor = "#ff7308";
+                }
+                if (color == "#f6b93b") {
+                    tcolor = "#ffcc33";
+                }
+                if (color == "#78e08f") {
+                    tcolor = "#2ed573";
+                }
+                if (color == "#82ccdd") {
+                    tcolor = "#1e90ff";
+                }
+                if (color == "#8498e6") {
+                    tcolor = "#5352ed";
+                }
+                // Going to Flat
+                if (color == "#ff3030") {
+                    tcolor = "#ff3030";
+                }
+                if (color == "#ff7308") {
+                    tcolor = "#ff7308";
+                }
+                if (color == "#ffcc33") {
+                    tcolor = "#ffcc33";
+                }
+                if (color == "#2ed573") {
+                    tcolor = "#2ed573";
+                }
+                if (color == "#1e90ff") {
+                    tcolor = "#1e90ff";
+                }
+                if (color == "#5352ed") {
+                    tcolor = "#5352ed";
+                }
+            } else if (settings.theme == 2) {
+                // Coming from elementary
+                if (color == "#ff8c82") {
+                    tcolor = "#ff5656";
+                }
+                if (color == "#ffc27d") {
+                    tcolor = "#fa983a";
+                }
+                if (color == "#ffe16b") {
+                    tcolor = "#f6b93b";
+                }
+                if (color == "#c6f96f") {
+                    tcolor = "#78e08f";
+                }
+                if (color == "#8cd5ff") {
+                    tcolor = "#82ccdd";
+                }
+                if (color == "#aca9fd") {
+                    tcolor = "#8498e6";
+                }
+                // Coming from Flat
+                if (color == "#ff3030") {
+                    tcolor = "#ff5656";
+                }
+                if (color == "#ff7308") {
+                    tcolor = "#fa983a";
+                }
+                if (color == "#ffcc33") {
+                    tcolor = "#f6b93b";
+                }
+                if (color == "#2ed573") {
+                    tcolor = "#78e08f";
+                }
+                if (color == "#1e90ff") {
+                    tcolor = "#82ccdd";
+                }
+                if (color == "#5352ed") {
+                    tcolor = "#8498e6";
+                }
+                // Going to Nature
+                if (color == "#ff5656") {
+                    tcolor = "#ff5656";
+                }
+                if (color == "#fa983a") {
+                    tcolor = "#fa983a";
+                }
+                if (color == "#f6b93b") {
+                    tcolor = "#f6b93b";
+                }
+                if (color == "#78e08f") {
+                    tcolor = "#78e08f";
+                }
+                if (color == "#82ccdd") {
+                    tcolor = "#82ccdd";
+                }
+                if (color == "#8498e6") {
+                    tcolor = "#8498e6";
+                }
+            }
             if (settings.high_contrast) {
                 style = ("""
                     .tt-box-%d {
@@ -441,12 +610,20 @@ namespace Timetable {
                         background-color: shade (%s, 0.66);
                         color: #FFFFFF;
                     }
+                    .tt-box-%d:backdrop {
+                        color: #DDDDDD;
+                    }
 
                     .tt-box-%d image {
                         color: #FFFFFF;
-                        -gtk-icon-shadow: alpha(#000, 0.25);
+                        -gtk-icon-shadow: none;
+                        border-image-width: 0;
+                        box-shadow: transparent;
                     }
-                """).printf(uid, selcolor, selcolor, uid);
+                    .tt-box-%d image:backdrop {
+                        color: #666;
+                    }
+                """).printf(uid, tcolor, tcolor, uid, uid, uid);
             } else {
                 style = ("""
                     .tt-box-%d {
@@ -458,11 +635,19 @@ namespace Timetable {
                         background-color: mix (%s, #FFF, 0.5);
                         color: #333;
                     }
+                    .tt-box-%d:backdrop {
+                        color: #666;
+                    }
                     .tt-box-%d image {
                         color: #333;
-                        -gtk-icon-shadow: alpha(#000, 0.25);
+                        -gtk-icon-shadow: none;
+                        border-image-width: 0;
+                        box-shadow: transparent;
                     }
-                """).printf(uid, selcolor, selcolor, uid);
+                    .tt-box-%d image:backdrop {
+                        color: #666;
+                    }
+                """).printf(uid, tcolor, tcolor, uid, uid, uid);
             }
             try {
                 css_provider.load_from_data(style, -1);
@@ -475,68 +660,6 @@ namespace Timetable {
                 css_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-        }
-
-        public void sync_colors () {
-            var settings = AppSettings.get_default ();
-            if (settings.theme == 0) {
-                if (this.color == "#ff8c82") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#ffc27d") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#ffe16b") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#c6f96f") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#8cd5ff") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#aca9fd") {
-                    selcolor = this.color;
-                }
-            } else if (settings.theme == 1) {
-                if (this.color == "#ff4757") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#ff6348") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#ffcc33") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#2ed573") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#1e90ff") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#5352ed") {
-                    selcolor = this.color;
-                }
-            } else if (settings.theme == 2) {
-                if (this.color == "#eb2f06") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#fa983a") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#f6b93b") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#78e08f") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#82ccdd") {
-                    selcolor = this.color;
-                }
-                if (this.color == "#8498e6") {
-                    selcolor = this.color;
-                }
-            }
         }
     }
 }

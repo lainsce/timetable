@@ -71,26 +71,18 @@ namespace Timetable {
             }
 
             theme_type.changed.connect (() => {
-                switch (theme_type.active) {
+                switch (theme_type.get_active ()) {
                     case 0:
                         settings.theme = 0;
-                        if (taskbox != null)
-                            taskbox.update_theme();
                         break;
                     case 1:
                         settings.theme = 1;
-                        if (taskbox != null)
-                            taskbox.update_theme();
                         break;
                     case 2:
                         settings.theme = 2;
-                        if (taskbox != null)
-                            taskbox.update_theme();
                         break;
-                    case 3:
+                    default:
                         settings.theme = 0;
-                        if (taskbox != null)
-                            taskbox.update_theme();
                         break;
                 }
             });

@@ -88,7 +88,7 @@ namespace Timetable {
             var column_button_style_context = column_button.get_style_context ();
             column_button_style_context.add_class ("tt-button");
             column_button_style_context.add_class ("image-button");
-            column_button.set_image (new Gtk.Image.from_icon_name ("list-add", Gtk.IconSize.SMALL_TOOLBAR));
+            column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
             column_button.clicked.connect (() => {
                 add_task (_("Task…"), "#EEEEEE", "12:00", "12:00", false);
