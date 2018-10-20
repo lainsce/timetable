@@ -18,16 +18,19 @@
 */
 namespace Timetable {
     public class Preferences : Gtk.Dialog {
-        public Preferences (MainWindow? parent) {
+        public TaskBox taskbox;
+        public MainWindow win;
+        public Preferences (MainWindow win) {
             Object (
                 border_width: 6,
                 deletable: false,
                 resizable: false,
                 title: _("Preferences"),
-                transient_for: parent,
+                transient_for: win,
                 destroy_with_parent: true,
                 window_position: Gtk.WindowPosition.CENTER_ON_PARENT
             );
+            this.win = win;
         }
 
         construct {
@@ -71,15 +74,23 @@ namespace Timetable {
                 switch (theme_type.active) {
                     case 0:
                         settings.theme = 0;
+                        if (taskbox != null)
+                            taskbox.update_theme();
                         break;
                     case 1:
                         settings.theme = 1;
+                        if (taskbox != null)
+                            taskbox.update_theme();
                         break;
                     case 2:
                         settings.theme = 2;
+                        if (taskbox != null)
+                            taskbox.update_theme();
                         break;
                     case 3:
                         settings.theme = 0;
+                        if (taskbox != null)
+                            taskbox.update_theme();
                         break;
                 }
             });

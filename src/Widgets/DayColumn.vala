@@ -8,6 +8,7 @@ namespace Timetable {
 
         public DayColumn (int day, MainWindow win) {
             this.win = win;
+            this.set_size_request (180,-1);
             is_modified = false;
             column = new Gtk.ListBox ();
             column.hexpand = true;

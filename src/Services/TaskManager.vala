@@ -51,6 +51,7 @@ namespace Timetable {
         }
 
         private string prepare_json_from_notes () {
+            var settings = AppSettings.get_default ();
             builder = new Json.Builder ();
 
             builder.begin_array ();
@@ -59,7 +60,9 @@ namespace Timetable {
             save_column (builder, win.wednesday_column);
             save_column (builder, win.thursday_column);
             save_column (builder, win.friday_column);
-            save_column (builder, win.weekend_column);
+            if (settings.weekend_show == true) {
+                save_column (builder, win.weekend_column);
+            }
             builder.end_array ();
 
             Json.Generator generator = new Json.Generator ();

@@ -161,9 +161,22 @@ namespace Timetable {
             grid.attach (wednesday_column, 2, 0, 1, 1);
             grid.attach (thursday_column, 3, 0, 1, 1);
             grid.attach (friday_column, 4, 0, 1, 1);
-            show_the_weekend ();
+            grid.attach (weekend_column, 5, 0, 1, 1);
+            if (grid != null) {
+                if (settings.weekend_show == true) {
+                    weekend_column.show_all ();
+                } else {
+                    weekend_column.hide ();
+                }
+            }
             settings.changed.connect (() => {
-                show_the_weekend ();
+                if (grid != null) {
+                    if (settings.weekend_show == true) {
+                        weekend_column.show_all ();
+                    } else {
+                        weekend_column.hide ();
+                    }
+                }
             });
             grid.show_all ();
 
@@ -175,19 +188,8 @@ namespace Timetable {
             this.show_all ();
         }
 
-        private void show_the_weekend () {
-            var settings = AppSettings.get_default ();
-            if (settings.weekend_show == true) {
-                grid.attach (weekend_column, 5, 0, 1, 1);
-            } else {
-                grid.remove (weekend_column);
-            }
-            weekend_column.visible = settings.weekend_show;
-        }
-
         private void action_settings () {
             var dialog = new Preferences (this);
-            dialog.set_modal (true);
             dialog.show_all ();
         }
 

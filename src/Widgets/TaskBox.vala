@@ -6,6 +6,7 @@ namespace Timetable {
         public int uid;
         public static int uid_counter;
         public string color;
+        public string selcolor;
         public string time_to_text;
         public string time_from_text;
         public bool task_allday;
@@ -20,12 +21,16 @@ namespace Timetable {
             this.time_from_text = time_from_text;
             this.task_allday = task_allday;
 
-            update_theme ();
             change_theme ();
+            settings.theme = change_theme ();
+            sync_colors ();
+            update_theme ();
 
             settings.changed.connect (() => {
-                update_theme();
+                change_theme ();
                 settings.theme = change_theme ();
+                sync_colors ();
+                update_theme ();
                 win.tm.save_notes ();
             });
 
@@ -281,10 +286,13 @@ namespace Timetable {
             color_button_red.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#ff8c82";
+                    selcolor = this.color;
                 } else if (settings.theme == 1) {
                     this.color = "#ff4757";
+                    selcolor = this.color;
                 } else if (settings.theme == 2) {
                     this.color = "#eb2f06";
+                    selcolor = this.color;
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -293,10 +301,13 @@ namespace Timetable {
             color_button_orange.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#ffc27d";
+                    selcolor = this.color;
                 } else if (settings.theme == 1) {
                     this.color = "#ff6348";
+                    selcolor = this.color;
                 } else if (settings.theme == 2) {
                     this.color = "#fa983a";
+                    selcolor = this.color;
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -305,10 +316,13 @@ namespace Timetable {
             color_button_yellow.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#ffe16b";
+                    selcolor = this.color;
                 } else if (settings.theme == 1) {
                     this.color = "#ffcc33";
+                    selcolor = this.color;
                 } else if (settings.theme == 2) {
                     this.color = "#f6b93b";
+                    selcolor = this.color;
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -317,10 +331,13 @@ namespace Timetable {
             color_button_green.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#c6f96f";
+                    selcolor = this.color;
                 } else if (settings.theme == 1) {
                     this.color = "#2ed573";
+                    selcolor = this.color;
                 } else if (settings.theme == 2) {
                     this.color = "#78e08f";
+                    selcolor = this.color;
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -329,10 +346,13 @@ namespace Timetable {
             color_button_blue.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#8cd5ff";
+                    selcolor = this.color;
                 } else if (settings.theme == 1) {
                     this.color = "#1e90ff";
+                    selcolor = this.color;
                 } else if (settings.theme == 2) {
                     this.color = "#82ccdd";
+                    selcolor = this.color;
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -341,10 +361,13 @@ namespace Timetable {
             color_button_violet.clicked.connect (() => {
                 if (settings.theme == 0) {
                     this.color = "#aca9fd";
+                    selcolor = this.color;
                 } else if (settings.theme == 1) {
                     this.color = "#5352ed";
+                    selcolor = this.color;
                 } else if (settings.theme == 2) {
                     this.color = "#8498e6";
+                    selcolor = this.color;
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -352,6 +375,7 @@ namespace Timetable {
 
             color_button_clear.clicked.connect (() => {
                 this.color = "#EEEEEE";
+                selcolor = this.color;
                 update_theme();
                 win.tm.save_notes ();
             });
@@ -405,7 +429,7 @@ namespace Timetable {
             this.get_style_context ().add_class ("tt-box-%d".printf(uid));
             var settings = AppSettings.get_default ();
             string style = null;
-            string selcolor = this.color;
+            selcolor = this.color;
             if (settings.high_contrast) {
                 style = ("""
                     .tt-box-%d {
@@ -451,6 +475,68 @@ namespace Timetable {
                 css_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+        }
+
+        public void sync_colors () {
+            var settings = AppSettings.get_default ();
+            if (settings.theme == 0) {
+                if (this.color == "#ff8c82") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#ffc27d") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#ffe16b") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#c6f96f") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#8cd5ff") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#aca9fd") {
+                    selcolor = this.color;
+                }
+            } else if (settings.theme == 1) {
+                if (this.color == "#ff4757") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#ff6348") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#ffcc33") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#2ed573") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#1e90ff") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#5352ed") {
+                    selcolor = this.color;
+                }
+            } else if (settings.theme == 2) {
+                if (this.color == "#eb2f06") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#fa983a") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#f6b93b") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#78e08f") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#82ccdd") {
+                    selcolor = this.color;
+                }
+                if (this.color == "#8498e6") {
+                    selcolor = this.color;
+                }
+            }
         }
     }
 }
