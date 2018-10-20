@@ -58,7 +58,10 @@
                 <p>Release: All-Day Bonanza</p>
                 <ul>
                     <li>New: Tasks can now be set to be an all-day task.</li>
+                    <li>New: Tasks' colors can be changed between 3 themes.</li>
                     <li>Fix: Tasks have been rejigged to not expand the app as well as make each task look nicer.</li>
+                    <li>Fix: Daycolumns have been rejigged to be less wide.</li>
+                    <li>Fix: General theme coloring support in the custom widgets.</li>
                 </ul>
             </description>
         </release>

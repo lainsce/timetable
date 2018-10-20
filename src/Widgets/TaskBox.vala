@@ -319,8 +319,8 @@ namespace Timetable {
                     this.color = "#ffcc33";
                     this.tcolor = "#ffcc33";
                 } else if (settings.theme == 2) {
-                    this.color = "#f6b93b";
-                    this.tcolor = "#f6b93b";
+                    this.color = "#f6d95b";
+                    this.tcolor = "#f6d95b";
                 }
                 update_theme();
                 win.tm.save_notes ();
@@ -451,7 +451,7 @@ namespace Timetable {
                 if (color == "#fa983a") {
                     tcolor = "#ffc27d";
                 }
-                if (color == "#f6b93b") {
+                if (color == "#f6d95b") {
                     tcolor = "#ffe16b";
                 }
                 if (color == "#2ed573") {
@@ -509,7 +509,7 @@ namespace Timetable {
                 if (color == "#fa983a") {
                     tcolor = "#ff7308";
                 }
-                if (color == "#f6b93b") {
+                if (color == "#f6d95b") {
                     tcolor = "#ffcc33";
                 }
                 if (color == "#78e08f") {
@@ -549,7 +549,7 @@ namespace Timetable {
                     tcolor = "#fa983a";
                 }
                 if (color == "#ffe16b") {
-                    tcolor = "#f6b93b";
+                    tcolor = "#f6d95b";
                 }
                 if (color == "#c6f96f") {
                     tcolor = "#78e08f";
@@ -568,7 +568,7 @@ namespace Timetable {
                     tcolor = "#fa983a";
                 }
                 if (color == "#ffcc33") {
-                    tcolor = "#f6b93b";
+                    tcolor = "#f6d95b";
                 }
                 if (color == "#2ed573") {
                     tcolor = "#78e08f";
@@ -586,8 +586,8 @@ namespace Timetable {
                 if (color == "#fa983a") {
                     tcolor = "#fa983a";
                 }
-                if (color == "#f6b93b") {
-                    tcolor = "#f6b93b";
+                if (color == "#f6d95b") {
+                    tcolor = "#f6d95b";
                 }
                 if (color == "#78e08f") {
                     tcolor = "#78e08f";
