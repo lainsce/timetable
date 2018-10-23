@@ -150,25 +150,6 @@ namespace Timetable {
             friday_column = new DayColumn (5, this);
             weekend_column = new DayColumn (6, this);
 
-            foreach (var task in monday_column.get_tasks ()) {
-                task.notificator (this.application);
-            }
-            foreach (var task in tuesday_column.get_tasks ()) {
-                task.notificator (this.application);
-            }
-            foreach (var task in wednesday_column.get_tasks ()) {
-                task.notificator (this.application);
-            }
-            foreach (var task in thursday_column.get_tasks ()) {
-                task.notificator (this.application);
-            }
-            foreach (var task in friday_column.get_tasks ()) {
-                task.notificator (this.application);
-            }
-            foreach (var task in weekend_column.get_tasks ()) {
-                task.notificator (this.application);
-            }
-
             tm.load_from_file ();
 
             grid = new Gtk.Grid ();

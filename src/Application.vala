@@ -32,6 +32,47 @@ namespace Timetable {
                 return;
             }
             window = new MainWindow (this);
+            foreach (var task in window.monday_column.get_tasks ()) {
+                task.notificator (this);
+            }
+            foreach (var task in window.tuesday_column.get_tasks ()) {
+                task.notificator (this);
+            }
+            foreach (var task in window.wednesday_column.get_tasks ()) {
+                task.notificator (this);
+            }
+            foreach (var task in window.thursday_column.get_tasks ()) {
+                task.notificator (this);
+            }
+            foreach (var task in window.friday_column.get_tasks ()) {
+                task.notificator (this);
+            }
+            foreach (var task in window.weekend_column.get_tasks ()) {
+                task.notificator (this);
+            }
+
+            // After open, query tasks notifications every 10 minutes.
+            Timeout.add_seconds (600, () => {
+                foreach (var task in window.monday_column.get_tasks ()) {
+                    task.notificator (this);
+                }
+                foreach (var task in window.tuesday_column.get_tasks ()) {
+                    task.notificator (this);
+                }
+                foreach (var task in window.wednesday_column.get_tasks ()) {
+                    task.notificator (this);
+                }
+                foreach (var task in window.thursday_column.get_tasks ()) {
+                    task.notificator (this);
+                }
+                foreach (var task in window.friday_column.get_tasks ()) {
+                    task.notificator (this);
+                }
+                foreach (var task in window.weekend_column.get_tasks ()) {
+                    task.notificator (this);
+                }
+                return false;
+            });
         }
 
         public override bool dbus_register (DBusConnection connection, string object_path) throws Error {
