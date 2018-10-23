@@ -7,4 +7,6 @@ Keywords=Plot;Week;Planning;Timetable;
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=GTK;Utility;Office;
+Categories=GNOME;GTK;Office;
+NoDisplay=false
+X-GNOME-UsesNotifications=true

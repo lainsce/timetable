@@ -10,8 +10,9 @@ namespace Timetable {
         public string time_to_text;
         public string time_from_text;
         public bool task_allday;
+        public bool task_notify;
 
-        public TaskBox (MainWindow win, string task_name, string color, string time_from_text, string time_to_text, bool task_allday) {
+        public TaskBox (MainWindow win, string task_name, string color, string time_from_text, string time_to_text, bool task_allday, bool task_notify) {
             var settings = AppSettings.get_default ();
             this.win = win;
             this.uid = uid_counter++;
@@ -21,6 +22,7 @@ namespace Timetable {
             this.time_to_text = time_to_text;
             this.time_from_text = time_from_text;
             this.task_allday = task_allday;
+            this.task_notify = task_notify;
 
             change_theme ();
             update_theme ();
@@ -232,13 +234,44 @@ namespace Timetable {
                 }
 		    });
 
-            var allday_box = new Gtk.Grid ();
-            allday_box.hexpand = false;
-            allday_box.column_spacing = 6;
-            allday_box.row_spacing = 6;
-            allday_box.attach (task_allday_label, 0, 0, 1, 1);
-            allday_box.attach (task_allday_switch, 1, 0, 1, 1);
-            allday_box.attach (task_allday_help, 2, 0, 1, 1);
+            var task_notify_label = new Gtk.Label (_("Notify:"));
+            task_notify_label.hexpand = false;
+            task_notify_label.halign = Gtk.Align.START;
+            var task_notify_switch = new Gtk.Switch ();
+            task_notify_switch.hexpand = false;
+            task_notify_switch.halign = Gtk.Align.START;
+
+            task_notify_switch.notify["active"].connect (() => {
+			    if (task_notify_switch.active) {
+                    this.task_notify = true;
+                    win.tm.save_notes ();
+			    } else {
+                    this.task_notify = false;
+                    win.tm.save_notes ();
+                }
+		    });
+
+            if (this.task_notify == true) {
+                task_notify_switch.set_active (true);
+            } else {
+                task_notify_switch.set_active (false);
+            }
+
+            var task_notify_help = new Gtk.Image.from_icon_name ("help-info-symbolic", Gtk.IconSize.BUTTON);
+            task_notify_help.halign = Gtk.Align.START;
+            task_notify_help.hexpand = true;
+            task_notify_help.tooltip_text = _("Set the task to notify when it starts.");
+
+            var switch_box = new Gtk.Grid ();
+            switch_box.hexpand = false;
+            switch_box.column_spacing = 6;
+            switch_box.row_spacing = 6;
+            switch_box.attach (task_allday_label, 0, 0, 1, 1);
+            switch_box.attach (task_allday_switch, 1, 0, 1, 1);
+            switch_box.attach (task_allday_help, 2, 0, 1, 1);
+            switch_box.attach (task_notify_label, 3, 0, 1, 1);
+            switch_box.attach (task_notify_switch, 4, 0, 1, 1);
+            switch_box.attach (task_notify_help, 5, 0, 1, 1);
 
             var time_box = new Gtk.Grid ();
             time_box.hexpand = false;
@@ -265,7 +298,7 @@ namespace Timetable {
             setting_grid.attach (color_button_box, 0, 3, 1, 1);
             setting_grid.attach (time_label, 0, 4, 1, 1);
             setting_grid.attach (time_box, 0, 5, 1, 1);
-            setting_grid.attach (allday_box, 0, 6, 1, 1);
+            setting_grid.attach (switch_box, 0, 6, 1, 1);
             setting_grid.show_all ();
 
             var popover = new Gtk.Popover (null);
@@ -372,7 +405,16 @@ namespace Timetable {
             });
 
             color_button_clear.clicked.connect (() => {
-                this.color = "#EEEEEE";
+                if (settings.theme == 0) {
+                    this.color = "#EEEEEE";
+                    this.tcolor = "#EEEEEE";
+                } else if (settings.theme == 1) {
+                    this.color = "#EEEEEE";
+                    this.tcolor = "#EEEEEE";
+                } else if (settings.theme == 2) {
+                    this.color = "#EEEEEE";
+                    this.tcolor = "#EEEEEE";
+                }
                 update_theme();
                 win.tm.save_notes ();
             });
@@ -482,6 +524,10 @@ namespace Timetable {
                 if (color == "#aca9fd") {
                     tcolor = "#aca9fd";
                 }
+                // Resetted color
+                if (color == "#EEEEEE") {
+                    tcolor = "#EEEEEE";
+                }
             } else if (settings.theme == 1) {
                 // Coming from elementary
                 if (color == "#ff8c82") {
@@ -540,6 +586,10 @@ namespace Timetable {
                 if (color == "#5352ed") {
                     tcolor = "#5352ed";
                 }
+                // Resetted color
+                if (color == "#EEEEEE") {
+                    tcolor = "#EEEEEE";
+                }
             } else if (settings.theme == 2) {
                 // Coming from elementary
                 if (color == "#ff8c82") {
@@ -597,6 +647,10 @@ namespace Timetable {
                 }
                 if (color == "#8498e6") {
                     tcolor = "#8498e6";
+                }
+                // Resetted color
+                if (color == "#EEEEEE") {
+                    tcolor = "#EEEEEE";
                 }
             }
             if (settings.high_contrast) {
@@ -660,6 +714,18 @@ namespace Timetable {
                 css_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+        }
+
+        public void notificator (Gtk.Application app) {
+            string time_now = new GLib.DateTime.now_local ().format ("%H:%M");
+            if (this.time_from_text == time_now && app != null && this.task_notify == true) {
+                string title = _("Task: %s").printf (this.task_name);
+                string body = "This task started now!";
+                var notification = new Notification (title);
+                notification.set_body (body);
+                notification.set_icon (new ThemedIcon ("com.github.lainsce.timetable"));
+                app.send_notification (null, notification);
+            }
         }
     }
 }

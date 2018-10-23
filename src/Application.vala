@@ -34,6 +34,14 @@ namespace Timetable {
             window = new MainWindow (this);
         }
 
+        public override bool dbus_register (DBusConnection connection, string object_path) throws Error {
+            base.dbus_register (connection, object_path);
+
+            var dbus = new DBus ();
+            connection.register_object (object_path, dbus);
+            return true;
+        }
+
         public static int main (string[] args) {
             Intl.setlocale (LocaleCategory.ALL, "");
             Intl.textdomain (Build.GETTEXT_PACKAGE);

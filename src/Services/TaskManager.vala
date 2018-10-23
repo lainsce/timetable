@@ -81,6 +81,7 @@ namespace Timetable {
                 builder.add_string_value (task.time_from_text);
                 builder.add_string_value (task.time_to_text);
                 builder.add_boolean_value (task.task_allday);
+                builder.add_boolean_value (task.task_notify);
                 builder.end_array ();
 	        }
 	        builder.end_array ();
@@ -88,6 +89,7 @@ namespace Timetable {
 
         public void load_from_file() {
             try {
+                var settings = AppSettings.get_default ();
                 var file = File.new_for_path(file_name);
                 var json_string = "";
                 if (file.query_exists()) {
@@ -108,8 +110,9 @@ namespace Timetable {
                         string time_from_text = task.get_string_element(2);
                         string time_to_text = task.get_string_element(3);
                         bool task_allday = task.get_boolean_element(4);
+                        bool task_notify = task.get_boolean_element(5);
 
-                        win.monday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday);
+                        win.monday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
                     }
 
                     var tuesday_columns = array.get_array_element (1);
@@ -120,8 +123,9 @@ namespace Timetable {
                         string time_from_text = task.get_string_element(2);
                         string time_to_text = task.get_string_element(3);
                         bool task_allday = task.get_boolean_element(4);
+                        bool task_notify = task.get_boolean_element(5);
 
-                        win.tuesday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday);
+                        win.tuesday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
                     }
 
                     var wednesday_columns = array.get_array_element (2);
@@ -132,8 +136,9 @@ namespace Timetable {
                         string time_from_text = task.get_string_element(2);
                         string time_to_text = task.get_string_element(3);
                         bool task_allday = task.get_boolean_element(4);
+                        bool task_notify = task.get_boolean_element(5);
 
-                        win.wednesday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday);
+                        win.wednesday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
                     }
 
                     var thursday_columns = array.get_array_element (3);
@@ -144,8 +149,9 @@ namespace Timetable {
                         string time_from_text = task.get_string_element(2);
                         string time_to_text = task.get_string_element(3);
                         bool task_allday = task.get_boolean_element(4);
+                        bool task_notify = task.get_boolean_element(5);
 
-                        win.thursday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday);
+                        win.thursday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
                     }
 
                     var friday_columns = array.get_array_element (4);
@@ -156,20 +162,23 @@ namespace Timetable {
                         string time_from_text = task.get_string_element(2);
                         string time_to_text = task.get_string_element(3);
                         bool task_allday = task.get_boolean_element(4);
+                        bool task_notify = task.get_boolean_element(5);
 
-                        win.friday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday);
+                        win.friday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
                     }
+                    if (settings.weekend_show == true) {
+                        var weekend_columns = array.get_array_element (5);
+                        foreach (var tasks in weekend_columns.get_elements()) {
+                            var task = tasks.get_array();
+                            string task_name = task.get_string_element(0);
+                            string color = task.get_string_element(1);
+                            string time_from_text = task.get_string_element(2);
+                            string time_to_text = task.get_string_element(3);
+                            bool task_allday = task.get_boolean_element(4);
+                            bool task_notify = task.get_boolean_element(5);
 
-                    var weekend_columns = array.get_array_element (5);
-                    foreach (var tasks in weekend_columns.get_elements()) {
-                        var task = tasks.get_array();
-                        string task_name = task.get_string_element(0);
-                        string color = task.get_string_element(1);
-                        string time_from_text = task.get_string_element(2);
-                        string time_to_text = task.get_string_element(3);
-                        bool task_allday = task.get_boolean_element(4);
-
-                        win.weekend_column.add_task (task_name, color, time_from_text, time_to_text, task_allday);
+                            win.weekend_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        }
                     }
                 }
             } catch (Error e) {

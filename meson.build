@@ -44,6 +44,7 @@ executable(
     meson.project_name(),
     'src/Application.vala',
     'src/MainWindow.vala',
+    'src/Services/DBus.vala',
     'src/Services/DialogServices.vala',
     'src/Services/FileManager.vala',
     'src/Services/TaskManager.vala',
