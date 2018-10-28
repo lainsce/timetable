@@ -36,7 +36,7 @@ namespace Timetable {
 
         public Gtk.FileChooserDialog create_file_chooser (string title,
                 Gtk.FileChooserAction action) {
-            var chooser = new Gtk.FileChooserDialog (title, null, action);
+            var chooser = new Gtk.FileChooserDialog (title, this, action);
 
             chooser.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL);
             if (action == Gtk.FileChooserAction.OPEN) {
