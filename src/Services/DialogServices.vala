@@ -1,18 +1,26 @@
 namespace Timetable {
-    public class Dialog : Gtk.MessageDialog {
-        public Dialog.display_save_confirm (Gtk.Window parent) {
-            set_markup ("<b>" +
-                    _("There are unsaved changes to the timetable. Do you want to save?") + "</b>" +
-                    "\n\n" + _("If you don't save, changes will be lost forever."));
-            use_markup = true;
-            type_hint = Gdk.WindowTypeHint.DIALOG;
-            set_transient_for (parent);
+    public class Dialog : Granite.MessageDialog {
+        public Dialog (Gtk.Window parent) {
+            Object (
+                primary_text: _("Save Changes to the Timetable?"),
+                secondary_text: _("If you don't save, changes will be lost forever."),
+                image_icon: new ThemedIcon ("dialog-warning"),
+                transient_for: parent,
+                modal: true
+            );
+        }
 
-            var button = new Gtk.Button.with_label (_("Don't Save"));
-            button.show ();
-            add_action_widget (button, Gtk.ResponseType.NO);
-            add_button ("_Save", Gtk.ResponseType.YES);
-            message_type = Gtk.MessageType.INFO;
+        construct {
+            var discard_button = new Gtk.Button.with_label (_("Don't Save"));
+            add_action_widget (discard_button, Gtk.ResponseType.NO);
+            var cancel_button = new Gtk.Button.with_label (_("Cancel"));
+            add_action_widget (cancel_button, Gtk.ResponseType.CANCEL);
+            var save_button = new Gtk.Button.with_label (_("Save"));
+            save_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+            save_button.can_default = true;
+            add_action_widget (save_button, Gtk.ResponseType.YES);
+
+            set_default (save_button);
         }
 
         public File display_save_dialog () {
@@ -29,13 +37,13 @@ namespace Timetable {
 
         public Gtk.FileChooserDialog create_file_chooser (string title,
                 Gtk.FileChooserAction action) {
-            var chooser = new Gtk.FileChooserDialog (title, null, action);
+            var chooser = new Gtk.FileChooserDialog (title, this, action);
 
-            chooser.add_button ("_Cancel", Gtk.ResponseType.CANCEL);
+            chooser.add_button (_("_Cancel"), Gtk.ResponseType.CANCEL);
             if (action == Gtk.FileChooserAction.OPEN) {
-                chooser.add_button ("_Open", Gtk.ResponseType.ACCEPT);
+                chooser.add_button (_("_Open"), Gtk.ResponseType.ACCEPT);
             } else if (action == Gtk.FileChooserAction.SAVE) {
-                chooser.add_button ("_Save", Gtk.ResponseType.ACCEPT);
+                chooser.add_button (_("_Save"), Gtk.ResponseType.ACCEPT);
                 chooser.set_do_overwrite_confirmation (true);
             }
 
