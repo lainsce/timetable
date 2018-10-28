@@ -1,12 +1,11 @@
 namespace Timetable.FileManager {
     public MainWindow win;
     public File file;
-    public Dialog dialog;
 
     public void new_tt (MainWindow win) {
         debug ("New button pressed.");
         debug ("Buffer was modified. Asking user to save first.");
-        dialog = new Dialog (win);
+        var dialog = new Dialog (win);
         dialog.response.connect ((response_id) => {
             switch (response_id) {
                 case Gtk.ResponseType.YES:
@@ -60,6 +59,7 @@ namespace Timetable.FileManager {
 
     public void save_as (MainWindow win) throws Error {
         debug ("Save as button pressed.");
+        var dialog = new Dialog (win);
         var file = dialog.display_save_dialog ();
 
         try {
