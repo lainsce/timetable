@@ -27,6 +27,7 @@ namespace Timetable.FileManager {
                     win.wednesday_column.clear_column ();
                     win.thursday_column.clear_column ();
                     win.friday_column.clear_column ();
+                    reset_modification_state (win);
                     break;
                 case Gtk.ResponseType.CANCEL:
                     debug ("User cancelled, don't do anything.");
@@ -41,12 +42,6 @@ namespace Timetable.FileManager {
         if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.weekend_column.is_modified == true) {
             debug ("Buffer was modified. Asking user to save first.");
             dialog.show_all ();
-            win.monday_column.is_modified = false;
-            win.tuesday_column.is_modified = false;
-            win.wednesday_column.is_modified = false;
-            win.thursday_column.is_modified = false;
-            win.friday_column.is_modified = false;
-            win.weekend_column.is_modified = false;
         } else {
             debug ("Buffer was not modified. Aborting.");
         }
@@ -102,6 +97,7 @@ namespace Timetable.FileManager {
                     var buffer = buffer_text;
                     uint8[] binbuffer = buffer.data;
                     save_file (file, binbuffer);
+                    reset_modification_state (win);
                 }
             }
         } catch (Error e) {
@@ -109,5 +105,14 @@ namespace Timetable.FileManager {
         }
 
         file = null;
+    }
+
+    public void reset_modification_state (MainWindow win) {
+        win.monday_column.is_modified = false;
+        win.tuesday_column.is_modified = false;
+        win.wednesday_column.is_modified = false;
+        win.thursday_column.is_modified = false;
+        win.friday_column.is_modified = false;
+        win.weekend_column.is_modified = false;
     }
 }
