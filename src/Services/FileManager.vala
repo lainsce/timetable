@@ -4,7 +4,6 @@ namespace Timetable.FileManager {
 
     public void new_tt (MainWindow win) {
         debug ("New button pressed.");
-        debug ("Buffer was modified. Asking user to save first.");
         var dialog = new Dialog (win);
         dialog.response.connect ((response_id) => {
             switch (response_id) {
@@ -40,6 +39,7 @@ namespace Timetable.FileManager {
         });
 
         if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.weekend_column.is_modified == true) {
+            debug ("Buffer was modified. Asking user to save first.");
             dialog.show_all ();
             win.monday_column.is_modified = false;
             win.tuesday_column.is_modified = false;
@@ -47,6 +47,8 @@ namespace Timetable.FileManager {
             win.thursday_column.is_modified = false;
             win.friday_column.is_modified = false;
             win.weekend_column.is_modified = false;
+        } else {
+            debug ("Buffer was not modified. Aborting.");
         }
     }
 
