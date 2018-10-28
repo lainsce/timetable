@@ -2,7 +2,7 @@ namespace Timetable {
     public class Dialog : Granite.MessageDialog {
         public Dialog (Gtk.Window parent) {
             Object (
-                primary_text: _("Do You Want to Save Changes to the Timetable?"),
+                primary_text: _("Save Changes to the Timetable?"),
                 secondary_text: _("If you don't save, changes will be lost forever."),
                 image_icon: new ThemedIcon ("dialog-warning"),
                 transient_for: parent,
