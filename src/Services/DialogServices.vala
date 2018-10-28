@@ -17,7 +17,10 @@ namespace Timetable {
             add_action_widget (cancel_button, Gtk.ResponseType.CANCEL);
             var save_button = new Gtk.Button.with_label (_("Save"));
             save_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
+            save_button.can_default = true;
             add_action_widget (save_button, Gtk.ResponseType.YES);
+
+            set_default (save_button);
         }
 
         public File display_save_dialog () {
