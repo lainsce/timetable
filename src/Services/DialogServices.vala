@@ -10,7 +10,7 @@ namespace Timetable {
             );
         }
 
-        public void display_save_confirm () {
+        construct {
             var discard_button = new Gtk.Button.with_label (_("Don't Save"));
             add_action_widget (discard_button, Gtk.ResponseType.NO);
             var cancel_button = new Gtk.Button.with_label (_("Cancel"));
@@ -18,8 +18,6 @@ namespace Timetable {
             var save_button = new Gtk.Button.with_label (_("Save"));
             save_button.get_style_context ().add_class (Gtk.STYLE_CLASS_SUGGESTED_ACTION);
             add_action_widget (save_button, Gtk.ResponseType.YES);
-
-            show_all ();
         }
 
         public File display_save_dialog () {

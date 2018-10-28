@@ -7,7 +7,6 @@ namespace Timetable.FileManager {
         debug ("New button pressed.");
         debug ("Buffer was modified. Asking user to save first.");
         dialog = new Dialog (win);
-        dialog.display_save_confirm ();
         dialog.response.connect ((response_id) => {
             switch (response_id) {
                 case Gtk.ResponseType.YES:
@@ -42,7 +41,7 @@ namespace Timetable.FileManager {
         });
 
         if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.weekend_column.is_modified == true) {
-            dialog.show ();
+            dialog.show_all ();
             win.monday_column.is_modified = false;
             win.tuesday_column.is_modified = false;
             win.wednesday_column.is_modified = false;
