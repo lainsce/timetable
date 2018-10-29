@@ -210,8 +210,8 @@ namespace Timetable {
 
             task_allday_switch.notify["active"].connect (() => {
 			    if (task_allday_switch.active) {
-                    task_time_from_label.label = "All Day";
-                    this.time_from_text = "All Day";
+                    task_time_from_label.label = _("All Day");
+                    this.time_from_text = _("All Day");
                     task_time_to_label.label = "";
     				this.time_to_text = "";
                     task_time_sep_label.label = "";

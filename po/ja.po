@@ -1,0 +1,260 @@
+# Japanese translations for com.github.lainsce.timetable package.
+# Copyright (C) 2018 THE com.github.lainsce.timetable'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.lainsce.timetable package.
+# Automatically generated, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.lainsce.timetable\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-29 21:15+0900\n"
+"PO-Revision-Date: 2018-10-29 21:31+0900\n"
+"Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: src/MainWindow.vala:50
+msgid "Timetable"
+msgstr "予定表"
+
+#: src/MainWindow.vala:98
+msgid "New Timetable"
+msgstr "新しい予定表"
+
+#: src/MainWindow.vala:101
+msgid "Export Timetable…"
+msgstr "予定表をエクスポート…"
+
+#: src/MainWindow.vala:116
+msgid "Export"
+msgstr "エクスポート"
+
+#: src/MainWindow.vala:121 src/Widgets/Preferences.vala:28
+msgid "Preferences"
+msgstr "設定"
+
+#: src/MainWindow.vala:138
+msgid "Settings"
+msgstr "設定"
+
+#: src/Services/DialogServices.vala:5
+msgid "Save Changes to the Timetable?"
+msgstr "変更を予定表に保存しますか？"
+
+#: src/Services/DialogServices.vala:6
+msgid "If you don't save, changes will be lost forever."
+msgstr "保存しない場合、変更は完全に破棄されます。"
+
+#: src/Services/DialogServices.vala:14
+msgid "Don't Save"
+msgstr "保存しない"
+
+#: src/Services/DialogServices.vala:16
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: src/Services/DialogServices.vala:18
+msgid "Save"
+msgstr "保存"
+
+#: src/Services/DialogServices.vala:27
+msgid "Export timetable to…"
+msgstr "予定表をエクスポート…"
+
+#: src/Services/DialogServices.vala:42
+msgid "_Cancel"
+msgstr "キャンセル(_C)"
+
+#: src/Services/DialogServices.vala:44
+msgid "_Open"
+msgstr "開く(_O)"
+
+#: src/Services/DialogServices.vala:46
+msgid "_Save"
+msgstr "保存(_S)"
+
+#: src/Services/DialogServices.vala:51
+msgid "Org files"
+msgstr "Org ファイル"
+
+#: src/Services/DialogServices.vala:56
+msgid "All files"
+msgstr "すべてのファイル"
+
+#: src/Widgets/DayColumn.vala:27
+msgid "◉ MON"
+msgstr "◉ 月"
+
+#: src/Widgets/DayColumn.vala:29
+msgid "MON"
+msgstr "月"
+
+#: src/Widgets/DayColumn.vala:34
+msgid "◉ TUE"
+msgstr "◉ 火"
+
+#: src/Widgets/DayColumn.vala:36
+msgid "TUE"
+msgstr "火"
+
+#: src/Widgets/DayColumn.vala:41
+msgid "◉ WED"
+msgstr "◉ 水"
+
+#: src/Widgets/DayColumn.vala:43
+msgid "WED"
+msgstr "水"
+
+#: src/Widgets/DayColumn.vala:48
+msgid "◉ THU"
+msgstr "◉ 木"
+
+#: src/Widgets/DayColumn.vala:50
+msgid "THU"
+msgstr "木"
+
+#: src/Widgets/DayColumn.vala:55
+msgid "◉ FRI"
+msgstr "◉ 金"
+
+#: src/Widgets/DayColumn.vala:57
+msgid "FRI"
+msgstr "金"
+
+#: src/Widgets/DayColumn.vala:62
+msgid "◉ SAT/SUN"
+msgstr "◉ 土/日"
+
+#: src/Widgets/DayColumn.vala:64
+msgid "SAT/SUN"
+msgstr "土/日"
+
+#: src/Widgets/DayColumn.vala:74
+msgid "No tasks…"
+msgstr "タスクがありません…"
+
+#: src/Widgets/DayColumn.vala:94
+msgid "Task…"
+msgstr "タスク…"
+
+#: src/Widgets/Preferences.vala:43
+msgid "Interface"
+msgstr "インターフェース"
+
+#: src/Widgets/Preferences.vala:44
+msgid "Show weekends:"
+msgstr "週末を表示:"
+
+#: src/Widgets/Preferences.vala:48
+msgid "Tasks"
+msgstr "タスク"
+
+#: src/Widgets/Preferences.vala:49
+msgid "High contrast colors:"
+msgstr "ハイコントラストカラー:"
+
+#: src/Widgets/Preferences.vala:53
+msgid "Tasks Theming:"
+msgstr "タスクテーマ:"
+
+#: src/Widgets/Preferences.vala:55
+msgid "elementary"
+msgstr "elementary"
+
+#: src/Widgets/Preferences.vala:56
+msgid "Flat"
+msgstr "フラット"
+
+#: src/Widgets/Preferences.vala:57
+msgid "Nature"
+msgstr "自然"
+
+#: src/Widgets/Preferences.vala:104
+msgid "Close"
+msgstr "閉じる"
+
+#: src/Widgets/TaskBox.vala:37
+msgid "Task Name"
+msgstr "タスク名"
+
+#: src/Widgets/TaskBox.vala:63
+msgid "Task Color"
+msgstr "タスクの色"
+
+#: src/Widgets/TaskBox.vala:70
+msgid "Red"
+msgstr "赤"
+
+#: src/Widgets/TaskBox.vala:81
+msgid "Orange"
+msgstr "オレンジ"
+
+#: src/Widgets/TaskBox.vala:92
+msgid "Yellow"
+msgstr "黄"
+
+#: src/Widgets/TaskBox.vala:103
+msgid "Green"
+msgstr "緑"
+
+#: src/Widgets/TaskBox.vala:114
+msgid "Blue"
+msgstr "青"
+
+#: src/Widgets/TaskBox.vala:125
+msgid "Indigo"
+msgstr "藍"
+
+#: src/Widgets/TaskBox.vala:136
+msgid "Clear Task Color"
+msgstr "タスクの色を消去"
+
+#: src/Widgets/TaskBox.vala:151
+msgid "Task Time"
+msgstr "タスクの時間"
+
+#: src/Widgets/TaskBox.vala:153
+msgid "From:"
+msgstr "開始:"
+
+#: src/Widgets/TaskBox.vala:170
+msgid "To:"
+msgstr "終了:"
+
+#: src/Widgets/TaskBox.vala:188
+msgid "All-Day:"
+msgstr "終日:"
+
+#: src/Widgets/TaskBox.vala:209
+msgid ""
+"Set the task to span all-day.\n"
+"When turned off, will set the task back to default time."
+msgstr ""
+"タスクを終日に設定します。\n"
+"無効にすると、タスクはデフォルトの時間にリセットされます。"
+
+#: src/Widgets/TaskBox.vala:213 src/Widgets/TaskBox.vala:214
+msgid "All Day"
+msgstr "終日"
+
+#: src/Widgets/TaskBox.vala:237
+msgid "Notify:"
+msgstr "通知:"
+
+#: src/Widgets/TaskBox.vala:263
+msgid "Set the task to notify when it starts."
+msgstr "タスクが開始した際に通知するように設定します。"
+
+#: src/Widgets/TaskBox.vala:313
+msgid "Task Settings"
+msgstr "タスクの設定"
+
+#: src/Widgets/TaskBox.vala:724
+#, c-format
+msgid "Task: %s"
+msgstr "タスク: %s"
