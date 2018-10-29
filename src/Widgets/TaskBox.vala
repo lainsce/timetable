@@ -656,10 +656,11 @@ namespace Timetable {
             if (settings.high_contrast) {
                 style = ("""
                     .tt-box-%d {
-                        border-bottom: 1px solid alpha(#000, 0.25);
                         border-top: none;
                         border-right: none;
-                        border-radius: 0;
+                        border-bottom: none;
+                        border-radius: 4px;
+                        margin-bottom: 4px;
                         border-left: 3px solid shade (%s, 0.5);
                         background-color: shade (%s, 0.66);
                         color: #FFFFFF;
@@ -681,10 +682,11 @@ namespace Timetable {
             } else {
                 style = ("""
                     .tt-box-%d {
-                        border-bottom: 1px solid alpha(#000, 0.25);
+                        border-bottom: none;
                         border-top: none;
                         border-right: none;
-                        border-radius: 0;
+                        border-radius: 4px;
+                        margin-bottom: 4px;
                         border-left: 3px solid %s;
                         background-color: mix (%s, #FFF, 0.5);
                         color: #333;

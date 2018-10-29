@@ -11,6 +11,8 @@
 .tt-column {
     background-color: shade (@bg_color, 1.05);
     border: 1px solid alpha(#000, 0.25);
+    border-radius: 4px;
+    padding: 4px;
 }
 .tt-column:backdrop {
     background-color: alpha (shade (@bg_color, 1.05), 0.24);
