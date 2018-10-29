@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: com.github.lainsce.timetable\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 21:15+0900\n"
-"PO-Revision-Date: 2018-10-29 21:15+0900\n"
+"PO-Revision-Date: 2018-10-29 21:31+0900\n"
 "Last-Translator: Ryo Nakano <ryonakaknock3@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ja\n"
@@ -212,7 +212,7 @@ msgstr "藍"
 
 #: src/Widgets/TaskBox.vala:136
 msgid "Clear Task Color"
-msgstr "タスクの色をクリア"
+msgstr "タスクの色を消去"
 
 #: src/Widgets/TaskBox.vala:151
 msgid "Task Time"
