@@ -54,6 +54,10 @@ msgstr "Si no los guarda, los cambios se perderán permanentemente."
 msgid "Don't Save"
 msgstr "No guardar"
 
+#: src/Services/DialogServices.vala:18
+msgid "Save"
+msgstr "Guardar"
+
 #: src/Services/DialogServices.vala:19
 msgid "Export timetable to…"
 msgstr "Exportar cronograma a…"
