@@ -412,49 +412,22 @@ namespace Timetable {
                 win.tm.save_notes ();
             });
 
-            var primary_label = new Gtk.Label (_("<b>Are you sure you want to delete this task?</b>"));
-            primary_label.set_use_markup (true);
-            primary_label.halign = Gtk.Align.START;
-            primary_label.margin_start = 6;
+            var delete_popover = new Granite.PopoverDialog.with_image_from_icon_name (
+                _("<b>Are you sure you want to delete this task?</b>"),
+                _("Deleting a task will remove it forever from your timetable."),
+                _("Delete"),
+                _("Cancel"),
+                "dialog-information"
+            );
 
-            var secondary_label = new Gtk.Label (_("Deleting a task will remove it forever from your timetable."));
-            secondary_label.halign = Gtk.Align.START;
-            secondary_label.margin_start = 6;
+            delete_popover.primary_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
 
-            var popup_icon = new Gtk.Image.from_icon_name ("dialog-information", Gtk.IconSize.DIALOG);
-
-            var cancel_button = new Gtk.Button.with_label (_("Cancel"));
-
-            var delete_button = new Gtk.Button.with_label (_("Delete"));
-            delete_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
-            delete_button.grab_focus ();
-
-            delete_button.clicked.connect (() => {
+            delete_popover.primary_button.clicked.connect (() => {
                 delete_task ();
                 win.tm.save_notes ();
             });
 
-            var options_button_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
-            options_button_box.halign = Gtk.Align.END;
-            options_button_box.margin_top = 12;
-            options_button_box.pack_start (cancel_button, false, true, 0);
-            options_button_box.pack_start (delete_button, false, true, 0);
-
-            var delete_grid = new Gtk.Grid ();
-            delete_grid.margin = 12;
-            delete_grid.column_spacing = 6;
-            delete_grid.row_spacing = 6;
-            delete_grid.orientation = Gtk.Orientation.VERTICAL;
-            delete_grid.attach (popup_icon, 0, 0, 1, 2);
-            delete_grid.attach (primary_label, 1, 0, 1, 1);
-            delete_grid.attach (secondary_label, 1, 1, 1, 1);
-            delete_grid.attach (options_button_box, 1, 2, 1, 1);
-            delete_grid.show_all ();
-
-            var delete_popover = new Gtk.Popover (null);
-            delete_popover.add (delete_grid);
-
-            cancel_button.clicked.connect (() => {
+            delete_popover.secondary_button.clicked.connect (() => {
                 delete_popover.closed ();
             });
 

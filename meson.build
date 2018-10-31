@@ -49,6 +49,7 @@ executable(
     'src/Services/FileManager.vala',
     'src/Services/TaskManager.vala',
     'src/Widgets/DayColumn.vala',
+    'src/Widgets/PopoverDialog.vala',
     'src/Widgets/Preferences.vala',
     'src/Widgets/TaskBox.vala',
     'src/Constants/AppSettings.vala',
