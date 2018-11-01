@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2018 elementary LLC.
+* Copyright (c) 2018 Lains
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -16,7 +16,6 @@
 * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 * Boston, MA 02110-1301 USA
 *
-* Authored by: Lains <lainsce@airmail.cc>
 */
 
 /**
