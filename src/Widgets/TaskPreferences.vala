@@ -268,11 +268,13 @@ namespace Timetable {
                 tb.task_time_sep_label.label = "";
                 time_to_picker.sensitive = false;
                 time_from_picker.sensitive = false;
+                tb.update_theme ();
             } else {
                 task_allday_switch.set_active (false);
                 tb.task_time_sep_label.label = "-";
                 time_to_picker.sensitive = true;
                 time_from_picker.sensitive = true;
+                tb.update_theme ();
             }
 
             var task_allday_help = new Gtk.Image.from_icon_name ("help-info-symbolic", Gtk.IconSize.BUTTON);

@@ -50,6 +50,10 @@ namespace Timetable {
             high_contrast_label.set_halign (Gtk.Align.END);
             var high_contrast = new SettingsSwitch ("high-contrast");
 
+            var show_tasks_allday_label = new SettingsLabel (_("Differentiate All-Day Tasks:"));
+            show_tasks_allday_label.set_halign (Gtk.Align.END);
+            var show_tasks_allday = new SettingsSwitch ("show-tasks-allday");
+
             var theme_label = new SettingsLabel (_("Tasks Theming:"));
             var theme_type = new Gtk.ComboBoxText();
             theme_type.append_text(_("elementary"));
@@ -93,8 +97,10 @@ namespace Timetable {
             main_grid.attach (tasks_header, 0, 3, 3, 1);
             main_grid.attach (high_contrast_label, 0, 4, 1, 1);
             main_grid.attach (high_contrast, 1, 4, 1, 1);
-            main_grid.attach (theme_label, 0, 5, 1, 1);
-            main_grid.attach (theme_type, 1, 5, 1, 1);
+            main_grid.attach (show_tasks_allday_label, 0, 5, 1, 1);
+            main_grid.attach (show_tasks_allday, 1, 5, 1, 1);
+            main_grid.attach (theme_label, 0, 6, 1, 1);
+            main_grid.attach (theme_type, 1, 6, 1, 1);
 
             var main_stack = new Gtk.Stack ();
             main_stack.margin = 12;

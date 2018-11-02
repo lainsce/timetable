@@ -30,6 +30,11 @@
 				<summary>Task high contrast</summary>
 				<description>Tasks color contrast</description>
 		</key>
+        <key name="show-tasks-allday" type="b">
+				<default>true</default>
+				<summary>Task difference all-days</summary>
+				<description>Tasks differentiation as all-day task</description>
+		</key>
         <key name="theme" type="i">
 				<default>0</default>
 				<summary>Tasks theming</summary>

@@ -281,55 +281,109 @@ namespace Timetable {
                 }
             }
             if (settings.high_contrast) {
-                style = ("""
-                    .tt-box-%d {
-                        border-top: none;
-                        border-right: none;
-                        border-bottom: none;
-                        border-radius: 4px;
-                        margin-bottom: 4px;
-                        border-left: 3px solid shade (%s, 0.5);
-                        background-color: shade (%s, 0.66);
-                        color: #FFFFFF;
-                    }
-                    .tt-box-%d:backdrop {
-                        color: #DDDDDD;
-                    }
-                    .tt-box-%d image {
-                        color: #FFFFFF;
-                        -gtk-icon-shadow: none;
-                        border-image-width: 0;
-                        box-shadow: transparent;
-                    }
-                    .tt-box-%d image:backdrop {
-                        color: #666;
-                    }
-                """).printf(uid, tcolor, tcolor, uid, uid, uid);
+                if (!task_allday == !settings.show_tasks_allday) {
+                    style = ("""
+                        .tt-box-%d {
+                            border-top: none;
+                            border-right: none;
+                            border-bottom: none;
+                            border-radius: 4px;
+                            margin-bottom: 4px;
+                            border-left: none;
+                            background-color: shade (%s, 0.66);
+                            color: #FFFFFF;
+                        }
+                        .tt-box-%d:backdrop {
+                            color: #DDDDDD;
+                        }
+                        .tt-box-%d image {
+                            color: #FFFFFF;
+                            -gtk-icon-shadow: none;
+                            border-image-width: 0;
+                            box-shadow: transparent;
+                        }
+                        .tt-box-%d image:backdrop {
+                            color: #666;
+                        }
+                    """).printf(uid, tcolor, uid, uid, uid);
+                } else {
+                    style = ("""
+                        .tt-box-%d {
+                            border-top: none;
+                            border-right: none;
+                            border-bottom: none;
+                            border-radius: 4px;
+                            margin-bottom: 4px;
+                            border-left: 3px solid shade (%s, 0.5);
+                            background-color: shade (%s, 0.66);
+                            color: #FFFFFF;
+                        }
+                        .tt-box-%d:backdrop {
+                            color: #DDDDDD;
+                        }
+                        .tt-box-%d image {
+                            color: #FFFFFF;
+                            -gtk-icon-shadow: none;
+                            border-image-width: 0;
+                            box-shadow: transparent;
+                        }
+                        .tt-box-%d image:backdrop {
+                            color: #666;
+                        }
+                    """).printf(uid, tcolor, tcolor, uid, uid, uid);
+                }
             } else {
-                style = ("""
-                    .tt-box-%d {
-                        border-bottom: none;
-                        border-top: none;
-                        border-right: none;
-                        border-radius: 4px;
-                        margin-bottom: 4px;
-                        border-left: 3px solid %s;
-                        background-color: mix (%s, #FFF, 0.5);
-                        color: #333;
-                    }
-                    .tt-box-%d:backdrop {
-                        color: #666;
-                    }
-                    .tt-box-%d image {
-                        color: #333;
-                        -gtk-icon-shadow: none;
-                        border-image-width: 0;
-                        box-shadow: transparent;
-                    }
-                    .tt-box-%d image:backdrop {
-                        color: #666;
-                    }
-                """).printf(uid, tcolor, tcolor, uid, uid, uid);
+                if (!task_allday == !settings.show_tasks_allday) {
+                    style = ("""
+                        .tt-box-%d {
+                            border-bottom: none;
+                            border-top: none;
+                            border-right: none;
+                            border-radius: 4px;
+                            margin-bottom: 4px;
+                            border-left: none;
+                            background-color: mix (%s, #FFF, 0.77);
+                            color: #333;
+                        }
+                        .tt-box-%d:backdrop {
+                            color: #666;
+                        }
+                        .tt-box-%d image {
+                            color: #333;
+                            -gtk-icon-shadow: none;
+                            border-image-width: 0;
+                            box-shadow: transparent;
+                        }
+                        .tt-box-%d image:backdrop {
+                            color: #666;
+                        }
+                    """).printf(uid, tcolor, uid, uid, uid);
+                } else {
+                    style = ("""
+                        .tt-box-%d {
+                            border-bottom: none;
+                            border-top: none;
+                            border-right: none;
+                            border-radius: 4px;
+                            margin-bottom: 4px;
+                            border-left: 3px solid %s;
+                            background-color: mix (%s, #FFF, 0.5);
+                            color: #333;
+                        }
+                        .tt-box-%d:backdrop {
+                            color: #666;
+                        }
+                        .tt-box-%d image {
+                            color: #333;
+                            -gtk-icon-shadow: none;
+                            border-image-width: 0;
+                            box-shadow: transparent;
+                        }
+                        .tt-box-%d image:backdrop {
+                            color: #666;
+                        }
+                    """).printf(uid, tcolor, tcolor, uid, uid, uid);
+                }
             }
             try {
                 css_provider.load_from_data(style, -1);
