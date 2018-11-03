@@ -85,7 +85,7 @@ namespace Timetable {
 
             evbox.settings_requested.connect (() => {
                 dialog = new TaskPreferences (win, this);
-                dialog.show_all ();
+                dialog.run ();
             });
 
             evbox.delete_requested.connect (() => {
@@ -311,6 +311,12 @@ namespace Timetable {
                         .tt-box-%d:backdrop {
                             color: #DDDDDD;
                         }
+                        .tt-box-%d:selected.activatable {
+                            color: #FFF;
+                        }
+                        .tt-box-%d:selected.activatable:backdrop {
+                            color: #DDDDDD;
+                        }
                         .tt-box-%d image {
                             color: #FFFFFF;
                             -gtk-icon-shadow: none;
@@ -320,7 +326,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: #666;
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, uid, uid, uid);
+                    """).printf(uid, tcolor, tcolor, tcolor, uid, uid, uid, uid, uid);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -331,7 +337,7 @@ namespace Timetable {
                             margin-bottom: 10px;
                             border-left: 3px solid shade (%s, 0.5);
                             background-color: shade (%s, 0.5);
-                            color: #FFFFFF;
+                            color: #FFF;
                             font-weight: 600;
                             box-shadow:
                                 0 1px 3px alpha (shade (%s, 0.33), 0.12),
@@ -341,6 +347,9 @@ namespace Timetable {
                             color: #DDDDDD;
                         }
                         .tt-box-%d:selected.activatable {
+                            color: #FFF;
+                        }
+                        .tt-box-%d:selected.activatable:backdrop {
                             color: #DDDDDD;
                         }
                         .tt-box-%d image {
@@ -352,7 +361,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: #666;
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, uid, uid, uid, uid);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, uid, uid, uid, uid, uid);
                 }
             } else {
                 if (settings.show_tasks_allday && this.task_allday) {
@@ -365,28 +374,31 @@ namespace Timetable {
                             margin-bottom: 10px;
                             border-left: 3px solid mix (%s, #FFF, 0.5);
                             background-color: mix (%s, #FFF, 0.5);
-                            color: shade (%s, 0.2);
+                            color: shade (%s, 0.4);
                             font-weight: 600;
                             box-shadow:
                                 0 1px 3px alpha (shade (%s, 0.33), 0.12),
                                 0 1px 2px alpha (shade (%s, 0.33), 0.24);
                         }
                         .tt-box-%d:backdrop {
-                            color: shade (%s, 0.5);
+                            color: shade (%s, 0.6);
                         }
                         .tt-box-%d:selected.activatable {
-                            color: shade (%s, 0.2);
+                            color: shade (%s, 0.4);
+                        }
+                        .tt-box-%d:selected.activatable:backdrop {
+                            color: shade (%s, 0.6);
                         }
                         .tt-box-%d image {
-                            color: shade (%s, 0.2);
+                            color: shade (%s, 0.4);
                             -gtk-icon-shadow: none;
                             border-image-width: 0;
                             box-shadow: transparent;
                         }
                         .tt-box-%d image:backdrop {
-                            color: shade (%s, 0.5);
+                            color: shade (%s, 0.6);
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -397,28 +409,31 @@ namespace Timetable {
                             margin-bottom: 10px;
                             border-left: 3px solid %s;
                             background-color: mix (%s, #FFF, 0.7);
-                            color: shade (%s, 0.33);
+                            color: shade (%s, 0.5);
                             font-weight: 600;
                             box-shadow:
                                 0 1px 3px alpha (shade (%s, 0.5), 0.12),
                                 0 1px 2px alpha (shade (%s, 0.5), 0.24);
                         }
                         .tt-box-%d:backdrop {
-                            color: shade (%s, 0.66);
+                            color: shade (%s, 0.88);
                         }
                         .tt-box-%d:selected.activatable {
-                            color: shade (%s, 0.33);
+                            color: shade (%s, 0.5);
+                        }
+                        .tt-box-%d:selected.activatable:backdrop {
+                            color: shade (%s, 0.88);
                         }
                         .tt-box-%d image {
-                            color: shade (%s, 0.33);
+                            color: shade (%s, 0.5);
                             -gtk-icon-shadow: none;
                             border-image-width: 0;
                             box-shadow: transparent;
                         }
                         .tt-box-%d image:backdrop {
-                            color: shade (%s, 0.66);
+                            color: shade (%s, 0.88);
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 }
             }
             try {

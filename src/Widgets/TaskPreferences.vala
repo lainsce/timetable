@@ -383,6 +383,8 @@ namespace Timetable {
             grid.attach (main_stack, 0, 1, 1, 1);
 
             ((Gtk.Container) get_content_area ()).add (grid);
+
+            this.show_all ();
         }
     }
 }
