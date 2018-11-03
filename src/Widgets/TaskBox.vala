@@ -43,14 +43,12 @@ namespace Timetable {
             });
 
             task_label = new Gtk.Label ("");
-            task_label.margin_start = 6;
             task_label.halign = Gtk.Align.START;
             task_label.wrap = true;
             task_label.hexpand = true;
             task_label.label = this.task_name;
 
             task_time_from_label = new Gtk.Label ("");
-            task_time_from_label.margin_start = 6;
             task_time_from_label.halign = Gtk.Align.START;
             task_time_from_label.label = this.time_from_text;
 
@@ -80,7 +78,7 @@ namespace Timetable {
             task_grid.row_spacing = 6;
             task_grid.row_homogeneous = true;
             task_grid.margin_top = task_grid.margin_bottom = 12;
-            task_grid.margin_start = task_grid.margin_end = 6;
+            task_grid.margin_start = task_grid.margin_end = 12;
             task_grid.attach (task_label, 0, 0, 1, 1);
             task_grid.attach (date_time_box, 0, 1, 1, 1);
             task_grid.attach (evbox, 1, 0, 1, 2);
@@ -342,6 +340,9 @@ namespace Timetable {
                         .tt-box-%d:backdrop {
                             color: #DDDDDD;
                         }
+                        .tt-box-%d:selected.activatable {
+                            color: #DDDDDD;
+                        }
                         .tt-box-%d image {
                             color: #FFFFFF;
                             -gtk-icon-shadow: none;
@@ -351,7 +352,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: #666;
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, uid, uid, uid);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, uid, uid, uid, uid);
                 }
             } else {
                 if (settings.show_tasks_allday && this.task_allday) {
@@ -373,6 +374,9 @@ namespace Timetable {
                         .tt-box-%d:backdrop {
                             color: shade (%s, 0.5);
                         }
+                        .tt-box-%d:selected.activatable {
+                            color: shade (%s, 0.2);
+                        }
                         .tt-box-%d image {
                             color: shade (%s, 0.2);
                             -gtk-icon-shadow: none;
@@ -382,7 +386,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: shade (%s, 0.5);
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -402,6 +406,9 @@ namespace Timetable {
                         .tt-box-%d:backdrop {
                             color: shade (%s, 0.66);
                         }
+                        .tt-box-%d:selected.activatable {
+                            color: shade (%s, 0.33);
+                        }
                         .tt-box-%d image {
                             color: shade (%s, 0.33);
                             -gtk-icon-shadow: none;
@@ -411,7 +418,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: shade (%s, 0.66);
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 }
             }
             try {

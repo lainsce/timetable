@@ -47,7 +47,10 @@ namespace Timetable {
             foreach (var task in window.friday_column.get_tasks ()) {
                 task.notificator (this);
             }
-            foreach (var task in window.weekend_column.get_tasks ()) {
+            foreach (var task in window.saturday_column.get_tasks ()) {
+                task.notificator (this);
+            }
+            foreach (var task in window.sunday_column.get_tasks ()) {
                 task.notificator (this);
             }
 
@@ -68,7 +71,10 @@ namespace Timetable {
                 foreach (var task in window.friday_column.get_tasks ()) {
                     task.notificator (this);
                 }
-                foreach (var task in window.weekend_column.get_tasks ()) {
+                foreach (var task in window.saturday_column.get_tasks ()) {
+                    task.notificator (this);
+                }
+                foreach (var task in window.sunday_column.get_tasks ()) {
                     task.notificator (this);
                 }
                 return false;

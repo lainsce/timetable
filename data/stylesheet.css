@@ -25,10 +25,16 @@
 
 .tt-column {
     background-color: shade (@bg_color, 1.05);
-    padding: 5px;
-    border: 1px solid alpha(#000, 0.1);
+    border: 1px solid alpha(#000, 0.25);
+    padding: 10px;
     border-radius: 4px;
 }
+
+.tt-column-time {
+    border-right: 1px solid alpha(#000, 0.25);
+    padding-right: 10px;
+}
+
 .tt-column:backdrop {
     background-color: alpha (@bg_color, 0.24);
 }
@@ -38,37 +44,39 @@
         to bottom,
         shade (@bg_color, 1.05),
         shade (@base_color, 0.9)
-        );
+    );
     border: 1px solid alpha(#000, 0.25);
-    border-radius: 8px;
+    border-radius: 50px;
 }
 .tt-button image {
-    -gtk-icon-shadow: none;
+    -gtk-icon-shadow: 0px 0px 0px transparent;
     border-image-width: 0;
+    color: #333;
     box-shadow: transparent;
 }
 .tt-button:focus,
 .tt-button:hover {
     box-shadow:
-        0 1px 3px alpha (#3689e6, 0.12),
-        0 1px 2px alpha (#3689e6, 0.24);
+        0 1px 3px alpha (#3689e6, 0.24),
+        0 1px 2px alpha (#3689e6, 0.32);
 }
 .tt-button:active {
     background-image: linear-gradient(
         to bottom,
         shade (@base_color, 0.9),
         shade (@bg_color, 1.05)
-        );
+    );
+    border: 1px solid alpha(#000, 0.5);
 }
 .tt-button:backdrop {
     background-image: linear-gradient(
         to bottom,
         alpha (shade (@bg_color, 1.05), 0.24),
         alpha (shade (@base_color, 0.9), 0.24)
-        );
+    );
 }
 .tt-button image:backdrop {
-    color: #666;
+    color: #999;
 }
 
 .color-button {

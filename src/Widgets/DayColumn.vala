@@ -84,10 +84,17 @@ namespace Timetable {
                     }
                     break;
                 case 6:
-                    if (time.get_day_of_week () == day || time.get_day_of_week () == 7) {
-                        day_header = _("◉ SAT/SUN");
+                    if (time.get_day_of_week () == day) {
+                        day_header = _("◉ SAT");
                     } else {
-                        day_header = _("SAT/SUN");
+                        day_header = _("SAT");
+                    }
+                    break;
+                case 7:
+                    if (time.get_day_of_week () == day) {
+                        day_header = _("◉ SUN");
+                    } else {
+                        day_header = _("SUN");
                     }
                     break;
             }
@@ -109,12 +116,12 @@ namespace Timetable {
             var column_button = new Gtk.Button ();
             column_button.can_focus = false;
             column_button.halign = Gtk.Align.END;
-            column_button.width_request = 38;
-            column_button.height_request = 32;
+            column_button.width_request = 40;
+            column_button.height_request = 30;
             var column_button_style_context = column_button.get_style_context ();
             column_button_style_context.add_class ("tt-button");
             column_button_style_context.add_class ("image-button");
-            column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
+            column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
 
             column_button.clicked.connect (() => {
                 add_task (_("Task…"), "#d4d4d4", "12:00", "12:00", false, false);

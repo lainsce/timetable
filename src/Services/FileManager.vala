@@ -16,6 +16,8 @@ namespace Timetable.FileManager {
                         win.wednesday_column.clear_column ();
                         win.thursday_column.clear_column ();
                         win.friday_column.clear_column ();
+                        win.saturday_column.clear_column ();
+                        win.sunday_column.clear_column ();
                     } catch (Error e) {
                         warning ("Unexpected error during save: " + e.message);
                     }
@@ -27,6 +29,8 @@ namespace Timetable.FileManager {
                     win.wednesday_column.clear_column ();
                     win.thursday_column.clear_column ();
                     win.friday_column.clear_column ();
+                    win.saturday_column.clear_column ();
+                    win.sunday_column.clear_column ();
                     reset_modification_state (win);
                     break;
                 case Gtk.ResponseType.CANCEL:
@@ -39,7 +43,7 @@ namespace Timetable.FileManager {
             dialog.destroy();
         });
 
-        if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.weekend_column.is_modified == true) {
+        if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.saturday_column.is_modified == true || win.sunday_column.is_modified == true) {
             debug ("Buffer was modified. Asking user to save first.");
             dialog.show_all ();
         } else {
@@ -68,7 +72,7 @@ namespace Timetable.FileManager {
                     file.delete ();
                 }
 
-                if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.weekend_column.is_modified == true) {
+                if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.saturday_column.is_modified == true || win.sunday_column.is_modified == true) {
                     string buffer_text = "";
                     buffer_text += "* Monday\n";
                     foreach (var task in win.monday_column.get_tasks ()) {
@@ -90,8 +94,12 @@ namespace Timetable.FileManager {
                     foreach (var task in win.friday_column.get_tasks ()) {
                         buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
                     }
-                    buffer_text += "* Weekend\n";
-                    foreach (var task in win.weekend_column.get_tasks ()) {
+                    buffer_text += "* Saturday\n";
+                    foreach (var task in win.saturday_column.get_tasks ()) {
+                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                    }
+                    buffer_text += "* Sunday\n";
+                    foreach (var task in win.sunday_column.get_tasks ()) {
                         buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
                     }
                     var buffer = buffer_text;
@@ -113,6 +121,7 @@ namespace Timetable.FileManager {
         win.wednesday_column.is_modified = false;
         win.thursday_column.is_modified = false;
         win.friday_column.is_modified = false;
-        win.weekend_column.is_modified = false;
+        win.saturday_column.is_modified = false;
+        win.sunday_column.is_modified = false;
     }
 }

@@ -24,7 +24,8 @@ namespace Timetable {
         public DayColumn wednesday_column;
         public DayColumn thursday_column;
         public DayColumn friday_column;
-        public DayColumn weekend_column;
+        public DayColumn saturday_column;
+        public DayColumn sunday_column;
         public Gtk.Grid grid;
 
         public TaskManager tm;
@@ -179,12 +180,14 @@ namespace Timetable {
             star_row.tooltip_text = _("All-Day");
 
             var tgrid = new Gtk.Grid ();
+            tgrid.get_style_context ().add_class ("tt-column-time");
             tgrid.set_size_request (24,-1);
             tgrid.margin_top = 24;
             tgrid.margin_bottom = tgrid.margin_start = 12;
             tgrid.margin_end = 0;
             tgrid.row_homogeneous = true;
             tgrid.hexpand = false;
+            tgrid.vexpand = true;
             tgrid.halign = Gtk.Align.CENTER;
             tgrid.row_spacing = 78;
             tgrid.attach (0_row, 0, 0, 1, 1);
@@ -199,7 +202,8 @@ namespace Timetable {
             wednesday_column = new DayColumn (3, this);
             thursday_column = new DayColumn (4, this);
             friday_column = new DayColumn (5, this);
-            weekend_column = new DayColumn (6, this);
+            saturday_column = new DayColumn (6, this);
+            sunday_column = new DayColumn (7, this);
 
             tm.load_from_file ();
 
@@ -213,20 +217,25 @@ namespace Timetable {
             grid.attach (wednesday_column, 2, 0, 1, 1);
             grid.attach (thursday_column, 3, 0, 1, 1);
             grid.attach (friday_column, 4, 0, 1, 1);
-            grid.attach (weekend_column, 5, 0, 1, 1);
+            grid.attach (saturday_column, 5, 0, 1, 1);
+            grid.attach (sunday_column, 6, 0, 1, 1);
             if (grid != null) {
                 if (settings.weekend_show == true) {
-                    weekend_column.show_all ();
+                    saturday_column.show_all ();
+                    sunday_column.show_all ();
                 } else {
-                    weekend_column.hide ();
+                    saturday_column.hide ();
+                    sunday_column.hide ();
                 }
             }
             settings.changed.connect (() => {
                 if (grid != null) {
                     if (settings.weekend_show == true) {
-                        weekend_column.show_all ();
+                        saturday_column.show_all ();
+                        sunday_column.show_all ();
                     } else {
-                        weekend_column.hide ();
+                        saturday_column.hide ();
+                        sunday_column.hide ();
                     }
                 }
             });
