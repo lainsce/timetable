@@ -16,6 +16,10 @@ namespace Timetable {
         public bool task_allday;
         public bool task_notify;
 
+        private const Gtk.TargetEntry[] dlb_entries = {
+            {"DRAG_LIST_ROW", Gtk.TargetFlags.SAME_APP, 0}
+        };
+
         public TaskBox (MainWindow win, string task_name, string color, string time_from_text, string time_to_text, bool task_allday, bool task_notify) {
             var settings = AppSettings.get_default ();
             this.win = win;
@@ -54,7 +58,11 @@ namespace Timetable {
             task_time_to_label.halign = Gtk.Align.START;
             task_time_to_label.label = this.time_to_text;
 
-            task_time_sep_label = new Gtk.Label ("-");
+            if (this.task_allday) {
+                task_time_sep_label = new Gtk.Label ("");
+            } else {
+                task_time_sep_label = new Gtk.Label ("-");
+            }
 
             var date_time_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
             date_time_box.pack_start (task_time_from_label, false, true, 0);
@@ -62,6 +70,10 @@ namespace Timetable {
             date_time_box.pack_start (task_time_to_label, false, true, 0);
 
             var evbox = new TaskEventBox (this);
+
+            Gtk.drag_source_set (
+                evbox, Gdk.ModifierType.BUTTON1_MASK, dlb_entries, Gdk.DragAction.MOVE
+            );
 
             var task_grid = new Gtk.Grid ();
             task_grid.hexpand = false;
@@ -281,7 +293,7 @@ namespace Timetable {
                 }
             }
             if (settings.high_contrast) {
-                if (task_allday == !settings.show_tasks_allday) {
+                if (settings.show_tasks_allday && this.task_allday) {
                     style = ("""
                         .tt-box-%d {
                             border-top: none;
@@ -335,7 +347,7 @@ namespace Timetable {
                     """).printf(uid, tcolor, tcolor, uid, uid, uid);
                 }
             } else {
-                if (task_allday == !settings.show_tasks_allday) {
+                if (settings.show_tasks_allday && this.task_allday) {
                     style = ("""
                         .tt-box-%d {
                             border-bottom: none;
@@ -344,21 +356,21 @@ namespace Timetable {
                             border-radius: 4px;
                             margin-bottom: 5px;
                             border-left: none;
-                            background-color: mix (%s, #FFF, 0.66);
-                            color: shade (%s, 0.33);
+                            background-color: shade (%s, 1.2);
+                            color: mix (%s, #000, 0.88);
                             font-weight: 600;
                         }
                         .tt-box-%d:backdrop {
-                            color: shade (%s, 0.33);
+                            color: mix (%s, #000, 0.66);
                         }
                         .tt-box-%d image {
-                            color: shade (%s, 0.33);
+                            color: mix (%s, #000, 0.88);
                             -gtk-icon-shadow: none;
                             border-image-width: 0;
                             box-shadow: transparent;
                         }
                         .tt-box-%d image:backdrop {
-                            color: shade (%s, 0.33);
+                            color: mix (%s, #000, 0.66);
                         }
                     """).printf(uid, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 } else {

@@ -6,6 +6,10 @@ namespace Timetable {
         public int day;
         public bool is_modified {get; set; default = false;}
 
+        private const Gtk.TargetEntry[] dlb_entries = {
+            {"DRAG_LIST_ROW", Gtk.TargetFlags.SAME_APP, 0}
+        };
+
         public DayColumn (int day, MainWindow win) {
             this.win = win;
             this.set_size_request (180,-1);
@@ -14,12 +18,29 @@ namespace Timetable {
             column.hexpand = true;
             column.vexpand = true;
             column.activate_on_single_click = false;
-            column.selection_mode = Gtk.SelectionMode.NONE;
+            column.selection_mode = Gtk.SelectionMode.BROWSE;
             column.set_sort_func ((row1, row2) => {
-                var task1 = ((TaskBox) row1).time_from_text;
-                var task2 = ((TaskBox) row2).time_from_text;
-                return strcmp (task1.casefold (), task2.casefold ());
+                string task1 = ((TaskBox) row1).time_from_text;
+                string task2 = ((TaskBox) row2).time_from_text;
+
+                int int1 = int.parse(task1);
+                int int2 = int.parse(task2);
+
+                unichar str1 = task1.get_char (task1.index_of_nth_char (0));
+                unichar str2 = task2.get_char (task2.index_of_nth_char (0));
+
+                if (str1.tolower () != 'a' || str2.tolower () != 'a') {
+                    return strcmp (task1.ascii_down (), task2.ascii_down ());
+                } else if (int1 > int2) {
+                    return task1.ascii_down ().collate (task2.ascii_down ());
+                } else {
+                    return 0;
+                }
             });
+
+            Gtk.drag_dest_set (
+                column, Gtk.DestDefaults.ALL, dlb_entries, Gdk.DragAction.MOVE
+            );
 
             var column_style_context = column.get_style_context ();
             column_style_context.add_class ("tt-column");
