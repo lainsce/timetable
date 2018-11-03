@@ -143,70 +143,40 @@ namespace Timetable {
             titlebar.pack_end (export_button);
 
             // Times Column
-            var 1_row = new Gtk.Label ("01:00");
-            1_row.halign = Gtk.Align.CENTER;
-            1_row.valign = Gtk.Align.CENTER;
-            var 1_row_style_context = 1_row.get_style_context ();
-            1_row_style_context.add_class ("tt-label-time");
+            var 0_row = new Gtk.Image.from_icon_name ("daytime-sunrise-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            0_row.halign = Gtk.Align.CENTER;
+            0_row.valign = Gtk.Align.CENTER;
+            var 0_row_style_context = 0_row.get_style_context ();
+            0_row_style_context.add_class ("tt-label-time");
 
-            var 4_row = new Gtk.Label ("04:00");
-            4_row.halign = Gtk.Align.CENTER;
-            1_row.valign = Gtk.Align.CENTER;
-            var 4_row_style_context = 4_row.get_style_context ();
-            4_row_style_context.add_class ("tt-label-time");
+            var 8_row = new Gtk.Image.from_icon_name ("weather-clear-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            8_row.halign = Gtk.Align.CENTER;
+            0_row.valign = Gtk.Align.CENTER;
+            var 8_row_style_context = 8_row.get_style_context ();
+            8_row_style_context.add_class ("tt-label-time");
 
-            var 7_row = new Gtk.Label ("07:00");
-            7_row.halign = Gtk.Align.CENTER;
-            7_row.valign = Gtk.Align.CENTER;
-            var 7_row_style_context = 7_row.get_style_context ();
-            7_row_style_context.add_class ("tt-label-time");
-
-            var 10_row = new Gtk.Label ("10:00");
-            10_row.halign = Gtk.Align.CENTER;
-            10_row.valign = Gtk.Align.CENTER;
-            var 10_row_style_context = 10_row.get_style_context ();
-            10_row_style_context.add_class ("tt-label-time");
-
-            var 13_row = new Gtk.Label ("13:00");
-            13_row.halign = Gtk.Align.CENTER;
-            13_row.valign = Gtk.Align.CENTER;
-            var 13_row_style_context = 13_row.get_style_context ();
-            13_row_style_context.add_class ("tt-label-time");
-
-            var 16_row = new Gtk.Label ("16:00");
+            var 16_row = new Gtk.Image.from_icon_name ("daytime-sunset-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
             16_row.halign = Gtk.Align.CENTER;
             16_row.valign = Gtk.Align.CENTER;
             var 16_row_style_context = 16_row.get_style_context ();
             16_row_style_context.add_class ("tt-label-time");
 
-            var 19_row = new Gtk.Label ("19:00");
-            19_row.halign = Gtk.Align.CENTER;
-            19_row.valign = Gtk.Align.CENTER;
-            var 19_row_style_context = 19_row.get_style_context ();
-            19_row_style_context.add_class ("tt-label-time");
-
-            var 22_row = new Gtk.Label ("22:00");
-            22_row.halign = Gtk.Align.CENTER;
-            22_row.valign = Gtk.Align.CENTER;
-            var 22_row_style_context = 22_row.get_style_context ();
-            22_row_style_context.add_class ("tt-label-time");
+            var 24_row = new Gtk.Image.from_icon_name ("weather-clear-night-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            24_row.halign = Gtk.Align.CENTER;
+            24_row.valign = Gtk.Align.CENTER;
+            var 24_row_style_context = 24_row.get_style_context ();
+            24_row_style_context.add_class ("tt-label-time");
 
             var tgrid = new Gtk.Grid ();
-            tgrid.set_size_request (50,50);
+            tgrid.set_size_request (12,12);
             tgrid.margin = 12;
-            tgrid.margin_top = 32;
-            tgrid.margin_bottom = 0;
-            tgrid.margin_right = 0;
+            tgrid.row_homogeneous = true;
             tgrid.hexpand = false;
             tgrid.row_spacing = 54;
-            tgrid.attach (1_row, 0, 0, 1, 1);
-            tgrid.attach (4_row, 0, 1, 1, 1);
-            tgrid.attach (7_row, 0, 2, 1, 1);
-            tgrid.attach (10_row, 0, 3, 1, 1);
-            tgrid.attach (13_row, 0, 4, 1, 1);
-            tgrid.attach (16_row, 0, 5, 1, 1);
-            tgrid.attach (19_row, 0, 6, 1, 1);
-            tgrid.attach (22_row, 0, 7, 1, 1);
+            tgrid.attach (0_row, 0, 0, 1, 1);
+            tgrid.attach (8_row, 0, 1, 1, 1);
+            tgrid.attach (16_row, 0, 2, 1, 1);
+            tgrid.attach (24_row, 0, 3, 1, 1);
 
             // Day Columns
             monday_column = new DayColumn (1, this);
