@@ -148,35 +148,50 @@ namespace Timetable {
             0_row.valign = Gtk.Align.CENTER;
             var 0_row_style_context = 0_row.get_style_context ();
             0_row_style_context.add_class ("tt-label-time");
+            0_row.tooltip_text = _("Sunrise");
 
             var 8_row = new Gtk.Image.from_icon_name ("weather-clear-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
             8_row.halign = Gtk.Align.CENTER;
             0_row.valign = Gtk.Align.CENTER;
             var 8_row_style_context = 8_row.get_style_context ();
             8_row_style_context.add_class ("tt-label-time");
+            8_row.tooltip_text = _("Mid-day");
 
             var 16_row = new Gtk.Image.from_icon_name ("daytime-sunset-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
             16_row.halign = Gtk.Align.CENTER;
             16_row.valign = Gtk.Align.CENTER;
             var 16_row_style_context = 16_row.get_style_context ();
             16_row_style_context.add_class ("tt-label-time");
+            16_row.tooltip_text = _("Sunset");
 
             var 24_row = new Gtk.Image.from_icon_name ("weather-clear-night-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
             24_row.halign = Gtk.Align.CENTER;
             24_row.valign = Gtk.Align.CENTER;
             var 24_row_style_context = 24_row.get_style_context ();
             24_row_style_context.add_class ("tt-label-time");
+            24_row.tooltip_text = _("Night");
+
+            var star_row = new Gtk.Image.from_icon_name ("starred-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            star_row.halign = Gtk.Align.CENTER;
+            star_row.valign = Gtk.Align.CENTER;
+            var star_row_style_context = star_row.get_style_context ();
+            star_row_style_context.add_class ("tt-label-time");
+            star_row.tooltip_text = _("All-Day");
 
             var tgrid = new Gtk.Grid ();
-            tgrid.set_size_request (12,12);
-            tgrid.margin = 12;
+            tgrid.set_size_request (24,-1);
+            tgrid.margin_top = 24;
+            tgrid.margin_bottom = tgrid.margin_start = 12;
+            tgrid.margin_end = 0;
             tgrid.row_homogeneous = true;
             tgrid.hexpand = false;
-            tgrid.row_spacing = 54;
+            tgrid.halign = Gtk.Align.CENTER;
+            tgrid.row_spacing = 78;
             tgrid.attach (0_row, 0, 0, 1, 1);
             tgrid.attach (8_row, 0, 1, 1, 1);
             tgrid.attach (16_row, 0, 2, 1, 1);
             tgrid.attach (24_row, 0, 3, 1, 1);
+            tgrid.attach (star_row, 0, 4, 1, 1);
 
             // Day Columns
             monday_column = new DayColumn (1, this);
@@ -191,15 +206,14 @@ namespace Timetable {
             grid = new Gtk.Grid ();
             grid.column_spacing = 12;
             grid.margin = 12;
-            grid.set_column_homogeneous (false);
-            grid.hexpand = false;
-            grid.attach (tgrid, 0, 0, 1, 1);
-            grid.attach (monday_column, 1, 0, 1, 1);
-            grid.attach (tuesday_column, 2, 0, 1, 1);
-            grid.attach (wednesday_column, 3, 0, 1, 1);
-            grid.attach (thursday_column, 4, 0, 1, 1);
-            grid.attach (friday_column, 5, 0, 1, 1);
-            grid.attach (weekend_column, 6, 0, 1, 1);
+            grid.set_column_homogeneous (true);
+            grid.hexpand = true;
+            grid.attach (monday_column, 0, 0, 1, 1);
+            grid.attach (tuesday_column, 1, 0, 1, 1);
+            grid.attach (wednesday_column, 2, 0, 1, 1);
+            grid.attach (thursday_column, 3, 0, 1, 1);
+            grid.attach (friday_column, 4, 0, 1, 1);
+            grid.attach (weekend_column, 5, 0, 1, 1);
             if (grid != null) {
                 if (settings.weekend_show == true) {
                     weekend_column.show_all ();
@@ -222,7 +236,12 @@ namespace Timetable {
                 FileManager.new_tt (this);
             });
 
-            this.add (grid);
+            var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+            box.hexpand = true;
+            box.pack_start (tgrid, false, true, 0);
+            box.pack_start (grid, false, true, 0);
+
+            this.add (box);
             this.show_all ();
         }
 

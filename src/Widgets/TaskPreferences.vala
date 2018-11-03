@@ -24,10 +24,8 @@ namespace Timetable {
             task_prefs_label_style_context.add_class ("h3");
 
             var task_name_label = new Granite.HeaderLabel (_("Task Name"));
-            task_name_label.can_default = true;
             var task_name_entry_buffer = new Gtk.EntryBuffer ();
             var task_name_entry = new Gtk.Entry.with_buffer (task_name_entry_buffer);
-            task_name_entry.can_focus = true;
             task_name_entry.set_placeholder_text ("Task…");
 
             task_name_entry_buffer.inserted_text.connect (() => {
@@ -119,8 +117,8 @@ namespace Timetable {
 
             color_button_red.clicked.connect (() => {
                 if (settings.theme == 0) {
-                    tb.color = "#ff8c82";
-                    tb.tcolor = "#ff8c82";
+                    tb.color = "#ed5353";
+                    tb.tcolor = "#ed5353";
                 } else if (settings.theme == 1) {
                     tb.color = "#F33B61";
                     tb.tcolor = "#F33B61";
@@ -134,8 +132,8 @@ namespace Timetable {
 
             color_button_orange.clicked.connect (() => {
                 if (settings.theme == 0) {
-                    tb.color = "#ffc27d";
-                    tb.tcolor = "#ffc27d";
+                    tb.color = "#ffa154";
+                    tb.tcolor = "#ffa154";
                 } else if (settings.theme == 1) {
                     tb.color = "#ffa358";
                     tb.tcolor = "#ffa358";
@@ -164,8 +162,8 @@ namespace Timetable {
 
             color_button_green.clicked.connect (() => {
                 if (settings.theme == 0) {
-                    tb.color = "#c6f96f";
-                    tb.tcolor = "#c6f96f";
+                    tb.color = "#9bdb4d";
+                    tb.tcolor = "#9bdb4d";
                 } else if (settings.theme == 1) {
                     tb.color = "#9CCF81";
                     tb.tcolor = "#9CCF81";
@@ -179,8 +177,8 @@ namespace Timetable {
 
             color_button_blue.clicked.connect (() => {
                 if (settings.theme == 0) {
-                    tb.color = "#8cd5ff";
-                    tb.tcolor = "#8cd5ff";
+                    tb.color = "#64baff";
+                    tb.tcolor = "#64baff";
                 } else if (settings.theme == 1) {
                     tb.color = "#8ED0FF";
                     tb.tcolor = "#8ED0FF";
@@ -194,8 +192,8 @@ namespace Timetable {
 
             color_button_violet.clicked.connect (() => {
                 if (settings.theme == 0) {
-                    tb.color = "#aca9fd";
-                    tb.tcolor = "#aca9fd";
+                    tb.color = "#ad65d6";
+                    tb.tcolor = "#ad65d6";
                 } else if (settings.theme == 1) {
                     tb.color = "#C1AFF2";
                     tb.tcolor = "#C1AFF2";
@@ -209,14 +207,14 @@ namespace Timetable {
 
             color_button_clear.clicked.connect (() => {
                 if (settings.theme == 0) {
-                    tb.color = "#CCCCCC";
-                    tb.tcolor = "#CCCCCC";
+                    tb.color = "#d4d4d4";
+                    tb.tcolor = "#d4d4d4";
                 } else if (settings.theme == 1) {
-                    tb.color = "#CCCCCC";
-                    tb.tcolor = "#CCCCCC";
+                    tb.color = "#d4d4d4";
+                    tb.tcolor = "#d4d4d4";
                 } else if (settings.theme == 2) {
-                    tb.color = "#CCCCCC";
-                    tb.tcolor = "#CCCCCC";
+                    tb.color = "#d4d4d4";
+                    tb.tcolor = "#d4d4d4";
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();

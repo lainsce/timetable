@@ -117,7 +117,7 @@ namespace Timetable {
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
             column_button.clicked.connect (() => {
-                add_task (_("Task…"), "#CCCCCC", "12:00", "12:00", false, false);
+                add_task (_("Task…"), "#d4d4d4", "12:00", "12:00", false, false);
             });
 
             this.row_spacing = 6;

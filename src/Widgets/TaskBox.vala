@@ -78,6 +78,7 @@ namespace Timetable {
             var task_grid = new Gtk.Grid ();
             task_grid.hexpand = false;
             task_grid.row_spacing = 6;
+            task_grid.row_homogeneous = true;
             task_grid.margin_top = task_grid.margin_bottom = 12;
             task_grid.margin_start = task_grid.margin_end = 6;
             task_grid.attach (task_label, 0, 0, 1, 1);
@@ -108,83 +109,83 @@ namespace Timetable {
             if (settings.theme == 0) {
                 // Coming from Flat
                 if (color == "#F33B61") {
-                    tcolor = "#ff8c82";
+                    tcolor = "#ed5353";
                 }
                 if (color == "#ffa358") {
-                    tcolor = "#ffc27d";
+                    tcolor = "#ffa154";
                 }
                 if (color == "#FFE379") {
                     tcolor = "#ffe16b";
                 }
                 if (color == "#9CCF81") {
-                    tcolor = "#c6f96f";
+                    tcolor = "#9bdb4d";
                 }
                 if (color == "#8ED0FF") {
-                    tcolor = "#8cd5ff";
+                    tcolor = "#64baff";
                 }
                 if (color == "#C1AFF2") {
-                    tcolor = "#aca9fd";
+                    tcolor = "#ad65d6";
                 }
                 // Coming from Nature
                 if (color == "#ff5656") {
-                    tcolor = "#ff8c82";
+                    tcolor = "#ed5353";
                 }
                 if (color == "#fa983a") {
-                    tcolor = "#ffc27d";
+                    tcolor = "#ffa154";
                 }
                 if (color == "#f6d95b") {
                     tcolor = "#ffe16b";
                 }
-                if (color == "#9CCF81") {
-                    tcolor = "#c6f96f";
+                if (color == "#78e08f") {
+                    tcolor = "#9bdb4d";
                 }
-                if (color == "#8ED0FF") {
-                    tcolor = "#8cd5ff";
+                if (color == "#82ccdd") {
+                    tcolor = "#64baff";
                 }
-                if (color == "#aca9fd") {
-                    tcolor = "#aca9fd";
+                if (color == "#ad65d6") {
+                    tcolor = "#ad65d6";
                 }
                 // Going to elementary
-                if (color == "#ff8c82") {
-                    tcolor = "#ff8c82";
+                if (color == "#ed5353") {
+                    tcolor = "#ed5353";
                 }
-                if (color == "#ffc27d") {
-                    tcolor = "#ffc27d";
+                if (color == "#ffa154") {
+                    tcolor = "#ffa154";
                 }
                 if (color == "#ffe16b") {
                     tcolor = "#ffe16b";
                 }
-                if (color == "#c6f96f") {
-                    tcolor = "#c6f96f";
+                if (color == "#9bdb4d") {
+                    tcolor = "#9bdb4d";
                 }
-                if (color == "#8cd5ff") {
-                    tcolor = "#8cd5ff";
+                if (color == "#64baff") {
+                    tcolor = "#64baff";
                 }
-                if (color == "#aca9fd") {
-                    tcolor = "#aca9fd";
+                if (color == "#ad65d6") {
+                    tcolor = "#ad65d6";
                 }
                 // Resetted color
-                if (color == "#CCCCCC") {
-                    tcolor = "#CCCCCC";
+                if (color == "#d4d4d4") {
+                    tcolor = "#d4d4d4";
                 }
             } else if (settings.theme == 1) {
                 // Coming from elementary
-                if (color == "#ff8c82") {
+                if (color == "#ed5353") {
                     tcolor = "#F33B61";
                 }
-                if (color == "#ffc27d") {
+                if (color == "#ffa154") {
                     tcolor = "#ffa358";
                 }
                 if (color == "#ffe16b") {
                     tcolor = "#FFE379";
                 }
-                if (color == "#c6f96f") {
+                if (color == "#9bdb4d") {
                     tcolor = "#9CCF81";
                 }
-                if (color == "#8cd5ff") {
+                if (color == "#64baff") {
                     tcolor = "#8ED0FF";
                 }
-                if (color == "#aca9fd") {
+                if (color == "#ad65d6") {
                     tcolor = "#C1AFF2";
                 }
                 // Coming from Nature
@@ -226,27 +227,27 @@ namespace Timetable {
                     tcolor = "#C1AFF2";
                 }
                 // Resetted color
-                if (color == "#CCCCCC") {
-                    tcolor = "#CCCCCC";
+                if (color == "#d4d4d4") {
+                    tcolor = "#d4d4d4";
                 }
             } else if (settings.theme == 2) {
                 // Coming from elementary
-                if (color == "#ff8c82") {
+                if (color == "#ed5353") {
                     tcolor = "#ff5656";
                 }
-                if (color == "#ffc27d") {
+                if (color == "#ffa154") {
                     tcolor = "#fa983a";
                 }
                 if (color == "#ffe16b") {
                     tcolor = "#f6d95b";
                 }
-                if (color == "#c6f96f") {
+                if (color == "#9bdb4d") {
                     tcolor = "#78e08f";
                 }
-                if (color == "#8cd5ff") {
+                if (color == "#64baff") {
                     tcolor = "#82ccdd";
                 }
-                if (color == "#aca9fd") {
+                if (color == "#ad65d6") {
                     tcolor = "#8498e6";
                 }
                 // Coming from Flat
@@ -288,8 +289,8 @@ namespace Timetable {
                     tcolor = "#8498e6";
                 }
                 // Resetted color
-                if (color == "#CCCCCC") {
-                    tcolor = "#CCCCCC";
+                if (color == "#d4d4d4") {
+                    tcolor = "#d4d4d4";
                 }
             }
             if (settings.high_contrast) {
@@ -300,11 +301,14 @@ namespace Timetable {
                             border-right: none;
                             border-bottom: none;
                             border-radius: 4px;
-                            margin-bottom: 5px;
+                            margin-bottom: 10px;
                             border-left: none;
                             background-color: shade (%s, 0.5);
                             color: #FFFFFF;
                             font-weight: 600;
+                            box-shadow:
+                                0 1px 3px alpha (shade (%s, 0.33), 0.12),
+                                0 1px 2px alpha (shade (%s, 0.33), 0.24);
                         }
                         .tt-box-%d:backdrop {
                             color: #DDDDDD;
@@ -318,7 +322,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: #666;
                         }
-                    """).printf(uid, tcolor, uid, uid, uid);
+                    """).printf(uid, tcolor, tcolor, tcolor, uid, uid, uid);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -326,11 +330,14 @@ namespace Timetable {
                             border-right: none;
                             border-bottom: none;
                             border-radius: 4px;
-                            margin-bottom: 5px;
+                            margin-bottom: 10px;
                             border-left: 3px solid shade (%s, 0.5);
                             background-color: shade (%s, 0.5);
                             color: #FFFFFF;
                             font-weight: 600;
+                            box-shadow:
+                                0 1px 3px alpha (shade (%s, 0.33), 0.12),
+                                0 1px 2px alpha (shade (%s, 0.33), 0.24);
                         }
                         .tt-box-%d:backdrop {
                             color: #DDDDDD;
@@ -344,7 +351,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: #666;
                         }
-                    """).printf(uid, tcolor, tcolor, uid, uid, uid);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, uid, uid, uid);
                 }
             } else {
                 if (settings.show_tasks_allday && this.task_allday) {
@@ -354,25 +361,28 @@ namespace Timetable {
                             border-top: none;
                             border-right: none;
                             border-radius: 4px;
-                            margin-bottom: 5px;
-                            border-left: none;
-                            background-color: shade (%s, 1.2);
-                            color: mix (%s, #000, 0.88);
+                            margin-bottom: 10px;
+                            border-left: 3px solid mix (%s, #FFF, 0.5);
+                            background-color: mix (%s, #FFF, 0.5);
+                            color: shade (%s, 0.2);
                             font-weight: 600;
+                            box-shadow:
+                                0 1px 3px alpha (shade (%s, 0.33), 0.12),
+                                0 1px 2px alpha (shade (%s, 0.33), 0.24);
                         }
                         .tt-box-%d:backdrop {
-                            color: mix (%s, #000, 0.66);
+                            color: shade (%s, 0.5);
                         }
                         .tt-box-%d image {
-                            color: mix (%s, #000, 0.88);
+                            color: shade (%s, 0.2);
                             -gtk-icon-shadow: none;
                             border-image-width: 0;
                             box-shadow: transparent;
                         }
                         .tt-box-%d image:backdrop {
-                            color: mix (%s, #000, 0.66);
+                            color: shade (%s, 0.5);
                         }
-                    """).printf(uid, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -380,14 +390,17 @@ namespace Timetable {
                             border-top: none;
                             border-right: none;
                             border-radius: 4px;
-                            margin-bottom: 5px;
-                            border-left: 3px solid shade (%s, 0.66);
-                            background-color: mix (%s, #FFF, 0.66);
+                            margin-bottom: 10px;
+                            border-left: 3px solid %s;
+                            background-color: mix (%s, #FFF, 0.7);
                             color: shade (%s, 0.33);
                             font-weight: 600;
+                            box-shadow:
+                                0 1px 3px alpha (shade (%s, 0.5), 0.12),
+                                0 1px 2px alpha (shade (%s, 0.5), 0.24);
                         }
                         .tt-box-%d:backdrop {
-                            color: shade (%s, 0.33);
+                            color: shade (%s, 0.66);
                         }
                         .tt-box-%d image {
                             color: shade (%s, 0.33);
@@ -396,9 +409,9 @@ namespace Timetable {
                             box-shadow: transparent;
                         }
                         .tt-box-%d image:backdrop {
-                            color: shade (%s, 0.33);
+                            color: shade (%s, 0.66);
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 }
             }
             try {
