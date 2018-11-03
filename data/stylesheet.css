@@ -8,6 +8,14 @@
     color: #7ab1ee;
 }
 
+.tt-label-time {
+    font-size: 1.33em;
+    color: #3689e6;
+}
+.tt-label-time:backdrop {
+    color: #7ab1ee;
+}
+
 .tt-column {
     background-color: shade (@bg_color, 1.05);
     border: 1px solid alpha(#000, 0.25);

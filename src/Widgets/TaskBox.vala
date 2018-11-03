@@ -95,22 +95,22 @@ namespace Timetable {
             string tcolor = null;
             if (settings.theme == 0) {
                 // Coming from Flat
-                if (color == "#ff3030") {
+                if (color == "#F33B61") {
                     tcolor = "#ff8c82";
                 }
-                if (color == "#ff7308") {
+                if (color == "#ffa358") {
                     tcolor = "#ffc27d";
                 }
-                if (color == "#ffcc33") {
+                if (color == "#FFE379") {
                     tcolor = "#ffe16b";
                 }
-                if (color == "#2ed573") {
+                if (color == "#9CCF81") {
                     tcolor = "#c6f96f";
                 }
-                if (color == "#1e90ff") {
+                if (color == "#8ED0FF") {
                     tcolor = "#8cd5ff";
                 }
-                if (color == "#5352ed") {
+                if (color == "#C1AFF2") {
                     tcolor = "#aca9fd";
                 }
                 // Coming from Nature
@@ -123,10 +123,10 @@ namespace Timetable {
                 if (color == "#f6d95b") {
                     tcolor = "#ffe16b";
                 }
-                if (color == "#2ed573") {
+                if (color == "#9CCF81") {
                     tcolor = "#c6f96f";
                 }
-                if (color == "#1e90ff") {
+                if (color == "#8ED0FF") {
                     tcolor = "#8cd5ff";
                 }
                 if (color == "#aca9fd") {
@@ -152,70 +152,70 @@ namespace Timetable {
                     tcolor = "#aca9fd";
                 }
                 // Resetted color
-                if (color == "#EEEEEE") {
-                    tcolor = "#EEEEEE";
+                if (color == "#CCCCCC") {
+                    tcolor = "#CCCCCC";
                 }
             } else if (settings.theme == 1) {
                 // Coming from elementary
                 if (color == "#ff8c82") {
-                    tcolor = "#ff3030";
+                    tcolor = "#F33B61";
                 }
                 if (color == "#ffc27d") {
-                    tcolor = "#ff7308";
+                    tcolor = "#ffa358";
                 }
                 if (color == "#ffe16b") {
-                    tcolor = "#ffcc33";
+                    tcolor = "#FFE379";
                 }
                 if (color == "#c6f96f") {
-                    tcolor = "#2ed573";
+                    tcolor = "#9CCF81";
                 }
                 if (color == "#8cd5ff") {
-                    tcolor = "#1e90ff";
+                    tcolor = "#8ED0FF";
                 }
                 if (color == "#aca9fd") {
-                    tcolor = "#5352ed";
+                    tcolor = "#C1AFF2";
                 }
                 // Coming from Nature
                 if (color == "#ff5656") {
-                    tcolor = "#ff3030";
+                    tcolor = "#F33B61";
                 }
                 if (color == "#fa983a") {
-                    tcolor = "#ff7308";
+                    tcolor = "#ffa358";
                 }
                 if (color == "#f6d95b") {
-                    tcolor = "#ffcc33";
+                    tcolor = "#FFE379";
                 }
                 if (color == "#78e08f") {
-                    tcolor = "#2ed573";
+                    tcolor = "#9CCF81";
                 }
                 if (color == "#82ccdd") {
-                    tcolor = "#1e90ff";
+                    tcolor = "#8ED0FF";
                 }
                 if (color == "#8498e6") {
-                    tcolor = "#5352ed";
+                    tcolor = "#C1AFF2";
                 }
                 // Going to Flat
-                if (color == "#ff3030") {
-                    tcolor = "#ff3030";
+                if (color == "#F33B61") {
+                    tcolor = "#F33B61";
                 }
-                if (color == "#ff7308") {
-                    tcolor = "#ff7308";
+                if (color == "#ffa358") {
+                    tcolor = "#ffa358";
                 }
-                if (color == "#ffcc33") {
-                    tcolor = "#ffcc33";
+                if (color == "#FFE379") {
+                    tcolor = "#FFE379";
                 }
-                if (color == "#2ed573") {
-                    tcolor = "#2ed573";
+                if (color == "#9CCF81") {
+                    tcolor = "#9CCF81";
                 }
-                if (color == "#1e90ff") {
-                    tcolor = "#1e90ff";
+                if (color == "#8ED0FF") {
+                    tcolor = "#8ED0FF";
                 }
-                if (color == "#5352ed") {
-                    tcolor = "#5352ed";
+                if (color == "#C1AFF2") {
+                    tcolor = "#C1AFF2";
                 }
                 // Resetted color
-                if (color == "#EEEEEE") {
-                    tcolor = "#EEEEEE";
+                if (color == "#CCCCCC") {
+                    tcolor = "#CCCCCC";
                 }
             } else if (settings.theme == 2) {
                 // Coming from elementary
@@ -238,22 +238,22 @@ namespace Timetable {
                     tcolor = "#8498e6";
                 }
                 // Coming from Flat
-                if (color == "#ff3030") {
+                if (color == "#F33B61") {
                     tcolor = "#ff5656";
                 }
-                if (color == "#ff7308") {
+                if (color == "#ffa358") {
                     tcolor = "#fa983a";
                 }
-                if (color == "#ffcc33") {
+                if (color == "#FFE379") {
                     tcolor = "#f6d95b";
                 }
-                if (color == "#2ed573") {
+                if (color == "#9CCF81") {
                     tcolor = "#78e08f";
                 }
-                if (color == "#1e90ff") {
+                if (color == "#8ED0FF") {
                     tcolor = "#82ccdd";
                 }
-                if (color == "#5352ed") {
+                if (color == "#C1AFF2") {
                     tcolor = "#8498e6";
                 }
                 // Going to Nature
@@ -276,22 +276,23 @@ namespace Timetable {
                     tcolor = "#8498e6";
                 }
                 // Resetted color
-                if (color == "#EEEEEE") {
-                    tcolor = "#EEEEEE";
+                if (color == "#CCCCCC") {
+                    tcolor = "#CCCCCC";
                 }
             }
             if (settings.high_contrast) {
-                if (!task_allday == !settings.show_tasks_allday) {
+                if (task_allday == !settings.show_tasks_allday) {
                     style = ("""
                         .tt-box-%d {
                             border-top: none;
                             border-right: none;
                             border-bottom: none;
                             border-radius: 4px;
-                            margin-bottom: 4px;
+                            margin-bottom: 5px;
                             border-left: none;
-                            background-color: shade (%s, 0.66);
+                            background-color: shade (%s, 0.5);
                             color: #FFFFFF;
+                            font-weight: 600;
                         }
                         .tt-box-%d:backdrop {
                             color: #DDDDDD;
@@ -313,10 +314,11 @@ namespace Timetable {
                             border-right: none;
                             border-bottom: none;
                             border-radius: 4px;
-                            margin-bottom: 4px;
+                            margin-bottom: 5px;
                             border-left: 3px solid shade (%s, 0.5);
-                            background-color: shade (%s, 0.66);
+                            background-color: shade (%s, 0.5);
                             color: #FFFFFF;
+                            font-weight: 600;
                         }
                         .tt-box-%d:backdrop {
                             color: #DDDDDD;
@@ -333,31 +335,32 @@ namespace Timetable {
                     """).printf(uid, tcolor, tcolor, uid, uid, uid);
                 }
             } else {
-                if (!task_allday == !settings.show_tasks_allday) {
+                if (task_allday == !settings.show_tasks_allday) {
                     style = ("""
                         .tt-box-%d {
                             border-bottom: none;
                             border-top: none;
                             border-right: none;
                             border-radius: 4px;
-                            margin-bottom: 4px;
+                            margin-bottom: 5px;
                             border-left: none;
-                            background-color: mix (%s, #FFF, 0.77);
-                            color: #333;
+                            background-color: mix (%s, #FFF, 0.66);
+                            color: shade (%s, 0.33);
+                            font-weight: 600;
                         }
                         .tt-box-%d:backdrop {
-                            color: #666;
+                            color: shade (%s, 0.33);
                         }
                         .tt-box-%d image {
-                            color: #333;
+                            color: shade (%s, 0.33);
                             -gtk-icon-shadow: none;
                             border-image-width: 0;
                             box-shadow: transparent;
                         }
                         .tt-box-%d image:backdrop {
-                            color: #666;
+                            color: shade (%s, 0.33);
                         }
-                    """).printf(uid, tcolor, uid, uid, uid);
+                    """).printf(uid, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -365,24 +368,25 @@ namespace Timetable {
                             border-top: none;
                             border-right: none;
                             border-radius: 4px;
-                            margin-bottom: 4px;
-                            border-left: 3px solid %s;
-                            background-color: mix (%s, #FFF, 0.5);
-                            color: #333;
+                            margin-bottom: 5px;
+                            border-left: 3px solid shade (%s, 0.66);
+                            background-color: mix (%s, #FFF, 0.66);
+                            color: shade (%s, 0.33);
+                            font-weight: 600;
                         }
                         .tt-box-%d:backdrop {
-                            color: #666;
+                            color: shade (%s, 0.33);
                         }
                         .tt-box-%d image {
-                            color: #333;
+                            color: shade (%s, 0.33);
                             -gtk-icon-shadow: none;
                             border-image-width: 0;
                             box-shadow: transparent;
                         }
                         .tt-box-%d image:backdrop {
-                            color: #666;
+                            color: shade (%s, 0.33);
                         }
-                    """).printf(uid, tcolor, tcolor, uid, uid, uid);
+                    """).printf(uid, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
                 }
             }
             try {

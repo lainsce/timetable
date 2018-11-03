@@ -15,7 +15,12 @@ namespace Timetable {
             column.vexpand = true;
             column.activate_on_single_click = false;
             column.selection_mode = Gtk.SelectionMode.NONE;
-            column.set_sort_func (list_sort);
+            column.set_sort_func ((row1, row2) => {
+                var task1 = ((TaskBox) row1).time_from_text;
+                var task2 = ((TaskBox) row2).time_from_text;
+                return strcmp (task1.casefold (), task2.casefold ());
+            });
+
             var column_style_context = column.get_style_context ();
             column_style_context.add_class ("tt-column");
 
@@ -91,7 +96,7 @@ namespace Timetable {
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.LARGE_TOOLBAR));
 
             column_button.clicked.connect (() => {
-                add_task (_("Task…"), "#EEEEEE", "12:00", "12:00", false, false);
+                add_task (_("Task…"), "#CCCCCC", "12:00", "12:00", false, false);
             });
 
             this.row_spacing = 6;
@@ -124,16 +129,5 @@ namespace Timetable {
             }
             return tasks;
         }
-
-        public int list_sort (Gtk.ListBoxRow first_row, Gtk.ListBoxRow second_row) {
-            var row_1 = (TaskBox) first_row;
-            var row_2 = (TaskBox) second_row;
-
-            string name_1 = row_1.time_from_text;
-            string name_2 = row_2.time_from_text;
-
-            return name_1.collate (name_2);
-        }
-
     }
 }

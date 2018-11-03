@@ -122,8 +122,8 @@ namespace Timetable {
                     tb.color = "#ff8c82";
                     tb.tcolor = "#ff8c82";
                 } else if (settings.theme == 1) {
-                    tb.color = "#ff3030";
-                    tb.tcolor = "#ff3030";
+                    tb.color = "#F33B61";
+                    tb.tcolor = "#F33B61";
                 } else if (settings.theme == 2) {
                     tb.color = "#ff5656";
                     tb.tcolor = "#ff5656";
@@ -137,8 +137,8 @@ namespace Timetable {
                     tb.color = "#ffc27d";
                     tb.tcolor = "#ffc27d";
                 } else if (settings.theme == 1) {
-                    tb.color = "#ff7308";
-                    tb.tcolor = "#ff7308";
+                    tb.color = "#ffa358";
+                    tb.tcolor = "#ffa358";
                 } else if (settings.theme == 2) {
                     tb.color = "#fa983a";
                     tb.tcolor = "#fa983a";
@@ -152,8 +152,8 @@ namespace Timetable {
                     tb.color = "#ffe16b";
                     tb.tcolor = "#ffe16b";
                 } else if (settings.theme == 1) {
-                    tb.color = "#ffcc33";
-                    tb.tcolor = "#ffcc33";
+                    tb.color = "#FFE379";
+                    tb.tcolor = "#FFE379";
                 } else if (settings.theme == 2) {
                     tb.color = "#f6d95b";
                     tb.tcolor = "#f6d95b";
@@ -167,8 +167,8 @@ namespace Timetable {
                     tb.color = "#c6f96f";
                     tb.tcolor = "#c6f96f";
                 } else if (settings.theme == 1) {
-                    tb.color = "#2ed573";
-                    tb.tcolor = "#2ed573";
+                    tb.color = "#9CCF81";
+                    tb.tcolor = "#9CCF81";
                 } else if (settings.theme == 2) {
                     tb.color = "#78e08f";
                     tb.tcolor = "#78e08f";
@@ -182,8 +182,8 @@ namespace Timetable {
                     tb.color = "#8cd5ff";
                     tb.tcolor = "#8cd5ff";
                 } else if (settings.theme == 1) {
-                    tb.color = "#1e90ff";
-                    tb.tcolor = "#1e90ff";
+                    tb.color = "#8ED0FF";
+                    tb.tcolor = "#8ED0FF";
                 } else if (settings.theme == 2) {
                     tb.color = "#82ccdd";
                     tb.tcolor = "#82ccdd";
@@ -197,8 +197,8 @@ namespace Timetable {
                     tb.color = "#aca9fd";
                     tb.tcolor = "#aca9fd";
                 } else if (settings.theme == 1) {
-                    tb.color = "#5352ed";
-                    tb.tcolor = "#aca9fd";
+                    tb.color = "#C1AFF2";
+                    tb.tcolor = "#C1AFF2";
                 } else if (settings.theme == 2) {
                     tb.color = "#8498e6";
                     tb.tcolor = "#8498e6";
@@ -209,14 +209,14 @@ namespace Timetable {
 
             color_button_clear.clicked.connect (() => {
                 if (settings.theme == 0) {
-                    tb.color = "#EEEEEE";
-                    tb.tcolor = "#EEEEEE";
+                    tb.color = "#CCCCCC";
+                    tb.tcolor = "#CCCCCC";
                 } else if (settings.theme == 1) {
-                    tb.color = "#EEEEEE";
-                    tb.tcolor = "#EEEEEE";
+                    tb.color = "#CCCCCC";
+                    tb.tcolor = "#CCCCCC";
                 } else if (settings.theme == 2) {
-                    tb.color = "#EEEEEE";
-                    tb.tcolor = "#EEEEEE";
+                    tb.color = "#CCCCCC";
+                    tb.tcolor = "#CCCCCC";
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -242,6 +242,7 @@ namespace Timetable {
             time_from_picker.time_changed.connect (() => {
                 tb.task_time_from_label.label = time_from_picker.time.format ("%H:%M").to_string ();
                 tb.time_from_text = time_from_picker.time.format ("%H:%M").to_string ();
+                tb.changed ();
                 win.tm.save_notes ();
             });
 
@@ -254,6 +255,7 @@ namespace Timetable {
             time_to_picker.time_changed.connect (() => {
                 tb.task_time_to_label.label = time_to_picker.time.format ("%H:%M").to_string ();
                 tb.time_to_text = time_to_picker.time.format ("%H:%M").to_string ();
+                tb.changed ();
                 win.tm.save_notes ();
             });
 

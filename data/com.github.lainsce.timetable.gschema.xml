@@ -31,7 +31,7 @@
 				<description>Tasks color contrast</description>
 		</key>
         <key name="show-tasks-allday" type="b">
-				<default>true</default>
+				<default>false</default>
 				<summary>Task difference all-days</summary>
 				<description>Tasks differentiation as all-day task</description>
 		</key>

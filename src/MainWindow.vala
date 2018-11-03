@@ -45,7 +45,7 @@ namespace Timetable {
             GLib.Object (
                 application: application,
                 icon_name: "com.github.lainsce.timetable",
-                height_request: 750,
+                height_request: 825,
                 width_request: 900,
                 title: (_("Timetable"))
             );
@@ -142,6 +142,72 @@ namespace Timetable {
             titlebar.pack_end (menu_button);
             titlebar.pack_end (export_button);
 
+            // Times Column
+            var 1_row = new Gtk.Label ("01:00");
+            1_row.halign = Gtk.Align.CENTER;
+            1_row.valign = Gtk.Align.CENTER;
+            var 1_row_style_context = 1_row.get_style_context ();
+            1_row_style_context.add_class ("tt-label-time");
+
+            var 4_row = new Gtk.Label ("04:00");
+            4_row.halign = Gtk.Align.CENTER;
+            1_row.valign = Gtk.Align.CENTER;
+            var 4_row_style_context = 4_row.get_style_context ();
+            4_row_style_context.add_class ("tt-label-time");
+
+            var 7_row = new Gtk.Label ("07:00");
+            7_row.halign = Gtk.Align.CENTER;
+            7_row.valign = Gtk.Align.CENTER;
+            var 7_row_style_context = 7_row.get_style_context ();
+            7_row_style_context.add_class ("tt-label-time");
+
+            var 10_row = new Gtk.Label ("10:00");
+            10_row.halign = Gtk.Align.CENTER;
+            10_row.valign = Gtk.Align.CENTER;
+            var 10_row_style_context = 10_row.get_style_context ();
+            10_row_style_context.add_class ("tt-label-time");
+
+            var 13_row = new Gtk.Label ("13:00");
+            13_row.halign = Gtk.Align.CENTER;
+            13_row.valign = Gtk.Align.CENTER;
+            var 13_row_style_context = 13_row.get_style_context ();
+            13_row_style_context.add_class ("tt-label-time");
+
+            var 16_row = new Gtk.Label ("16:00");
+            16_row.halign = Gtk.Align.CENTER;
+            16_row.valign = Gtk.Align.CENTER;
+            var 16_row_style_context = 16_row.get_style_context ();
+            16_row_style_context.add_class ("tt-label-time");
+
+            var 19_row = new Gtk.Label ("19:00");
+            19_row.halign = Gtk.Align.CENTER;
+            19_row.valign = Gtk.Align.CENTER;
+            var 19_row_style_context = 19_row.get_style_context ();
+            19_row_style_context.add_class ("tt-label-time");
+
+            var 22_row = new Gtk.Label ("22:00");
+            22_row.halign = Gtk.Align.CENTER;
+            22_row.valign = Gtk.Align.CENTER;
+            var 22_row_style_context = 22_row.get_style_context ();
+            22_row_style_context.add_class ("tt-label-time");
+
+            var tgrid = new Gtk.Grid ();
+            tgrid.set_size_request (50,50);
+            tgrid.margin = 12;
+            tgrid.margin_top = 32;
+            tgrid.margin_bottom = 0;
+            tgrid.margin_right = 0;
+            tgrid.hexpand = false;
+            tgrid.row_spacing = 54;
+            tgrid.attach (1_row, 0, 0, 1, 1);
+            tgrid.attach (4_row, 0, 1, 1, 1);
+            tgrid.attach (7_row, 0, 2, 1, 1);
+            tgrid.attach (10_row, 0, 3, 1, 1);
+            tgrid.attach (13_row, 0, 4, 1, 1);
+            tgrid.attach (16_row, 0, 5, 1, 1);
+            tgrid.attach (19_row, 0, 6, 1, 1);
+            tgrid.attach (22_row, 0, 7, 1, 1);
+
             // Day Columns
             monday_column = new DayColumn (1, this);
             tuesday_column = new DayColumn (2, this);
@@ -155,14 +221,15 @@ namespace Timetable {
             grid = new Gtk.Grid ();
             grid.column_spacing = 12;
             grid.margin = 12;
-            grid.set_column_homogeneous (true);
+            grid.set_column_homogeneous (false);
             grid.hexpand = false;
-            grid.attach (monday_column, 0, 0, 1, 1);
-            grid.attach (tuesday_column, 1, 0, 1, 1);
-            grid.attach (wednesday_column, 2, 0, 1, 1);
-            grid.attach (thursday_column, 3, 0, 1, 1);
-            grid.attach (friday_column, 4, 0, 1, 1);
-            grid.attach (weekend_column, 5, 0, 1, 1);
+            grid.attach (tgrid, 0, 0, 1, 1);
+            grid.attach (monday_column, 1, 0, 1, 1);
+            grid.attach (tuesday_column, 2, 0, 1, 1);
+            grid.attach (wednesday_column, 3, 0, 1, 1);
+            grid.attach (thursday_column, 4, 0, 1, 1);
+            grid.attach (friday_column, 5, 0, 1, 1);
+            grid.attach (weekend_column, 6, 0, 1, 1);
             if (grid != null) {
                 if (settings.weekend_show == true) {
                     weekend_column.show_all ();
