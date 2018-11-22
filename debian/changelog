@@ -1,3 +1,9 @@
+com.github.lainsce.timetable (1.0.3) xenial; urgency=low
+
+  * Fixes and bugfixes.
+
+ -- Lains <lainsce@airmail.cc>  Fri, 23 Nov 2018 12:20:00 -0300
+
 com.github.lainsce.timetable (1.0.2) xenial; urgency=low
 
   * New: Tasks can now be set to be an all-day task.

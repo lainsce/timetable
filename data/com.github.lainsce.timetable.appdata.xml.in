@@ -53,6 +53,15 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
+        <release version="1.0.3" date="2018-11-23">
+            <description>
+                <p>Release: User Experienced Tasks</p>
+                <ul>
+                    <li>New: Tasks can be set to have an optional notification when they start.</li>
+                    <li>Fix: The grid of Day columns doesn't dictate the size of the app anymore, allowing the app to be resized to a smaller size.</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.2" date="2018-10-26">
             <description>
                 <p>Release: All-Day Bonanza</p>

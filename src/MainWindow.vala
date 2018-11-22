@@ -250,7 +250,10 @@ namespace Timetable {
             box.pack_start (tgrid, false, true, 0);
             box.pack_start (grid, false, true, 0);
 
-            this.add (box);
+            var scrwindow = new Gtk.ScrolledWindow (null, null);
+            scrwindow.add (box);
+
+            this.add (scrwindow);
             this.show_all ();
         }
 
