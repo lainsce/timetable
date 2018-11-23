@@ -104,7 +104,8 @@ namespace Timetable.FileManager {
                     }
                     var buffer = buffer_text;
                     uint8[] binbuffer = buffer.data;
-                    save_file (file, binbuffer);
+                    var file_final = File.new_for_path (file.get_path () + ".org");
+                    save_file (file_final, binbuffer);
                     reset_modification_state (win);
                 }
             }
