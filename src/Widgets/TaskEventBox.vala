@@ -6,6 +6,7 @@ namespace Timetable {
         public Gtk.Revealer revealer;
 
         public bool show_button = true;
+        public bool show_popover = true;
         public signal void settings_requested ();
         public signal void delete_requested ();
 
@@ -13,18 +14,27 @@ namespace Timetable {
             this.tb = tb;
 
             task_delete_button = new Gtk.Button();
-            task_delete_button.events |= Gdk.EventMask.BUTTON_PRESS_MASK;
-            var task_delete_button_context = task_delete_button.get_style_context ();
-            task_delete_button_context.add_class ("flat");
-            task_delete_button_context.add_class ("icon-shadow");
+            task_delete_button.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                                         Gdk.EventMask.LEAVE_NOTIFY_MASK &
+                                         Gdk.EventMask.BUTTON_PRESS_MASK &
+                                         Gdk.EventMask.BUTTON_RELEASE_MASK;
+            var task_delete_button_c = task_delete_button.get_style_context ();
+            task_delete_button_c.add_class ("flat");
+            task_delete_button_c.add_class ("icon-shadow");
             task_delete_button.has_tooltip = true;
             task_delete_button.vexpand = false;
             task_delete_button.valign = Gtk.Align.CENTER;
-            task_delete_button.set_image (new Gtk.Image.from_icon_name ("edit-delete-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
+            task_delete_button.set_image (new Gtk.Image.from_icon_name (
+                                             "edit-delete-symbolic",
+                                             Gtk.IconSize.SMALL_TOOLBAR
+                                          ));
             task_delete_button.tooltip_text = (_("Delete Task"));
 
             app_button = new Gtk.Button();
-            app_button.events |= Gdk.EventMask.BUTTON_PRESS_MASK;
+            app_button.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                                 Gdk.EventMask.LEAVE_NOTIFY_MASK &
+                                 Gdk.EventMask.BUTTON_PRESS_MASK &
+                                 Gdk.EventMask.BUTTON_RELEASE_MASK;
             var app_button_context = app_button.get_style_context ();
             app_button_context.add_class ("flat");
             app_button_context.add_class ("icon-shadow");
@@ -32,10 +42,16 @@ namespace Timetable {
             app_button.vexpand = false;
             app_button.valign = Gtk.Align.CENTER;
             app_button.tooltip_text = (_("Task Settings"));
-            app_button.image = new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+            app_button.image = new Gtk.Image.from_icon_name (
+                                    "open-menu-symbolic",
+                                    Gtk.IconSize.SMALL_TOOLBAR
+                               );
 
             var task_buttons_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 6);
-            task_buttons_box.events |= Gdk.EventMask.ENTER_NOTIFY_MASK & Gdk.EventMask.LEAVE_NOTIFY_MASK;
+            task_buttons_box.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                                       Gdk.EventMask.LEAVE_NOTIFY_MASK &
+                                       Gdk.EventMask.BUTTON_PRESS_MASK &
+                                       Gdk.EventMask.BUTTON_RELEASE_MASK;
             task_buttons_box.pack_start (app_button, false, true, 0);
             task_buttons_box.pack_start (task_delete_button, false, true, 0);
 
@@ -46,8 +62,10 @@ namespace Timetable {
             revealer.add (task_buttons_box);
 
             this.add (revealer);
-
-            this.events |= Gdk.EventMask.ENTER_NOTIFY_MASK & Gdk.EventMask.LEAVE_NOTIFY_MASK;
+            this.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                           Gdk.EventMask.LEAVE_NOTIFY_MASK &
+                           Gdk.EventMask.BUTTON_PRESS_MASK &
+                           Gdk.EventMask.BUTTON_RELEASE_MASK;
 
             task_delete_button.clicked.connect (() => {
                 delete_requested ();
@@ -63,7 +81,11 @@ namespace Timetable {
             });
 
             this.leave_notify_event.connect ((event) => {
-                revealer.set_reveal_child (false);
+                if (tb.popover.visible == true) {
+                    revealer.set_reveal_child (this.show_button);
+                } else {
+                    revealer.set_reveal_child (false);
+                }
                 return false;
             });
 

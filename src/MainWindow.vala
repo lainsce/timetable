@@ -98,6 +98,11 @@ namespace Timetable {
             new_button.has_tooltip = true;
             new_button.tooltip_text = (_("New Timetable"));
 
+            var open_button = new Gtk.Button ();
+            open_button.set_image (new Gtk.Image.from_icon_name ("document-open", Gtk.IconSize.LARGE_TOOLBAR));
+            open_button.has_tooltip = true;
+            open_button.tooltip_text = (_("Open Timetable…"));
+
             var export_tt = new Gtk.ModelButton ();
             export_tt.text = (_("Export Timetable…"));
             export_tt.action_name = ACTION_PREFIX + ACTION_EXPORT;
@@ -140,6 +145,7 @@ namespace Timetable {
             menu_button.popover = menu;
 
             titlebar.pack_start (new_button);
+            titlebar.pack_start (open_button);
             titlebar.pack_end (menu_button);
             titlebar.pack_end (export_button);
 
@@ -243,6 +249,10 @@ namespace Timetable {
 
             new_button.clicked.connect (() => {
                 FileManager.new_tt (this);
+            });
+
+            open_button.clicked.connect (() => {
+                FileManager.open_tt (this);
             });
 
             var box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);

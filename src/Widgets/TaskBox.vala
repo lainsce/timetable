@@ -1,7 +1,8 @@
 namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
         public MainWindow win;
-        public TaskPreferences dialog;
+        public TaskPreferences popover;
+        public TaskEventBox evbox;
         public string task_name;
         public Gtk.Label task_label;
         public Gtk.Label task_time_from_label;
@@ -67,7 +68,7 @@ namespace Timetable {
             date_time_box.pack_start (task_time_sep_label, false, true, 0);
             date_time_box.pack_start (task_time_to_label, false, true, 0);
 
-            var evbox = new TaskEventBox (this);
+            evbox = new TaskEventBox (this);
 
             Gtk.drag_source_set (
                 evbox, Gdk.ModifierType.BUTTON1_MASK, dlb_entries, Gdk.DragAction.MOVE
@@ -84,8 +85,8 @@ namespace Timetable {
             task_grid.attach (evbox, 1, 0, 1, 2);
 
             evbox.settings_requested.connect (() => {
-                dialog = new TaskPreferences (win, this);
-                dialog.run ();
+                popover = new TaskPreferences (win, this);
+                popover.popup ();
             });
 
             evbox.delete_requested.connect (() => {

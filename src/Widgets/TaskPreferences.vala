@@ -1,20 +1,15 @@
 namespace Timetable {
-    public class TaskPreferences : Gtk.Dialog {
+    public class TaskPreferences : Gtk.Popover {
         public weak TaskBox tb;
         public MainWindow win;
 
         public TaskPreferences (MainWindow win, TaskBox tb) {
             Object (
-                border_width: 6,
-                deletable: false,
-                resizable: false,
-                title: _("Task Preferences"),
-                transient_for: win,
-                destroy_with_parent: true,
-                window_position: Gtk.WindowPosition.CENTER_ON_PARENT
+                border_width: 6
             );
             this.win = win;
             this.tb = tb;
+            this.set_relative_to (tb.evbox.app_button);
 
             var settings = AppSettings.get_default ();
             var task_prefs_label = new Gtk.Label (_("“%s” Preferences").printf(tb.task_name));
@@ -375,15 +370,11 @@ namespace Timetable {
             main_stack.margin_top = 0;
             main_stack.add (main_grid);
 
-            var close_button = add_button (_("Close"), Gtk.ResponseType.CLOSE);
-            ((Gtk.Button) close_button).clicked.connect (() => destroy ());
-
             var grid = new Gtk.Grid ();
             grid.margin_top = 0;
             grid.attach (main_stack, 0, 1, 1, 1);
 
-            ((Gtk.Container) get_content_area ()).add (grid);
-
+            this.add (grid);
             this.show_all ();
         }
     }
