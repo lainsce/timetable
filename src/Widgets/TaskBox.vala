@@ -86,7 +86,6 @@ namespace Timetable {
 
             evbox.settings_requested.connect (() => {
                 popover = new TaskPreferences (win, this);
-                popover.popup ();
             });
 
             evbox.delete_requested.connect (() => {

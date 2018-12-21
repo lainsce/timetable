@@ -56,6 +56,10 @@ namespace Timetable {
             task_buttons_box.pack_start (task_delete_button, false, true, 0);
 
             revealer = new Gtk.Revealer ();
+            revealer.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                               Gdk.EventMask.LEAVE_NOTIFY_MASK &
+                               Gdk.EventMask.BUTTON_PRESS_MASK &
+                               Gdk.EventMask.BUTTON_RELEASE_MASK;
             revealer.set_transition_duration (100);
             revealer.set_transition_type (Gtk.RevealerTransitionType.CROSSFADE);
             revealer.halign = Gtk.Align.START;
@@ -82,11 +86,11 @@ namespace Timetable {
 
             this.leave_notify_event.connect ((event) => {
                 if (tb.popover.visible == true) {
-                    revealer.set_reveal_child (this.show_button);
-                } else {
                     revealer.set_reveal_child (false);
-                }
-                return false;
+    	            return false;
+    	        }
+    	        revealer.set_reveal_child (this.show_button);
+                return true;
             });
 
             app_button.enter_notify_event.connect ((event) => {
