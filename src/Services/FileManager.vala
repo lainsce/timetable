@@ -2,6 +2,31 @@ namespace Timetable.FileManager {
     public MainWindow win;
     public File file;
 
+    public void open_tt (MainWindow win) {
+        debug ("Open button pressed.");
+        var dialog = new Dialog (win);
+        dialog.response.connect ((response_id) => {
+            switch (response_id) {
+                case Gtk.ResponseType.YES:
+                    debug ("User opens the file.");
+                    // TODO: Find how to read the file and display it.
+                    break;
+                case Gtk.ResponseType.NO:
+                    debug ("User doesn't care about the file.");
+                    break;
+                case Gtk.ResponseType.CANCEL:
+                    debug ("User cancelled, don't do anything.");
+                    break;
+                case Gtk.ResponseType.DELETE_EVENT:
+                    debug ("User cancelled, don't do anything.");
+                    break;
+            }
+            dialog.destroy();
+        });
+
+        dialog.show_all ();
+    }
+
     public void new_tt (MainWindow win) {
         debug ("New button pressed.");
         var dialog = new Dialog (win);
