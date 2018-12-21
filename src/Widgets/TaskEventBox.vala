@@ -86,11 +86,15 @@ namespace Timetable {
 
             this.leave_notify_event.connect ((event) => {
                 if (tb.popover.visible == true) {
-                    revealer.set_reveal_child (false);
-    	            return false;
+    	            return true;
     	        }
     	        revealer.set_reveal_child (this.show_button);
-                return true;
+    	        return false;
+            });
+
+            revealer.leave_notify_event.connect ((event) => {
+                revealer.set_reveal_child (false);
+	            return false;
             });
 
             app_button.enter_notify_event.connect ((event) => {
