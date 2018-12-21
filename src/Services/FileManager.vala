@@ -68,7 +68,13 @@ namespace Timetable.FileManager {
             dialog.destroy();
         });
 
-        if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.saturday_column.is_modified == true || win.sunday_column.is_modified == true) {
+        if (win.monday_column.is_modified == true ||
+            win.tuesday_column.is_modified == true ||
+            win.wednesday_column.is_modified == true ||
+            win.thursday_column.is_modified == true ||
+            win.friday_column.is_modified == true ||
+            win.saturday_column.is_modified == true ||
+            win.sunday_column.is_modified == true) {
             debug ("Buffer was modified. Asking user to save first.");
             dialog.show_all ();
         } else {
@@ -77,7 +83,11 @@ namespace Timetable.FileManager {
     }
 
     public void save_file (File file, uint8[] buffer) throws Error {
-        var output = new DataOutputStream (file.create(FileCreateFlags.REPLACE_DESTINATION));
+        var output = new DataOutputStream (
+                                file.create(
+                                    FileCreateFlags.REPLACE_DESTINATION
+                                )
+                         );
         long written = 0;
         while (written < buffer.length)
             written += output.write (buffer[written:buffer.length]);
@@ -97,39 +107,88 @@ namespace Timetable.FileManager {
                     file.delete ();
                 }
 
-                if (win.monday_column.is_modified == true || win.tuesday_column.is_modified == true || win.wednesday_column.is_modified == true || win.thursday_column.is_modified == true || win.friday_column.is_modified == true || win.saturday_column.is_modified == true || win.sunday_column.is_modified == true) {
+                if (win.monday_column.is_modified == true ||
+                    win.tuesday_column.is_modified == true ||
+                    win.wednesday_column.is_modified == true ||
+                    win.thursday_column.is_modified == true ||
+                    win.friday_column.is_modified == true ||
+                    win.saturday_column.is_modified == true ||
+                    win.sunday_column.is_modified == true) {
                     string buffer_text = "";
                     buffer_text += "* Monday\n";
                     foreach (var task in win.monday_column.get_tasks ()) {
-                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                        buffer_text += "\t- " +
+                                       task.task_name +
+                                       "\n\t<" +
+                                       task.time_from_text +
+                                       " - " +
+                                       task.time_to_text +
+                                       ">\n";
                     }
                     buffer_text += "* Tuesday\n";
                     foreach (var task in win.tuesday_column.get_tasks ()) {
-                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                        buffer_text += "\t- " +
+                                       task.task_name +
+                                       "\n\t<" +
+                                       task.time_from_text +
+                                       " - " +
+                                       task.time_to_text +
+                                       ">\n";
                     }
                     buffer_text += "* Wednesday\n";
                     foreach (var task in win.wednesday_column.get_tasks ()) {
-                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                        buffer_text += "\t- " +
+                                       task.task_name +
+                                       "\n\t<" +
+                                       task.time_from_text +
+                                       " - " +
+                                       task.time_to_text +
+                                       ">\n";
                     }
                     buffer_text += "* Thursday\n";
                     foreach (var task in win.thursday_column.get_tasks ()) {
-                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                        buffer_text += "\t- " +
+                                       task.task_name +
+                                       "\n\t<" +
+                                       task.time_from_text +
+                                       " - " +
+                                       task.time_to_text +
+                                       ">\n";
                     }
                     buffer_text += "* Friday\n";
                     foreach (var task in win.friday_column.get_tasks ()) {
-                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                        buffer_text += "\t- " +
+                                       task.task_name +
+                                       "\n\t<" +
+                                       task.time_from_text +
+                                       " - " +
+                                       task.time_to_text +
+                                       ">\n";
                     }
                     buffer_text += "* Saturday\n";
                     foreach (var task in win.saturday_column.get_tasks ()) {
-                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                        buffer_text += "\t- " +
+                                       task.task_name +
+                                       "\n\t<" +
+                                       task.time_from_text +
+                                       " - " +
+                                       task.time_to_text +
+                                       ">\n";
                     }
                     buffer_text += "* Sunday\n";
                     foreach (var task in win.sunday_column.get_tasks ()) {
-                        buffer_text += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+                        buffer_text += "\t- " +
+                                       task.task_name +
+                                       "\n\t<" +
+                                       task.time_from_text +
+                                       " - " +
+                                       task.time_to_text +
+                                       ">\n";
                     }
                     var buffer = buffer_text;
                     uint8[] binbuffer = buffer.data;
-                    var file_final = File.new_for_path (file.get_path () + ".org");
+                    var file_final = File.new_for_path (file.get_path () +
+                                                        ".org");
                     save_file (file_final, binbuffer);
                     reset_modification_state (win);
                 }

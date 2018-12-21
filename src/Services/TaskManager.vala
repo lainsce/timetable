@@ -21,7 +21,8 @@ namespace Timetable {
     public class TaskManager {
         public MainWindow win;
         public Json.Builder builder;
-        private string app_dir = Environment.get_user_cache_dir () + "/com.github.lainsce.timetable";
+        private string app_dir = Environment.get_user_cache_dir () +
+                                 "/com.github.lainsce.timetable";
         private string file_name;
 
         public TaskManager (MainWindow win) {
@@ -41,7 +42,9 @@ namespace Timetable {
                 if (file.query_exists ()) {
                     file.delete ();
                 }
-                var file_stream = file.create (FileCreateFlags.REPLACE_DESTINATION);
+                var file_stream = file.create (
+                                        FileCreateFlags.REPLACE_DESTINATION
+                                        );
                 var data_stream = new DataOutputStream (file_stream);
                 data_stream.put_string(json_string);
             } catch (Error e) {
@@ -70,7 +73,8 @@ namespace Timetable {
             return str;
         }
 
-        private static void save_column (Json.Builder builder, DayColumn column) {
+        private static void save_column (Json.Builder builder,
+                                         DayColumn column) {
 	        builder.begin_array ();
 	        foreach (var task in column.get_tasks ()) {
                 builder.begin_array ();
@@ -109,7 +113,12 @@ namespace Timetable {
                         bool task_allday = task.get_boolean_element(4);
                         bool task_notify = task.get_boolean_element(5);
 
-                        win.monday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        win.monday_column.add_task (task_name,
+                                                    color,
+                                                    time_from_text,
+                                                    time_to_text,
+                                                    task_allday,
+                                                    task_notify);
                     }
 
                     var tuesday_columns = array.get_array_element (1);
@@ -122,7 +131,12 @@ namespace Timetable {
                         bool task_allday = task.get_boolean_element(4);
                         bool task_notify = task.get_boolean_element(5);
 
-                        win.tuesday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        win.tuesday_column.add_task (task_name,
+                                                     color,
+                                                     time_from_text,
+                                                     time_to_text,
+                                                     task_allday,
+                                                     task_notify);
                     }
 
                     var wednesday_columns = array.get_array_element (2);
@@ -135,7 +149,12 @@ namespace Timetable {
                         bool task_allday = task.get_boolean_element(4);
                         bool task_notify = task.get_boolean_element(5);
 
-                        win.wednesday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        win.wednesday_column.add_task (task_name,
+                                                       color,
+                                                       time_from_text,
+                                                       time_to_text,
+                                                       task_allday,
+                                                       task_notify);
                     }
 
                     var thursday_columns = array.get_array_element (3);
@@ -148,7 +167,12 @@ namespace Timetable {
                         bool task_allday = task.get_boolean_element(4);
                         bool task_notify = task.get_boolean_element(5);
 
-                        win.thursday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        win.thursday_column.add_task (task_name,
+                                                      color,
+                                                      time_from_text,
+                                                      time_to_text,
+                                                      task_allday,
+                                                      task_notify);
                     }
 
                     var friday_columns = array.get_array_element (4);
@@ -161,7 +185,12 @@ namespace Timetable {
                         bool task_allday = task.get_boolean_element(4);
                         bool task_notify = task.get_boolean_element(5);
 
-                        win.friday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        win.friday_column.add_task (task_name,
+                                                    color,
+                                                    time_from_text,
+                                                    time_to_text,
+                                                    task_allday,
+                                                    task_notify);
                     }
                     var saturday_columns = array.get_array_element (5);
                     foreach (var tasks in saturday_columns.get_elements()) {
@@ -173,7 +202,12 @@ namespace Timetable {
                         bool task_allday = task.get_boolean_element(4);
                         bool task_notify = task.get_boolean_element(5);
 
-                        win.saturday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        win.saturday_column.add_task (task_name,
+                                                      color,
+                                                      time_from_text,
+                                                      time_to_text,
+                                                      task_allday,
+                                                      task_notify);
                     }
 
                     var sunday_columns = array.get_array_element (6);
@@ -186,7 +220,12 @@ namespace Timetable {
                         bool task_allday = task.get_boolean_element(4);
                         bool task_notify = task.get_boolean_element(5);
 
-                        win.sunday_column.add_task (task_name, color, time_from_text, time_to_text, task_allday, task_notify);
+                        win.sunday_column.add_task (task_name,
+                                                    color,
+                                                    time_from_text,
+                                                    time_to_text,
+                                                    task_allday,
+                                                    task_notify);
                     }
                 }
             } catch (Error e) {

@@ -35,7 +35,8 @@ namespace Timetable {
         public const string ACTION_SETTINGS = "action_settings";
         public const string ACTION_EXPORT = "action_export";
         public SimpleActionGroup actions { get; construct; }
-        public static Gee.MultiMap<string, string> action_accelerators = new Gee.HashMultiMap<string, string> ();
+        public static Gee.MultiMap<string, string> action_accelerators =
+                                        new Gee.HashMultiMap<string, string> ();
 
         private const GLib.ActionEntry[] action_entries = {
             { ACTION_SETTINGS,              action_settings              },
@@ -83,7 +84,9 @@ namespace Timetable {
 
             var provider = new Gtk.CssProvider ();
             provider.load_from_resource ("/com/github/lainsce/timetable/stylesheet.css");
-            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (),
+                                                      provider,
+                                                      Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
 
             this.get_style_context ().add_class ("rounded");
 
@@ -94,12 +97,14 @@ namespace Timetable {
             this.set_titlebar (titlebar);
 
             var new_button = new Gtk.Button ();
-            new_button.set_image (new Gtk.Image.from_icon_name ("document-new", Gtk.IconSize.LARGE_TOOLBAR));
+            new_button.set_image (new Gtk.Image.from_icon_name ("document-new",
+                                                                Gtk.IconSize.LARGE_TOOLBAR));
             new_button.has_tooltip = true;
             new_button.tooltip_text = (_("New Timetable"));
 
             var open_button = new Gtk.Button ();
-            open_button.set_image (new Gtk.Image.from_icon_name ("document-open", Gtk.IconSize.LARGE_TOOLBAR));
+            open_button.set_image (new Gtk.Image.from_icon_name ("document-open",
+                                                                 Gtk.IconSize.LARGE_TOOLBAR));
             open_button.has_tooltip = true;
             open_button.tooltip_text = (_("Open Timetable…"));
 
@@ -120,7 +125,8 @@ namespace Timetable {
 
             var export_button = new Gtk.MenuButton ();
             export_button.tooltip_text = _("Export");
-            export_button.image = new Gtk.Image.from_icon_name ("document-export", Gtk.IconSize.LARGE_TOOLBAR);
+            export_button.image = new Gtk.Image.from_icon_name ("document-export",
+                                                                Gtk.IconSize.LARGE_TOOLBAR);
             export_button.popover = export_menu;
 
             var settings_button = new Gtk.ModelButton ();
@@ -139,7 +145,8 @@ namespace Timetable {
             menu.add (menu_grid);
 
             var menu_button = new Gtk.MenuButton ();
-            menu_button.set_image (new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR));
+            menu_button.set_image (new Gtk.Image.from_icon_name ("open-menu",
+                                                                 Gtk.IconSize.LARGE_TOOLBAR));
             menu_button.has_tooltip = true;
             menu_button.tooltip_text = (_("Settings"));
             menu_button.popover = menu;
@@ -150,35 +157,40 @@ namespace Timetable {
             titlebar.pack_end (export_button);
 
             // Times Column
-            var 0_row = new Gtk.Image.from_icon_name ("daytime-sunrise-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            var 0_row = new Gtk.Image.from_icon_name ("daytime-sunrise-symbolic",
+                                                      Gtk.IconSize.LARGE_TOOLBAR);
             0_row.halign = Gtk.Align.CENTER;
             0_row.valign = Gtk.Align.CENTER;
             var 0_row_style_context = 0_row.get_style_context ();
             0_row_style_context.add_class ("tt-label-time");
             0_row.tooltip_text = _("Sunrise");
 
-            var 8_row = new Gtk.Image.from_icon_name ("weather-clear-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            var 8_row = new Gtk.Image.from_icon_name ("weather-clear-symbolic",
+                                                      Gtk.IconSize.LARGE_TOOLBAR);
             8_row.halign = Gtk.Align.CENTER;
             0_row.valign = Gtk.Align.CENTER;
             var 8_row_style_context = 8_row.get_style_context ();
             8_row_style_context.add_class ("tt-label-time");
             8_row.tooltip_text = _("Mid-day");
 
-            var 16_row = new Gtk.Image.from_icon_name ("daytime-sunset-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            var 16_row = new Gtk.Image.from_icon_name ("daytime-sunset-symbolic",
+                                                       Gtk.IconSize.LARGE_TOOLBAR);
             16_row.halign = Gtk.Align.CENTER;
             16_row.valign = Gtk.Align.CENTER;
             var 16_row_style_context = 16_row.get_style_context ();
             16_row_style_context.add_class ("tt-label-time");
             16_row.tooltip_text = _("Sunset");
 
-            var 24_row = new Gtk.Image.from_icon_name ("weather-clear-night-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            var 24_row = new Gtk.Image.from_icon_name ("weather-clear-night-symbolic",
+                                                       Gtk.IconSize.LARGE_TOOLBAR);
             24_row.halign = Gtk.Align.CENTER;
             24_row.valign = Gtk.Align.CENTER;
             var 24_row_style_context = 24_row.get_style_context ();
             24_row_style_context.add_class ("tt-label-time");
             24_row.tooltip_text = _("Night");
 
-            var star_row = new Gtk.Image.from_icon_name ("starred-symbolic", Gtk.IconSize.LARGE_TOOLBAR);
+            var star_row = new Gtk.Image.from_icon_name ("starred-symbolic",
+                                                         Gtk.IconSize.LARGE_TOOLBAR);
             star_row.halign = Gtk.Align.CENTER;
             star_row.valign = Gtk.Align.CENTER;
             var star_row_style_context = star_row.get_style_context ();
