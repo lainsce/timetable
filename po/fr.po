@@ -1,0 +1,259 @@
+# French translations for com.github.lainsce.timetable package.
+# Copyright (C) 2019 THE com.github.lainsce.timetable'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.lainsce.timetable package.
+# NathanBnm, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.lainsce.timetable\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-29 21:15+0900\n"
+"PO-Revision-Date: 2019-01-17 21:02+0100\n"
+"Last-Translator: NathanBnm\n"
+"Language-Team: Français\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: src/MainWindow.vala:50
+msgid "Timetable"
+msgstr "Planning"
+
+#: src/MainWindow.vala:98
+msgid "New Timetable"
+msgstr "Nouveau planning"
+
+#: src/MainWindow.vala:101
+msgid "Export Timetable…"
+msgstr "Exporter le planning…"
+
+#: src/MainWindow.vala:116
+msgid "Export"
+msgstr "Exporter"
+
+#: src/MainWindow.vala:121 src/Widgets/Preferences.vala:28
+msgid "Preferences"
+msgstr "Préférences"
+
+#: src/MainWindow.vala:138
+msgid "Settings"
+msgstr "Paramètres"
+
+#: src/Services/DialogServices.vala:5
+msgid "Save Changes to the Timetable?"
+msgstr "Enregistrer les changements dans le planning ?"
+
+#: src/Services/DialogServices.vala:6
+msgid "If you don't save, changes will be lost forever."
+msgstr "Si vous n'enregistrez pas, les changements seront perdus pour toujours."
+
+#: src/Services/DialogServices.vala:14
+msgid "Don't Save"
+msgstr "Ne pas enregistrer"
+
+#: src/Services/DialogServices.vala:16
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/Services/DialogServices.vala:18
+msgid "Save"
+msgstr "Enregistrer"
+
+#: src/Services/DialogServices.vala:27
+msgid "Export timetable to…"
+msgstr "Exporter le planning vers…"
+
+#: src/Services/DialogServices.vala:42
+msgid "_Cancel"
+msgstr "_Annuler"
+
+#: src/Services/DialogServices.vala:44
+msgid "_Open"
+msgstr "_Ouvrir"
+
+#: src/Services/DialogServices.vala:46
+msgid "_Save"
+msgstr "_Enregistrer"
+
+#: src/Services/DialogServices.vala:51
+msgid "Org files"
+msgstr "Fichiers Org"
+
+#: src/Services/DialogServices.vala:56
+msgid "All files"
+msgstr "Tous les fichiers"
+
+#: src/Widgets/DayColumn.vala:27
+msgid "◉ MON"
+msgstr "◉ LUN"
+
+#: src/Widgets/DayColumn.vala:29
+msgid "MON"
+msgstr "LUN"
+
+#: src/Widgets/DayColumn.vala:34
+msgid "◉ TUE"
+msgstr "◉ MAR"
+
+#: src/Widgets/DayColumn.vala:36
+msgid "TUE"
+msgstr "MAR"
+
+#: src/Widgets/DayColumn.vala:41
+msgid "◉ WED"
+msgstr "◉ MER"
+
+#: src/Widgets/DayColumn.vala:43
+msgid "WED"
+msgstr "MER"
+
+#: src/Widgets/DayColumn.vala:48
+msgid "◉ THU"
+msgstr "◉ JEU"
+
+#: src/Widgets/DayColumn.vala:50
+msgid "THU"
+msgstr "JEU"
+
+#: src/Widgets/DayColumn.vala:55
+msgid "◉ FRI"
+msgstr "◉ VEN"
+
+#: src/Widgets/DayColumn.vala:57
+msgid "FRI"
+msgstr "VEN"
+
+#: src/Widgets/DayColumn.vala:62
+msgid "◉ SAT/SUN"
+msgstr "◉ SAM/DIM"
+
+#: src/Widgets/DayColumn.vala:64
+msgid "SAT/SUN"
+msgstr "SAM/DIM"
+
+#: src/Widgets/DayColumn.vala:74
+msgid "No tasks…"
+msgstr "Aucune tâche…"
+
+#: src/Widgets/DayColumn.vala:94
+msgid "Task…"
+msgstr "Tâche…"
+
+#: src/Widgets/Preferences.vala:43
+msgid "Interface"
+msgstr "Interface"
+
+#: src/Widgets/Preferences.vala:44
+msgid "Show weekends:"
+msgstr "Affichier les week-ends :"
+
+#: src/Widgets/Preferences.vala:48
+msgid "Tasks"
+msgstr "Tâches"
+
+#: src/Widgets/Preferences.vala:49
+msgid "High contrast colors:"
+msgstr "Couleurs à contraste élevé :"
+
+#: src/Widgets/Preferences.vala:53
+msgid "Tasks Theming:"
+msgstr "Thème des tâches :"
+
+#: src/Widgets/Preferences.vala:55
+msgid "elementary"
+msgstr "elementary"
+
+#: src/Widgets/Preferences.vala:56
+msgid "Flat"
+msgstr "Plat"
+
+#: src/Widgets/Preferences.vala:57
+msgid "Nature"
+msgstr "Nature"
+
+#: src/Widgets/Preferences.vala:104
+msgid "Close"
+msgstr "Fermer"
+
+#: src/Widgets/TaskBox.vala:37
+msgid "Task Name"
+msgstr "Nom de la tâche"
+
+#: src/Widgets/TaskBox.vala:63
+msgid "Task Color"
+msgstr "Couleur de la tâche"
+
+#: src/Widgets/TaskBox.vala:70
+msgid "Red"
+msgstr "Rouge"
+
+#: src/Widgets/TaskBox.vala:81
+msgid "Orange"
+msgstr "Orange"
+
+#: src/Widgets/TaskBox.vala:92
+msgid "Yellow"
+msgstr "Jaune"
+
+#: src/Widgets/TaskBox.vala:103
+msgid "Green"
+msgstr "Vert"
+
+#: src/Widgets/TaskBox.vala:114
+msgid "Blue"
+msgstr "Bleu"
+
+#: src/Widgets/TaskBox.vala:125
+msgid "Indigo"
+msgstr "Indigo"
+
+#: src/Widgets/TaskBox.vala:136
+msgid "Clear Task Color"
+msgstr "Effacer la couleur de la tâche"
+
+#: src/Widgets/TaskBox.vala:151
+msgid "Task Time"
+msgstr "Horaire de la tâche"
+
+#: src/Widgets/TaskBox.vala:153
+msgid "From:"
+msgstr "De :"
+
+#: src/Widgets/TaskBox.vala:170
+msgid "To:"
+msgstr "À :"
+
+#: src/Widgets/TaskBox.vala:188
+msgid "All-Day:"
+msgstr "Journée entière :"
+
+#: src/Widgets/TaskBox.vala:209
+msgid ""
+"Set the task to span all-day.\n"
+"When turned off, will set the task back to default time."
+msgstr ""
+"Réglez la tâche pour qu'elle s'étende sur toute la journée.\n"
+"S'il désactivé, la tâche sera remise à l'heure par défaut."
+
+#: src/Widgets/TaskBox.vala:213 src/Widgets/TaskBox.vala:214
+msgid "All Day"
+msgstr "Journée entière"
+
+#: src/Widgets/TaskBox.vala:237
+msgid "Notify:"
+msgstr "Envoyer une notification :"
+
+#: src/Widgets/TaskBox.vala:263
+msgid "Set the task to notify when it starts."
+msgstr "Définissez la tâche à notifier lorsqu'elle débute"
+
+#: src/Widgets/TaskBox.vala:313
+msgid "Task Settings"
+msgstr "Paramètres des tâches"
+
+#: src/Widgets/TaskBox.vala:724
+#, c-format
+msgid "Task: %s"
+msgstr "Tâche : %s"
