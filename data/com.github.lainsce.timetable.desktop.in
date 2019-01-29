@@ -1,12 +1,9 @@
 [Desktop Entry]
 Name=Timetable
-Name[lt]=Tvarkaraštis
 Comment=Plot out your own timetable for the week and organize it
-Comment[lt]=Planuoti savaitės tvarkaraštį ir jį tvarkyti
 Exec=com.github.lainsce.timetable
 Icon=com.github.lainsce.timetable
 Keywords=Plot;Week;Planning;Timetable;
-Keywords[lt]=Planuoti;Savaitė;Planavimas;Tvarkaraštis;
 Terminal=false
 Type=Application
 StartupNotify=true
