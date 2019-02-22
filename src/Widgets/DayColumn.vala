@@ -124,7 +124,7 @@ namespace Timetable {
             column_button.set_image (new Gtk.Image.from_icon_name ("list-add-symbolic", Gtk.IconSize.SMALL_TOOLBAR));
 
             column_button.clicked.connect (() => {
-                add_task (_("Task…"), "#d4d4d4", "12:00", "12:00", false, false);
+                add_task (_("Task…"), "#d4d4d4", "12:00", "12:00", false);
             });
 
             this.row_spacing = 6;
@@ -135,8 +135,8 @@ namespace Timetable {
             this.show_all ();
         }
 
-        public void add_task (string name, string color, string time_from_text, string time_to_text, bool task_allday, bool task_notify) {
-            var taskbox = new TaskBox (this.win, name, color, time_from_text, time_to_text, task_allday, task_notify);
+        public void add_task (string name, string color, string time_from_text, string time_to_text, bool task_allday) {
+            var taskbox = new TaskBox (this.win, name, color, time_from_text, time_to_text, task_allday);
             taskbox.update_theme ();
             column.insert (taskbox, -1);
             win.tm.save_notes ();

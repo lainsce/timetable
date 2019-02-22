@@ -303,34 +303,6 @@ namespace Timetable {
                 }
 		    });
 
-            var task_notify_label = new Gtk.Label (_("Notify:"));
-            task_notify_label.hexpand = false;
-            task_notify_label.halign = Gtk.Align.START;
-            var task_notify_switch = new Gtk.Switch ();
-            task_notify_switch.hexpand = false;
-            task_notify_switch.halign = Gtk.Align.START;
-
-            task_notify_switch.notify["active"].connect (() => {
-			    if (task_notify_switch.active) {
-                    tb.task_notify = true;
-                    win.tm.save_notes ();
-			    } else {
-                    tb.task_notify = false;
-                    win.tm.save_notes ();
-                }
-		    });
-
-            if (tb.task_notify == true) {
-                task_notify_switch.set_active (true);
-            } else {
-                task_notify_switch.set_active (false);
-            }
-
-            var task_notify_help = new Gtk.Image.from_icon_name ("help-info-symbolic", Gtk.IconSize.BUTTON);
-            task_notify_help.halign = Gtk.Align.START;
-            task_notify_help.hexpand = true;
-            task_notify_help.tooltip_text = _("Set the task to notify when it starts.");
-
             var switch_box = new Gtk.Grid ();
             switch_box.hexpand = false;
             switch_box.column_spacing = 6;
@@ -338,9 +310,6 @@ namespace Timetable {
             switch_box.attach (task_allday_label, 0, 0, 1, 1);
             switch_box.attach (task_allday_switch, 1, 0, 1, 1);
             switch_box.attach (task_allday_help, 2, 0, 1, 1);
-            switch_box.attach (task_notify_label, 3, 0, 1, 1);
-            switch_box.attach (task_notify_switch, 4, 0, 1, 1);
-            switch_box.attach (task_notify_help, 5, 0, 1, 1);
 
             var time_box = new Gtk.Grid ();
             time_box.hexpand = false;

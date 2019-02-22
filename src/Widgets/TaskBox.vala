@@ -15,13 +15,12 @@ namespace Timetable {
         public string time_to_text;
         public string time_from_text;
         public bool task_allday;
-        public bool task_notify;
 
         private const Gtk.TargetEntry[] dlb_entries = {
             {"DRAG_LIST_ROW", Gtk.TargetFlags.SAME_APP, 0}
         };
 
-        public TaskBox (MainWindow win, string task_name, string color, string time_from_text, string time_to_text, bool task_allday, bool task_notify) {
+        public TaskBox (MainWindow win, string task_name, string color, string time_from_text, string time_to_text, bool task_allday) {
             var settings = AppSettings.get_default ();
             this.win = win;
             this.uid = uid_counter++;
@@ -31,7 +30,6 @@ namespace Timetable {
             this.time_to_text = time_to_text;
             this.time_from_text = time_from_text;
             this.task_allday = task_allday;
-            this.task_notify = task_notify;
 
             change_theme ();
             update_theme ();
@@ -463,21 +461,6 @@ namespace Timetable {
                 var provider = new Gtk.CssProvider ();
                 provider.load_from_resource ("/com/github/lainsce/timetable/nature.css");
                 Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            }
-        }
-
-        public void notificator (Gtk.Application app) {
-            var time = new GLib.DateTime.now_local ();
-            string time_now = time.format("%H").to_string () + ":" + time.get_minute ().to_string ();
-            if (this.time_from_text == time_now) {
-                if (this.task_notify == true) {
-                    string title = _("Task: %s").printf (this.task_name);
-                    string body = "This task started now!";
-                    var notification = new Notification (title);
-                    notification.set_body (body);
-                    notification.set_icon (new ThemedIcon ("com.github.lainsce.timetable"));
-                    app.send_notification ("task-notify", notification);
-                }
             }
         }
     }

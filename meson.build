@@ -1,6 +1,6 @@
 # Name our project
 project('com.github.lainsce.timetable', ['vala', 'c'],
-    version: '1.0.3'
+    version: '1.0.4'
 )
 
 # Import main lib files
@@ -44,7 +44,6 @@ executable(
     meson.project_name(),
     'src/Application.vala',
     'src/MainWindow.vala',
-    'src/Services/DBus.vala',
     'src/Services/DialogServices.vala',
     'src/Services/FileManager.vala',
     'src/Services/TaskManager.vala',

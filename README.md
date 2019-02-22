@@ -30,7 +30,6 @@ meson
 Simply clone this repo, then:
 
 ```bash
-meson build && cd build
-meson configure -Dprefix=/usr
+meson build --prefix=/usr && cd build
 sudo ninja install
 ```

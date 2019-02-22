@@ -85,7 +85,7 @@ namespace Timetable {
             });
 
             this.leave_notify_event.connect ((event) => {
-                if (tb.popover.visible == true) {
+                if (tb.popover != null && tb.popover.get_visible () == true) {
     	            return true;
     	        }
     	        revealer.set_reveal_child (this.show_button);
