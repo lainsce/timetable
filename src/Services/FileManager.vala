@@ -14,103 +14,71 @@ namespace Timetable.FileManager {
             print ("Error writing file: " + err.message);
         }
 
-        Regex r = /\* (?P<day_header>[A-Za-z]*)\n/;
-        Regex r2 = /\t\- (?P<task_name>[a-zA-Z0-9…]*)\n\t\<(?P<from_time_a>\d*)\:(?P<from_time_b>\d*) - (?P<to_time_a>\d*)\:(?P<to_time_b>\d*)\>/;
+        try {
+            string rstr = """\*\ (?P<day_header>\w*(day))""";
+            string rstr2 = """\t\-\ (?P<task_name>.*)\n\t\<(?P<from_time_a>\d*)\:(?P<from_time_b>\d*)\ \-\ (?P<to_time_a>\d*)\:(?P<to_time_b>\d*)\>""";
+            
+            var r = new Regex(rstr, RegexCompileFlags.CASELESS, RegexMatchFlags.NOTEMPTY);
+            var r2 = new Regex(rstr2, RegexCompileFlags.CASELESS, RegexMatchFlags.NOTEMPTY);
 
-        MatchInfo info;
-        MatchInfo info2;
+            MatchInfo info;
+            MatchInfo info2;
 
-        debug ("Opening file...");
-        if (file == null) {
-            debug ("User cancelled operation. Aborting.");
-        } else {
-            if (win.monday_column.is_modified == true ||
-                win.tuesday_column.is_modified == true ||
-                win.wednesday_column.is_modified == true ||
-                win.thursday_column.is_modified == true ||
-                win.friday_column.is_modified == true ||
-                win.saturday_column.is_modified == true ||
-                win.sunday_column.is_modified == true) {
-                new_tt (win);
-                for (r.match (text, 0, out info) ; info.matches () ; info.next ()) {
-                    if (info.fetch_named("day_header") == "Monday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.monday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Tuesday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.tuesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Wednesday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.wednesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Thursday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.thursday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Friday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.friday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Saturday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.saturday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Sunday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.sunday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                }
+            debug ("Opening file...");
+            if (file == null) {
+                debug ("User cancelled operation. Aborting.");
             } else {
-                reset_columns_state (win);
-                for (r.match (text, 0, out info) ; info.matches () ; info.next ()) {
-                    if (info.fetch_named("day_header") == "Monday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.monday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                if (r.match (text, RegexMatchFlags.NOTEMPTY, out info)) {
+                    //do {
+                        if (info.fetch_named("day_header") == "Monday") {
+                            if (r2.match (text, 0, out info2) && info.matches ()) {
+                                do {
+                                    win.monday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                                } while (info2.next ());
+                            }
+                        } else if (info.fetch_named("day_header") == "Tuesday") {
+                            if (r2.match (text, 0, out info2) && info.matches ()) {
+                                do {
+                                    win.tuesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                                } while (info2.next ());
+                            }
+                        } else if  (info.fetch_named("day_header") == "Wednesday") {
+                            if (r2.match (text, 0, out info2) && info.matches ()) {
+                                do {
+                                    win.wednesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                                } while (info2.next ());
+                            }
+                        } else if (info.fetch_named("day_header") == "Thursday") {
+                            if (r2.match (text, 0, out info2) && info.matches ()) {
+                                do {
+                                    win.thursday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                                } while (info2.next ());
+                            }
+                        } else if (info.fetch_named("day_header") == "Friday") {
+                            if (r2.match (text, 0, out info2) && info.matches ()) {
+                                do {
+                                    win.friday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                                } while (info2.next ());
+                            }
+                        } else if (info.fetch_named("day_header") == "Saturday") {
+                            if (r2.match (text, 0, out info2) && info.matches ()) {
+                                do {
+                                    win.saturday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                                } while (info2.next ());
+                            }
+                        } else if (info.fetch_named("day_header") == "Sunday") {
+                            if (r2.match (text, 0, out info2) && info.matches ()) {
+                                do {
+                                    win.sunday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
+                                } while (info2.next ());
+                            }
                         }
-                    }
-                    if (info.fetch_named("day_header") == "Tuesday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.tuesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Wednesday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.wednesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Thursday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.thursday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Friday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.friday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Saturday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.saturday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
-                    if (info.fetch_named("day_header") == "Sunday") {
-                        for (r2.match (text, 0, out info2) ; info2.matches () ; info2.next ()) {
-                            win.sunday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                        }
-                    }
+                   // } while (info.next ());
                 }
             }
+        } catch (RegexError error) {
+            warning (@"$(error.message)\n");
         }
-        reset_modification_state (win);
     }
 
     public void new_tt (MainWindow win) {
