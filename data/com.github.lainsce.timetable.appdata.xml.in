@@ -53,6 +53,15 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
+        <release version="1.0.4" date="2019-03-01">
+            <description>
+                <p>Release: User Experienced Tasks</p>
+                <ul>
+                    <li>New: Open any .org files exported by Timetable.</li>
+                    <li>Removed: Notifications system as it was useless since Timetable couldn't notify if closed.</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.3" date="2018-11-23">
             <description>
                 <p>Release: User Experienced Tasks</p>

@@ -21,7 +21,7 @@
 				<description>The width of the window</description>
 		</key>
         <key name="weekend-show" type="b">
-				<default>false</default>
+				<default>true</default>
 				<summary>Show the Weekend</summary>
 				<description>Display the weekend in the UI</description>
 		</key>
@@ -31,7 +31,7 @@
 				<description>Tasks color contrast</description>
 		</key>
         <key name="show-tasks-allday" type="b">
-				<default>false</default>
+				<default>true</default>
 				<summary>Task difference all-days</summary>
 				<description>Tasks differentiation as all-day task</description>
 		</key>
