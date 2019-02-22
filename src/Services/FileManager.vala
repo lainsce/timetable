@@ -3,6 +3,17 @@ namespace Timetable.FileManager {
     public File file;
     public string buffer_text;
 
+    class TaskDay : Object {
+        public string day_header { get; set; }
+    }
+
+    class TaskDayTask : Object {
+        public string day_header { get; set; }
+        public string desc { get; set; }
+        public string from_hour { get; set; }
+        public string to_hour { get; set; }
+    }
+
     public void open_tt (MainWindow win) {
         debug ("Open button pressed.");
         var file = Dialog.display_open_dialog ();
@@ -11,74 +22,113 @@ namespace Timetable.FileManager {
         try {
             GLib.FileUtils.get_contents (file_path, out text);
         } catch (Error err) {
-            print ("Error writing file: " + err.message);
+            print (err.message);
         }
 
-        try {
-            string rstr = """\*\ (?P<day_header>\w*(day))""";
-            string rstr2 = """\t\-\ (?P<task_name>.*)\n\t\<(?P<from_time_a>\d*)\:(?P<from_time_b>\d*)\ \-\ (?P<to_time_a>\d*)\:(?P<to_time_b>\d*)\>""";
-            
-            var r = new Regex(rstr, RegexCompileFlags.CASELESS, RegexMatchFlags.NOTEMPTY);
-            var r2 = new Regex(rstr2, RegexCompileFlags.CASELESS, RegexMatchFlags.NOTEMPTY);
+        var days = new Gee.ArrayList<TaskDay> ();
+        TaskDay? current = null;
 
-            MatchInfo info;
-            MatchInfo info2;
+        var daytasks = new Gee.ArrayList<TaskDayTask> ();
+        TaskDayTask? curtask = null;
 
-            debug ("Opening file...");
-            if (file == null) {
-                debug ("User cancelled operation. Aborting.");
-            } else {
-                if (r.match (text, RegexMatchFlags.NOTEMPTY, out info)) {
-                    //do {
-                        if (info.fetch_named("day_header") == "Monday") {
-                            if (r2.match (text, 0, out info2) && info.matches ()) {
-                                do {
-                                    win.monday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                                } while (info2.next ());
-                            }
-                        } else if (info.fetch_named("day_header") == "Tuesday") {
-                            if (r2.match (text, 0, out info2) && info.matches ()) {
-                                do {
-                                    win.tuesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                                } while (info2.next ());
-                            }
-                        } else if  (info.fetch_named("day_header") == "Wednesday") {
-                            if (r2.match (text, 0, out info2) && info.matches ()) {
-                                do {
-                                    win.wednesday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                                } while (info2.next ());
-                            }
-                        } else if (info.fetch_named("day_header") == "Thursday") {
-                            if (r2.match (text, 0, out info2) && info.matches ()) {
-                                do {
-                                    win.thursday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                                } while (info2.next ());
-                            }
-                        } else if (info.fetch_named("day_header") == "Friday") {
-                            if (r2.match (text, 0, out info2) && info.matches ()) {
-                                do {
-                                    win.friday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                                } while (info2.next ());
-                            }
-                        } else if (info.fetch_named("day_header") == "Saturday") {
-                            if (r2.match (text, 0, out info2) && info.matches ()) {
-                                do {
-                                    win.saturday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                                } while (info2.next ());
-                            }
-                        } else if (info.fetch_named("day_header") == "Sunday") {
-                            if (r2.match (text, 0, out info2) && info.matches ()) {
-                                do {
-                                    win.sunday_column.add_task (info2.fetch_named("task_name"), "#d4d4d4", info2.fetch_named("from_time_a") + ":" + info2.fetch_named("from_time_b"), info2.fetch_named("to_time_a") + ":" + info2.fetch_named("to_time_b"), false);
-                                } while (info2.next ());
-                            }
-                        }
-                   // } while (info.next ());
+        int i = 0;
+        string[] tokens = text.split ("\n");
+        foreach (string line in tokens) {
+            line = line.strip ();
+            if (line.has_prefix ("*")) {
+                string day_header = line.replace ("*", "").strip ();
+
+                current = new TaskDay ();
+                current.day_header = day_header;
+                days.add (current);
+
+                curtask = new TaskDayTask ();
+                curtask.day_header = day_header;
+            } else if (line.has_prefix ("-")) {
+                curtask.desc = read_desc (tokens, i).strip ().substring (1).strip ();
+            } else if (line.has_prefix ("<")) {
+                string from, to;
+                read_hours (line, out from, out to);
+                curtask.from_hour = from;
+                curtask.to_hour = to;
+                daytasks.add (curtask);
+            }
+
+            i++;
+        }
+
+        foreach (var day in days) {
+            if (day.day_header == "Monday") {
+                foreach (var task in daytasks) {
+                    if (task.day_header == "Monday") {
+                        win.monday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                    }
                 }
             }
-        } catch (RegexError error) {
-            warning (@"$(error.message)\n");
+            if (day.day_header == "Tuesday") {
+                foreach (var task in daytasks) {
+                    if (task.day_header == "Tuesday") {
+                        win.tuesday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                    }
+                }
+            }
+            if (day.day_header == "Wednesday") {
+                foreach (var task in daytasks) {
+                    if (task.day_header == "Wednesday") {
+                        win.wednesday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                    }
+                }
+            }
+            if (day.day_header == "Thursday") {
+                foreach (var task in daytasks) {
+                    if (task.day_header == "Thursday") {
+                        win.thursday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                    }
+                }
+            }
+            if (day.day_header == "Friday") {
+                foreach (var task in daytasks) {
+                    if (task.day_header == "Friday") {
+                        win.friday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                    }
+                }
+            }
+            if (day.day_header == "Saturday") {
+                foreach (var task in daytasks) {
+                    if (task.day_header == "Saturday") {
+                        win.saturday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                    }
+                }
+            }
+            if (day.day_header == "Sunday") {
+                foreach (var task in daytasks) {
+                    if (task.day_header == "Sunday") {
+                        win.sunday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                    }
+                }
+            }
         }
+    }
+
+    public static void read_hours (string line, out string from, out string to) {
+        string[] s = line.split ("-");
+        if (s.length < 2) {
+            from = to = "";
+            return;
+        }
+
+        from = s[0].strip ().substring (1, 5);
+        to = s[1].strip ().substring (0, 5);
+    }
+
+    public static string read_desc (string[] tokens, int line) {
+        string desc = "";
+        while (line < tokens.length && !tokens[line].strip ().has_prefix ("<")) {
+            desc += tokens[line];
+            line++;
+        }
+
+        return desc;
     }
 
     public void new_tt (MainWindow win) {
