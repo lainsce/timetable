@@ -260,7 +260,7 @@ namespace Timetable {
             task_allday_switch.halign = Gtk.Align.START;
             if (tb.task_allday == true) {
                 task_allday_switch.set_active (true);
-                tb.task_time_sep_label.label = "";
+                tb.task_time_sep_label.label = "-";
                 time_to_picker.sensitive = false;
                 time_from_picker.sensitive = false;
                 tb.update_theme ();
@@ -279,11 +279,11 @@ namespace Timetable {
 
             task_allday_switch.notify["active"].connect (() => {
 			    if (task_allday_switch.active) {
-                    tb.task_time_from_label.label = _("All Day");
-                    tb.time_from_text = _("All Day");
-                    tb.task_time_to_label.label = "";
-    				tb.time_to_text = "";
-                    tb.task_time_sep_label.label = "";
+                    tb.task_time_from_label.label = "00:00";
+                    tb.time_from_text = "00:00";
+                    tb.task_time_to_label.label = "23:59";
+    				tb.time_to_text = "23:59";
+                    tb.task_time_sep_label.label = "-";
                     tb.task_allday = true;
                     time_to_picker.sensitive = false;
                     time_from_picker.sensitive = false;

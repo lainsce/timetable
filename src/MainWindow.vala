@@ -29,18 +29,21 @@ namespace Timetable {
         public Gtk.Grid grid;
 
         public TaskManager tm;
+        public bool is_tt {get; set; default = true;}
 
         // Actions
         public const string ACTION_PREFIX = "win.";
         public const string ACTION_SETTINGS = "action_settings";
-        public const string ACTION_EXPORT = "action_export";
+        public const string ACTION_EXPORT_ORG = "action_export_org";
+        public const string ACTION_EXPORT_TT = "action_export_tt";
         public SimpleActionGroup actions { get; construct; }
         public static Gee.MultiMap<string, string> action_accelerators =
                                         new Gee.HashMultiMap<string, string> ();
 
         private const GLib.ActionEntry[] action_entries = {
             { ACTION_SETTINGS,              action_settings              },
-            { ACTION_EXPORT,                action_export                }
+            { ACTION_EXPORT_ORG,            action_export_org            },
+            { ACTION_EXPORT_TT,             action_export_tt             }
         };
 
         public MainWindow (Gtk.Application application) {
@@ -108,9 +111,13 @@ namespace Timetable {
             open_button.has_tooltip = true;
             open_button.tooltip_text = (_("Open Timetable…"));
 
+            var export_org = new Gtk.ModelButton ();
+            export_org.text = (_("Export as .org…"));
+            export_org.action_name = ACTION_PREFIX + ACTION_EXPORT_ORG;
+            
             var export_tt = new Gtk.ModelButton ();
-            export_tt.text = (_("Export Timetable…"));
-            export_tt.action_name = ACTION_PREFIX + ACTION_EXPORT;
+            export_tt.text = (_("Export as .timetable…"));
+            export_tt.action_name = ACTION_PREFIX + ACTION_EXPORT_TT;
 
             var export_menu_grid = new Gtk.Grid ();
             export_menu_grid.margin = 6;
@@ -118,6 +125,7 @@ namespace Timetable {
             export_menu_grid.column_spacing = 12;
             export_menu_grid.orientation = Gtk.Orientation.VERTICAL;
             export_menu_grid.add (export_tt);
+            export_menu_grid.add (export_org);
             export_menu_grid.show_all ();
 
             var export_menu = new Gtk.Popover (null);
@@ -284,9 +292,20 @@ namespace Timetable {
             dialog.show_all ();
         }
 
-        private void action_export () {
+        private void action_export_org () {
+            is_tt = false;
             try {
-                FileManager.save_as (this);
+                FileManager.save_as_org (this);
+                is_tt = true;
+            } catch (Error e) {
+                warning ("Unexpected error during export: " + e.message);
+            }
+        }
+
+        private void action_export_tt () {
+            is_tt = true;
+            try {
+                FileManager.save_as_tt (this);
             } catch (Error e) {
                 warning ("Unexpected error during export: " + e.message);
             }

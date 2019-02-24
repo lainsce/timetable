@@ -14,9 +14,28 @@ foreach i : icon_sizes
     )
 endforeach
 
+foreach i : icon_sizes
+    install_data(
+        join_paths('icons', 'mimes', i, 'timetable' + '.svg'),
+        install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', i + 'x' + i, 'mimetypes')
+    )
+endforeach
+
+foreach i : icon_sizes
+    install_data(
+        join_paths('icons', 'mimes', i, 'timetable' + '.svg'),
+        install_dir: join_paths(get_option('datadir'), 'icons', 'hicolor', i + 'x' + i + '@2', 'mimetypes')
+    )
+endforeach
+
 install_data(
     meson.project_name() + '.gschema.xml',
     install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas')
+)
+
+install_data(
+    meson.project_name() + '.mime.xml',
+    install_dir: join_paths(get_option('datadir'), 'mime', 'packages')
 )
 
 i18n.merge_file(

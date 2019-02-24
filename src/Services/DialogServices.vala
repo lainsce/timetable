@@ -26,9 +26,15 @@ namespace Timetable.Dialog {
             chooser.set_do_overwrite_confirmation (true);
         }
         var filter1 = new Gtk.FileFilter ();
-        filter1.set_filter_name (_("Org files"));
-        filter1.add_pattern ("*.org");
+        filter1.set_filter_name (_("Timetable files"));
+        filter1.add_pattern ("*.timetable");
+        filter1.add_mime_type ("application/x-timetable");
         chooser.add_filter (filter1);
+        var filter2 = new Gtk.FileFilter ();
+        filter2.set_filter_name (_("Org files"));
+        filter2.add_pattern ("*.org");
+        chooser.add_filter (filter2);
+        
         var filter = new Gtk.FileFilter ();
         filter.set_filter_name (_("All files"));
         filter.add_pattern ("*");

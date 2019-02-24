@@ -20,18 +20,160 @@
 namespace Timetable {
     public class Application : Gtk.Application {
         public MainWindow window;
+        public static string[] supported_mimetypes;
+        private static bool print_cr = false;
 
-        public Application () {
-            Object (flags: ApplicationFlags.FLAGS_NONE,
-            application_id: "com.github.lainsce.timetable");
+        construct {
+            flags |= ApplicationFlags.HANDLES_COMMAND_LINE;
+            flags |= ApplicationFlags.HANDLES_OPEN;
+            application_id = "com.github.lainsce.timetable";
+            supported_mimetypes = {"application/x-timetable"};
+            register_default_handler ();
         }
 
         protected override void activate () {
+            new_win ();
+        }
+
+        public void new_win () {
             if (window != null) {
                 window.present ();
                 return;
             }
             window = new MainWindow (this);
+        }
+
+        protected override int command_line (ApplicationCommandLine command_line) {
+            string[] args = command_line.get_arguments ();
+            var context = new OptionContext ("File");
+            context.add_main_entries (entries, "com.github.lainsce.timetable");
+            context.add_group (Gtk.get_option_group (true));
+            int unclaimed_args;
+
+            try {
+                unowned string[] tmp = args;
+                context.parse (ref tmp);
+                unclaimed_args = tmp.length - 1;
+            } catch (Error e) {
+                stdout.printf ("ERROR: " + e.message + "\n");
+                return 0;
+            }
+            
+            
+            if (print_cr) {
+                stdout.printf ("Copyright 2017-2018 Lains\n");
+                return 0;
+            } else {
+                new_win ();
+            }
+
+            if (unclaimed_args > 0) {
+                File[] files = new File[unclaimed_args];
+                files.length = 0;
+
+                foreach (string arg in args[1:unclaimed_args + 1]) {
+                    // We set a message, that later is informed to the user
+                    // in a dialog if something noteworthy happens.
+                    string msg = "";
+                    try {
+                        var file = File.new_for_commandline_arg (arg);
+
+                        if (!file.query_exists ()) {
+                            try {
+                                FileUtils.set_contents (file.get_path (), "");
+                            } catch (Error e) {
+                                string reason = "";
+                                // We list some common errors for quick feedback
+                                if (e is FileError.ACCES) {
+                                    reason = ("Maybe you do not have the necessary permissions.");
+                                } else if (e is FileError.NOENT) {
+                                    reason = ("Maybe the file path provided is not valid.");
+                                } else if (e is FileError.ROFS) {
+                                    reason = ("The location is read-only.");
+                                } else if (e is FileError.NOTDIR) {
+                                    reason = ("The parent directory doesn't exist.");
+                                } else {
+                                    // Otherwise we simple use the error notification from glib
+                                    msg = e.message;
+                                }
+
+                                if (reason.length > 0) {
+                                    msg = ("File \"%s\" cannot be created.\n%s").printf ("<b>%s</b>".printf (file.get_path ()), reason);
+                                }
+
+                                // Escape to the outer catch clause, and overwrite
+                                // the weird glib's standard errors.
+                                throw new Error (e.domain, e.code, msg);
+                            }
+                        }
+
+                        var info = file.query_info ("standard::*", FileQueryInfoFlags.NONE, null);
+                        string err_msg = ("File \"%s\" cannot be opened.\n%s");
+                        string reason = "";
+
+                        switch (info.get_file_type ()) {
+                            case FileType.REGULAR:
+                            case FileType.SYMBOLIC_LINK:
+                                files += file;
+                                break;
+                            case FileType.MOUNTABLE:
+                                reason = ("It is a mountable location.");
+                                break;
+                            case FileType.DIRECTORY:
+                                reason = ("It is a directory.");
+                                break;
+                            case FileType.SPECIAL:
+                                reason = ("It is a \"special\" file such as a socket,\n fifo, block device, or character device.");
+                                break;
+                            default:
+                                reason = ("It is an \"unknown\" file type.");
+                                break;
+                        }
+
+                        if (reason.length > 0) {
+                            msg = err_msg.printf ("<b>%s</b>".printf (file.get_path ()), reason);
+                        }
+
+                    } catch (Error e) {
+                        warning (e.message);
+                    }
+                }
+
+                if (files.length > 0) {
+                    FileManager.open_from_outside (window, files, "");
+                }
+            }
+            return 0;
+        }
+
+        private static void register_default_handler () {
+            var app_info = new DesktopAppInfo ("com.github.lainsce.timetable.desktop");
+            if (app_info == null) {
+                warning ("AppInfo object not found for Timetable.");
+                return;
+            }
+
+            foreach (string mimetype in supported_mimetypes) {
+                var handler = AppInfo.get_default_for_type (mimetype, false);
+                if (handler == null) {
+                    try {
+                        debug ("Registering Timetable as the default handler for %s", mimetype);
+                        app_info.set_as_default_for_type (mimetype);
+                    } catch (Error e) {
+                        warning (e.message);
+                    }
+                } else {
+                    unowned string[] types = handler.get_supported_types ();
+                    if (types == null || !(mimetype in types)) {
+                        try {
+                            debug ("Registering Timetable as the default handler for %s", mimetype);
+                            app_info.set_as_default_for_type (mimetype);
+                        } catch (Error e) {
+                            warning (e.message);
+                        }
+                    }
+                }
+            }
         }
 
         public static int main (string[] args) {
@@ -41,5 +183,10 @@ namespace Timetable {
             var app = new Timetable.Application ();
             return app.run (args);
         }
+        
+        const OptionEntry[] entries = {
+            { "copyright", 'v', 0, OptionArg.NONE, out print_cr, ("Print copyright info and exit"), null },
+            { null }
+        };
     }
 }

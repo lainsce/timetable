@@ -56,7 +56,7 @@ namespace Timetable {
             task_time_to_label.label = this.time_to_text;
 
             if (this.task_allday) {
-                task_time_sep_label = new Gtk.Label ("");
+                task_time_sep_label = new Gtk.Label ("-");
             } else {
                 task_time_sep_label = new Gtk.Label ("-");
             }

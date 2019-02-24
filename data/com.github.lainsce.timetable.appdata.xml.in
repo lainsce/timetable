@@ -53,6 +53,14 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
+        <release version="1.0.5" date="2019-03-08">
+            <description>
+                <p>Release: Outsider Tasks</p>
+                <ul>
+                    <li>New: Open the special .timetable files made for Timetable by Timetable.</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.4" date="2019-03-01">
             <description>
                 <p>Release: User Experienced Tasks</p>

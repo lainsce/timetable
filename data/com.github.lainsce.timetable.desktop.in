@@ -1,12 +1,13 @@
 [Desktop Entry]
 Name=Timetable
 Comment=Plot out your own timetable for the week and organize it
-Exec=com.github.lainsce.timetable
+Exec=com.github.lainsce.timetable %U
 Icon=com.github.lainsce.timetable
 Keywords=Plot;Week;Planning;Timetable;
 Terminal=false
 Type=Application
 StartupNotify=true
 Categories=GNOME;GTK;Office;
+MimeType=application/x-timetable;
 NoDisplay=false
 X-GNOME-UsesNotifications=true

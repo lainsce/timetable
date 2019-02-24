@@ -12,6 +12,170 @@ namespace Timetable.FileManager {
         public string desc { get; set; }
         public string from_hour { get; set; }
         public string to_hour { get; set; }
+        public string color { get; set; }
+        public bool allday { get; set; }
+    }
+
+    public bool open_from_outside (MainWindow win, File[] ofiles, string hint) {
+        if (ofiles.length > 0) {
+        var file = ofiles[0];
+        string file_path = file.get_path ();
+        string text;
+        try {
+            GLib.FileUtils.get_contents (file_path, out text);
+        } catch (Error err) {
+            print (err.message);
+        }
+
+        var days = new Gee.ArrayList<TaskDay> ();
+        TaskDay? current = null;
+
+        var daytasks = new Gee.ArrayList<TaskDayTask> ();
+        TaskDayTask? curtask = null;
+
+        int i = 0;
+        string color;
+        string[] tokens = text.split ("\n");
+        foreach (string line in tokens) {
+            line = line.strip ();
+            if (line.has_prefix ("*")) {
+                string day_header = line.replace ("*", "").strip ();
+                current = new TaskDay ();
+                current.day_header = day_header;
+                days.add (current);
+
+                curtask = new TaskDayTask ();
+                curtask.day_header = day_header;
+            } else if (line.has_prefix ("-")) {
+                curtask.desc = read_desc (tokens, i).strip ().substring (1).strip ();
+            } else if (line.has_prefix ("[")) {
+                read_props (line, out color);
+                curtask.color = color;
+            } else if (line.has_prefix ("<")) {
+                string from, to;
+                read_hours (line, out from, out to);
+                curtask.from_hour = from;
+                curtask.to_hour = to;
+                daytasks.add (curtask);
+            } 
+
+            i++;
+        }
+
+        if (win.monday_column.is_modified == true ||
+            win.tuesday_column.is_modified == true ||
+            win.wednesday_column.is_modified == true ||
+            win.thursday_column.is_modified == true ||
+            win.friday_column.is_modified == true ||
+            win.saturday_column.is_modified == true ||
+            win.sunday_column.is_modified == true) {
+                new_tt (win);
+                foreach (var day in days) {
+                    if (day.day_header == "Monday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Monday") {
+                                win.monday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Tuesday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Tuesday") {
+                                win.tuesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Wednesday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Wednesday") {
+                                win.wednesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Thursday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Thursday") {
+                                win.thursday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Friday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Friday") {
+                                win.friday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Saturday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Saturday") {
+                                win.saturday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Sunday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Sunday") {
+                                win.sunday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                }
+            } else {
+                foreach (var day in days) {
+                    if (day.day_header == "Monday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Monday") {
+                                win.monday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Tuesday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Tuesday") {
+                                win.tuesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Wednesday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Wednesday") {
+                                win.wednesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Thursday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Thursday") {
+                                win.thursday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Friday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Friday") {
+                                win.friday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Saturday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Saturday") {
+                                win.saturday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                    if (day.day_header == "Sunday") {
+                        foreach (var task in daytasks) {
+                            if (task.day_header == "Sunday") {
+                                win.sunday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public void open_tt (MainWindow win) {
@@ -32,12 +196,12 @@ namespace Timetable.FileManager {
         TaskDayTask? curtask = null;
 
         int i = 0;
+        string color;
         string[] tokens = text.split ("\n");
         foreach (string line in tokens) {
             line = line.strip ();
             if (line.has_prefix ("*")) {
                 string day_header = line.replace ("*", "").strip ();
-
                 current = new TaskDay ();
                 current.day_header = day_header;
                 days.add (current);
@@ -46,13 +210,16 @@ namespace Timetable.FileManager {
                 curtask.day_header = day_header;
             } else if (line.has_prefix ("-")) {
                 curtask.desc = read_desc (tokens, i).strip ().substring (1).strip ();
+            } else if (line.has_prefix ("[")) {
+                read_props (line, out color);
+                curtask.color = color;
             } else if (line.has_prefix ("<")) {
                 string from, to;
                 read_hours (line, out from, out to);
                 curtask.from_hour = from;
                 curtask.to_hour = to;
                 daytasks.add (curtask);
-            }
+            } 
 
             i++;
         }
@@ -69,49 +236,49 @@ namespace Timetable.FileManager {
                     if (day.day_header == "Monday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Monday") {
-                                win.monday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.monday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Tuesday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Tuesday") {
-                                win.tuesday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.tuesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Wednesday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Wednesday") {
-                                win.wednesday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.wednesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Thursday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Thursday") {
-                                win.thursday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.thursday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Friday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Friday") {
-                                win.friday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.friday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Saturday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Saturday") {
-                                win.saturday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.saturday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Sunday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Sunday") {
-                                win.sunday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.sunday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
@@ -121,49 +288,49 @@ namespace Timetable.FileManager {
                     if (day.day_header == "Monday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Monday") {
-                                win.monday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.monday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Tuesday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Tuesday") {
-                                win.tuesday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.tuesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Wednesday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Wednesday") {
-                                win.wednesday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.wednesday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Thursday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Thursday") {
-                                win.thursday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.thursday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Friday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Friday") {
-                                win.friday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.friday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Saturday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Saturday") {
-                                win.saturday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.saturday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
                     if (day.day_header == "Sunday") {
                         foreach (var task in daytasks) {
                             if (task.day_header == "Sunday") {
-                                win.sunday_column.add_task (task.desc, "#d4d4d4", task.from_hour, task.to_hour, false);
+                                win.sunday_column.add_task (task.desc, task.color, task.from_hour, task.to_hour, task.allday);
                             }
                         }
                     }
@@ -180,6 +347,16 @@ namespace Timetable.FileManager {
 
         from = s[0].strip ().substring (1, 5);
         to = s[1].strip ().substring (0, 5);
+    }
+    
+    public static void read_props (string line, out string color) {
+        string[] s = line.split ("]");
+        if (s.length < 2) {
+            color = "#d4d4d4";
+            return;
+        }
+
+        color = s[0].strip ().substring (1, 7);
     }
 
     public static string read_desc (string[] tokens, int line) {
@@ -202,7 +379,11 @@ namespace Timetable.FileManager {
                 case Gtk.ResponseType.OK:
                     debug ("User saves.");
                     try {
-                        save_as (win);
+                        if (win.is_tt) {
+                            save_as_tt (win);
+                        } else {
+                            save_as_org (win);
+                        }
                     } catch (Error err) {
                         print ("Error writing file: " + err.message);
                     }
@@ -245,7 +426,7 @@ namespace Timetable.FileManager {
         }
     }
 
-    public void save_as (MainWindow win) throws Error {
+    public void save_as_org (MainWindow win) throws Error {
         string buffer_text = "";
         debug ("Save as button pressed.");
         var file = Dialog.display_save_dialog ();
@@ -263,19 +444,19 @@ namespace Timetable.FileManager {
                     win.saturday_column.is_modified == true ||
                     win.sunday_column.is_modified == true) {
                     buffer_text += "* Monday\n";
-                    buffer_text += get_column_tasks (win.monday_column);
+                    buffer_text += get_column_tasks (win.monday_column, true);
                     buffer_text += "* Tuesday\n";
-                    buffer_text += get_column_tasks (win.tuesday_column);
+                    buffer_text += get_column_tasks (win.tuesday_column, true);
                     buffer_text += "* Wednesday\n";
-                    buffer_text += get_column_tasks (win.wednesday_column);
+                    buffer_text += get_column_tasks (win.wednesday_column, true);
                     buffer_text += "* Thursday\n";
-                    buffer_text += get_column_tasks (win.thursday_column);
+                    buffer_text += get_column_tasks (win.thursday_column, true);
                     buffer_text += "* Friday\n";
-                    buffer_text += get_column_tasks (win.friday_column);
+                    buffer_text += get_column_tasks (win.friday_column, true);
                     buffer_text += "* Saturday\n";
-                    buffer_text += get_column_tasks (win.saturday_column);
+                    buffer_text += get_column_tasks (win.saturday_column, true);
                     buffer_text += "* Sunday\n";
-                    buffer_text += get_column_tasks (win.sunday_column);
+                    buffer_text += get_column_tasks (win.sunday_column, true);
                     var buffer = buffer_text;
 
                     if (!file.get_basename ().down ().has_suffix (".org")) {
@@ -292,11 +473,65 @@ namespace Timetable.FileManager {
 
         file = null;
     }
+    
+    public void save_as_tt (MainWindow win) throws Error {
+        string buffer_text = "";
+        debug ("Save as button pressed.");
+        var file = Dialog.display_save_dialog ();
 
-    public string get_column_tasks (DayColumn column) {
+        try {
+            debug ("Saving file…");
+            if (file == null) {
+                debug ("User cancelled operation. Aborting.");
+            } else {
+                if (win.monday_column.is_modified == true ||
+                    win.tuesday_column.is_modified == true ||
+                    win.wednesday_column.is_modified == true ||
+                    win.thursday_column.is_modified == true ||
+                    win.friday_column.is_modified == true ||
+                    win.saturday_column.is_modified == true ||
+                    win.sunday_column.is_modified == true) {
+                    buffer_text += "* Monday\n";
+                    buffer_text += get_column_tasks (win.monday_column, false);
+                    buffer_text += "* Tuesday\n";
+                    buffer_text += get_column_tasks (win.tuesday_column, false);
+                    buffer_text += "* Wednesday\n";
+                    buffer_text += get_column_tasks (win.wednesday_column, false);
+                    buffer_text += "* Thursday\n";
+                    buffer_text += get_column_tasks (win.thursday_column, false);
+                    buffer_text += "* Friday\n";
+                    buffer_text += get_column_tasks (win.friday_column, false);
+                    buffer_text += "* Saturday\n";
+                    buffer_text += get_column_tasks (win.saturday_column, false);
+                    buffer_text += "* Sunday\n";
+                    buffer_text += get_column_tasks (win.sunday_column, false);
+                    var buffer = buffer_text;
+
+                    if (!file.get_basename ().down ().has_suffix (".timetable")) {
+                        var file_final = File.new_for_path (file.get_path () + ".timetable");
+                        string file_path_final = file_final.get_path ();
+                        save_file (file_path_final, buffer);
+                    }
+                    reset_modification_state (win);
+                }
+            }
+        } catch (Error e) {
+            warning ("Unexpected error during save: " + e.message);
+        }
+
+        file = null;
+    }
+
+    public string get_column_tasks (DayColumn column, bool org) {
         string task_string = "";
-        foreach (var task in column.get_tasks ()) {
-            task_string += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+        if (org) {
+            foreach (var task in column.get_tasks ()) {
+                task_string += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n";
+            }
+        } else {
+            foreach (var task in column.get_tasks ()) {
+                task_string += "\t- " + task.task_name + "\n\t<" + task.time_from_text + " - " + task.time_to_text + ">\n" + "\t[" + task.color + "]\n";
+            }
         }
         return task_string;
     }

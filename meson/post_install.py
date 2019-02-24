@@ -8,5 +8,11 @@ if not os.environ.get('DESTDIR'):
     print('Compiling gsettings schemas...')
     subprocess.call(['glib-compile-schemas', schemadir], shell=False)
 
+    print('Recaching mimetype handlers...')
+    subprocess.call(['update-desktop-database'], shell=False)
+    
+    print('Rebuilding mimetype handlers...')
+    subprocess.call(['update-mime-database', '-n', '/usr/share/mime/'], shell=False)
+
     print('Rebuilding desktop icons cache...')
     subprocess.call(['gtk-update-icon-cache', '/usr/share/icons/hicolor/'], shell=False)
