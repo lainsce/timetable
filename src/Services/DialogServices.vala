@@ -15,9 +15,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 namespace Timetable.Dialog {
-    public Gtk.FileChooserDialog create_file_chooser (string title,
-            Gtk.FileChooserAction action) {
-        var chooser = new Gtk.FileChooserDialog (title, null, action);
+    public MainWindow win;
+    public Gtk.FileChooserDialog create_file_chooser (Gtk.FileChooserAction action) {
+        var chooser = new Gtk.FileChooserDialog (null, null, action);
+        chooser.set_transient_for(win);
         chooser.add_button ("_Cancel", Gtk.ResponseType.CANCEL);
         if (action == Gtk.FileChooserAction.OPEN) {
             chooser.add_button ("_Open", Gtk.ResponseType.ACCEPT);
@@ -37,8 +38,7 @@ namespace Timetable.Dialog {
     }
 
     public File display_open_dialog () {
-        var chooser = create_file_chooser (_("Open file"),
-                Gtk.FileChooserAction.OPEN);
+        var chooser = create_file_chooser (Gtk.FileChooserAction.OPEN);
         File file = null;
         if (chooser.run () == Gtk.ResponseType.ACCEPT)
             file = chooser.get_file ();
@@ -47,8 +47,7 @@ namespace Timetable.Dialog {
     }
 
     public File display_save_dialog () {
-        var chooser = create_file_chooser (_("Save file"),
-                Gtk.FileChooserAction.SAVE);
+        var chooser = create_file_chooser (Gtk.FileChooserAction.SAVE);
         File file = null;
         if (chooser.run () == Gtk.ResponseType.ACCEPT)
             file = chooser.get_file ();
