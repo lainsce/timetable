@@ -53,6 +53,14 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
+        <release version="1.0.6" date="2019-03-15">
+            <description>
+                <p>Release: Wispy Weekends</p>
+                <ul>
+                    <li>Fixed: Hiding and showing the weekend columns now is respected across app openings.</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.5" date="2019-03-01">
             <description>
                 <p>Release: Color and Save Tasks</p>
