@@ -220,6 +220,8 @@ namespace Timetable {
             wednesday_column = new DayColumn (3, this);
             thursday_column = new DayColumn (4, this);
             friday_column = new DayColumn (5, this);
+            saturday_column = new DayColumn (6, this);
+            sunday_column = new DayColumn (7, this);
 
             tm.load_from_file ();
 
@@ -233,13 +235,11 @@ namespace Timetable {
             grid.attach (wednesday_column, 2, 0, 1, 1);
             grid.attach (thursday_column, 3, 0, 1, 1);
             grid.attach (friday_column, 4, 0, 1, 1);
-            if (grid != null) {
-                weekend_columns ();
-            }
+
+            weekend_columns ();
+
             settings.changed.connect (() => {
-                if (grid != null) {
-                    weekend_columns ();
-                }
+                weekend_columns ();
             });
             grid.show_all ();
 
@@ -266,17 +266,13 @@ namespace Timetable {
         private void weekend_columns () {
             var settings = AppSettings.get_default ();
             if (settings.weekend_show == true) {
-                saturday_column = new DayColumn (6, this);
-                sunday_column = new DayColumn (7, this);
                 grid.attach (saturday_column, 5, 0, 1, 1);
                 grid.attach (sunday_column, 6, 0, 1, 1);
-                saturday_column.show_all ();
-                sunday_column.show_all ();
+                saturday_column.visible = true;
+                sunday_column.visible = true;
             } else if (settings.weekend_show == false) {
-                grid.attach (saturday_column, 5, 0, 1, 1);
-                grid.attach (sunday_column, 6, 0, 1, 1);
-                saturday_column.hide ();
-                sunday_column.hide ();
+                saturday_column.visible = false;
+                sunday_column.visible = false;
             }
         }
 
