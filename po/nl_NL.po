@@ -1,0 +1,147 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the com.github.lainsce.timetable package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.lainsce.timetable\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-10-13 17:16-0500\n"
+"PO-Revision-Date: 2019-03-14 20:34+0100\n"
+"Language-Team: Dutch <vistausss@outlook.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: nl_NL\n"
+
+#: src/MainWindow.vala:48
+msgid "Timetable"
+msgstr "Tijdschema"
+
+#: src/MainWindow.vala:96
+msgid "New Timetable"
+msgstr "Nieuw tijdschema"
+
+#: src/MainWindow.vala:99
+msgid "Export Timetable…"
+msgstr "Tijdschema exporteren…"
+
+#: src/MainWindow.vala:114
+msgid "Export"
+msgstr "Exporteren"
+
+#: src/MainWindow.vala:119 src/Widgets/Preferences.vala:26
+msgid "Preferences"
+msgstr "Voorkeuren"
+
+#: src/MainWindow.vala:136 src/Widgets/TaskBox.vala:203
+msgid "Settings"
+msgstr "Instellingen"
+
+#: src/Services/DialogServices.vala:5
+msgid "There are unsaved changes to the timetable. Do you want to save?"
+msgstr "Er zijn niet-opgeslagen wijzigingen aan het tijdschema. Wil je ze opslaan?"
+
+#: src/Services/DialogServices.vala:6
+msgid "If you don't save, changes will be lost forever."
+msgstr "Als je ze niet opslaat, dan gaan ze permanent verloren."
+
+#: src/Services/DialogServices.vala:11
+msgid "Don't Save"
+msgstr "Niet opslaan"
+
+#: src/Services/DialogServices.vala:19
+msgid "Export timetable to…"
+msgstr "Tijdschema exporteren naar…"
+
+#: src/Services/DialogServices.vala:43
+msgid "Org files"
+msgstr "Org-bestanden"
+
+#: src/Services/DialogServices.vala:48
+msgid "All files"
+msgstr "Alle bestanden"
+
+#: src/Widgets/DayColumn.vala:22
+msgid "MON"
+msgstr "MA"
+
+#: src/Widgets/DayColumn.vala:25
+msgid "TUE"
+msgstr "DI"
+
+#: src/Widgets/DayColumn.vala:28
+msgid "WED"
+msgstr "WOE"
+
+#: src/Widgets/DayColumn.vala:31
+msgid "THU"
+msgstr "DO"
+
+#: src/Widgets/DayColumn.vala:34
+msgid "FRI"
+msgstr "VRIJ"
+
+#: src/Widgets/DayColumn.vala:43
+msgid "No tasks…"
+msgstr "Geen taken…"
+
+#: src/Widgets/DayColumn.vala:61
+msgid "Task…"
+msgstr "Taak…"
+
+#: src/Widgets/Preferences.vala:39
+msgid "Close"
+msgstr "Sluiten"
+
+#: src/Widgets/Preferences.vala:55
+msgid "Tasks Coloring"
+msgstr "Taakkleuren"
+
+#: src/Widgets/Preferences.vala:56
+msgid "High contrast colors:"
+msgstr "Kleuren met hoog contrast:"
+
+#: src/Widgets/TaskBox.vala:28
+msgid "Task Name"
+msgstr "Naam van taak"
+
+#: src/Widgets/TaskBox.vala:51
+msgid "Task Color"
+msgstr "Kleur van taak"
+
+#: src/Widgets/TaskBox.vala:58
+msgid "Red"
+msgstr "Rood"
+
+#: src/Widgets/TaskBox.vala:69
+msgid "Orange"
+msgstr "Oranje"
+
+#: src/Widgets/TaskBox.vala:80
+msgid "Yellow"
+msgstr "Geel"
+
+#: src/Widgets/TaskBox.vala:91
+msgid "Green"
+msgstr "Groen"
+
+#: src/Widgets/TaskBox.vala:102
+msgid "Blue"
+msgstr "Blauw"
+
+#: src/Widgets/TaskBox.vala:113
+msgid "Indigo"
+msgstr "Indigo"
+
+#: src/Widgets/TaskBox.vala:124
+msgid "Clear color"
+msgstr "Heldere kleur"
+
+#: src/Widgets/TaskBox.vala:139
+msgid "Task Time"
+msgstr "Tijdstip van taak"
