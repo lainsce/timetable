@@ -20,7 +20,7 @@ msgstr ""
 
 #: src/MainWindow.vala:48
 msgid "Timetable"
-msgstr "Tijdschema"
+msgstr "Timetable"
 
 #: src/MainWindow.vala:96
 msgid "New Timetable"
