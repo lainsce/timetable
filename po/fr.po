@@ -147,7 +147,7 @@ msgstr "Interface"
 
 #: src/Widgets/Preferences.vala:44
 msgid "Show weekends:"
-msgstr "Affichier les week-ends :"
+msgstr "Afficher les week-ends :"
 
 #: src/Widgets/Preferences.vala:48
 msgid "Tasks"
