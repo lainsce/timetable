@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.lainsce.timetable extra\n"
+"Project-Id-Version: com.github.lainsce.timetable\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-10-29 21:15+0900\n"
 "PO-Revision-Date: 2019-04-07 20:02+0100\n"
