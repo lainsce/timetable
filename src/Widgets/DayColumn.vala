@@ -169,7 +169,15 @@ namespace Timetable {
             TaskBox target;
             Gtk.Widget row;
             TaskBox source;
-            int newPos = 0;
+            int newPos;
+            
+            target = (TaskBox) column.get_row_at_y (y);
+
+            if (target == null) {
+                newPos = -1;
+            } else {
+                newPos = target.get_index ();
+            }
 
             row = ((Gtk.Widget[]) selection_data.get_data ())[0];
     
@@ -216,6 +224,7 @@ namespace Timetable {
             change_theme ();
             update_theme ();
             win.tm.save_notes ();
+            build_drag_and_drop ();
 
             settings.changed.connect (() => {
                 change_theme ();
@@ -249,8 +258,6 @@ namespace Timetable {
             date_time_box.pack_start (task_time_to_label, false, true, 0);
 
             evbox = new TaskEventBox (this);
-
-            build_drag_and_drop ();
 
             var task_grid = new Gtk.Grid ();
             task_grid.hexpand = false;
@@ -647,10 +654,9 @@ namespace Timetable {
         public void on_drag_data_received (Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint target_type, uint time) {
             Gtk.Widget row;
             int newPos = 0;
-    
             row = ((Gtk.Widget[]) selection_data.get_data ())[0];
-            Gtk.Allocation alloc;
 
+            daycolumn.column.remove (row);
             daycolumn.column.insert (row, newPos);
             show_all ();
         }

@@ -49,7 +49,6 @@ executable(
     'src/Services/TaskManager.vala',
     'src/Widgets/DayColumn.vala',
     'src/Widgets/Preferences.vala',
-    'src/Widgets/TaskBox.vala',
     'src/Widgets/TaskEventBox.vala',
     'src/Widgets/TaskPreferences.vala',
     'src/Constants/AppSettings.vala',
