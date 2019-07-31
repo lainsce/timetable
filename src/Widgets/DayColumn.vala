@@ -652,12 +652,23 @@ namespace Timetable {
         }
 
         public void on_drag_data_received (Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint target_type, uint time) {
-            Gtk.Widget row;
-            int newPos = 0;
-            row = ((Gtk.Widget[]) selection_data.get_data ())[0];
+            int newPos;
+            Gtk.Allocation alloc;
 
-            daycolumn.column.remove (row);
-            daycolumn.column.insert (row, newPos);
+            if (this == null) {
+                newPos = -1;
+            } else {
+                this.get_allocation (out alloc);
+                newPos = this.get_index ();
+
+                if (y <= ((newPos * alloc.height) - (alloc.height / 2)) && newPos > 1) {
+                    newPos--;
+                }
+                debug ("Dropped: %i", newPos);
+            }
+
+            daycolumn.column.remove (this);
+            daycolumn.column.insert (this, newPos);
             show_all ();
         }
     
