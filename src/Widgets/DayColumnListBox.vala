@@ -64,21 +64,19 @@ namespace Timetable {
             row = ((Gtk.Widget[]) selection_data.get_data ())[0];
             source = (TaskBox) row;
 
+            int last_index = (int) this.get_children ().length;
+
             if (target == null) {
                 newPos = -1;
             } else {
-                newPos = target.get_index()+1;
+                newPos = last_index-1;
             }
     
-            if (this.get_children () != null) {
-                this.remove (source);
-                this.insert (source, newPos);
-            } else {
-                this.insert (source, newPos);
-            }
+            source.get_parent ().remove (source); 
+            this.insert (source, newPos);
+            source.show_all ();
             
             win.tm.save_notes ();
-            this.show_all ();
         }
     }
 }
