@@ -1,48 +1,15 @@
 namespace Timetable {
     public class DayColumn : Gtk.Grid {
-        public MainWindow win;
-        public TaskBox tb;
-        public Gtk.ListBox column;
-        public string day_header;
-        public int day;
+        private MainWindow win;
+        private DayColumnListBox column;
+        private string day_header;
         public bool is_modified {get; set; default = false;}
-
-        private const Gtk.TargetEntry[] targetEntries = {
-            {"TASKBOX", Gtk.TargetFlags.SAME_APP, 0}
-        };
 
         public DayColumn (int day, MainWindow win) {
             this.win = win;
             this.set_size_request (180,-1);
             is_modified = false;
-            column = new Gtk.ListBox ();
-            column.hexpand = true;
-            column.vexpand = true;
-            column.activate_on_single_click = false;
-            column.selection_mode = Gtk.SelectionMode.SINGLE;
-            column.set_sort_func ((row1, row2) => {
-                string task1 = ((TaskBox) row1).time_from_text;
-                string task2 = ((TaskBox) row2).time_from_text;
-
-                int int1 = int.parse(task1);
-                int int2 = int.parse(task2);
-
-                unichar str1 = task1.get_char (task1.index_of_nth_char (0));
-                unichar str2 = task2.get_char (task2.index_of_nth_char (0));
-
-                if (str1.tolower () != 'a' || str2.tolower () != 'a') {
-                    return strcmp (task1.ascii_down (), task2.ascii_down ());
-                } else if (int1 > int2) {
-                    return task1.ascii_down ().collate (task2.ascii_down ());
-                } else {
-                    return 0;
-                }
-            });
-
-            build_drag_and_drop ();
-
-            var column_style_context = column.get_style_context ();
-            column_style_context.add_class ("tt-column");
+            column = new DayColumnListBox (day, win);
 
             var time = new GLib.DateTime.now_local ();
 
@@ -103,15 +70,6 @@ namespace Timetable {
             var column_label_style_context = column_label.get_style_context ();
             column_label_style_context.add_class ("tt-label");
 
-            var no_tasks = new Gtk.Label (_("No tasks…"));
-            no_tasks.halign = Gtk.Align.CENTER;
-            var no_tasks_style_context = no_tasks.get_style_context ();
-            no_tasks_style_context.add_class ("h2");
-            no_tasks.sensitive = false;
-            no_tasks.margin = 12;
-            no_tasks.show_all ();
-            column.set_placeholder (no_tasks);
-
             var column_button = new Gtk.Button ();
             column_button.can_focus = false;
             column_button.halign = Gtk.Align.END;
@@ -127,9 +85,9 @@ namespace Timetable {
             });
 
             this.row_spacing = 6;
-            this.attach (column_label, 0, 0, 1, 1);
+            this.attach (column_label, 0, 0, 2, 1);
+            this.attach (column_button, 1, 0, 2, 1);
             this.attach (column, 0, 1, 2, 1);
-            this.attach (column_button, 1, 0, 1, 1);
 
             this.show_all ();
         }
@@ -155,41 +113,6 @@ namespace Timetable {
 	            tasks.add ((TaskBox)item);
             }
             return tasks;
-        }
-
-        private void build_drag_and_drop () {
-            Gtk.drag_dest_set (this, Gtk.DestDefaults.ALL, targetEntries, Gdk.DragAction.MOVE);
-    
-            drag_data_received.connect (on_drag_data_received);
-        }
-    
-        private void on_drag_data_received (Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint target_type, uint time) {
-            TaskBox target;
-            Gtk.Widget row;
-            TaskBox source;
-            int newPos;
-            Gtk.Allocation alloc;
-            
-            target = (TaskBox) column.get_row_at_y (y);
-            target.get_allocation (out alloc);
-            row = ((Gtk.Widget[]) selection_data.get_data ())[0];
-            source = (TaskBox) row;
-
-            if (target == null) {
-                newPos = -1;
-            } else {
-                newPos = target.get_index();
-            }
-    
-            if (column.get_children () != null) {
-                column.remove (source);
-                column.insert (source, newPos);
-            } else {
-                column.insert (source, newPos);
-            }
-            
-            win.tm.save_notes ();
-            show_all ();
         }
     }
 }

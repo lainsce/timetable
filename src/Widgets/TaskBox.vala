@@ -1,16 +1,16 @@
 namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
-        public MainWindow win;
-        public DayColumn daycolumn;
+        private MainWindow win;
+        private int uid;
+        private static int uid_counter;
+
         public TaskPreferences popover;
         public TaskEventBox evbox;
-        public string task_name;
         public Gtk.Label task_label;
         public Gtk.Label task_time_from_label;
         public Gtk.Label task_time_sep_label;
         public Gtk.Label task_time_to_label;
-        public int uid;
-        public static int uid_counter;
+        public string task_name;
         public string color;
         public string tcolor;
         public string time_to_text;
