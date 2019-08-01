@@ -53,6 +53,14 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
+        <release version="1.0.7" date="2019-08-05">
+            <description>
+                <p>Release: Draggy Days</p>
+                <ul>
+                    <li>Fixed: Drag and drop your tasks away and organize them that way.</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.6" date="2019-03-15">
             <description>
                 <p>Release: Wispy Weekends</p>

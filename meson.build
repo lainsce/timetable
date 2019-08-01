@@ -1,6 +1,6 @@
 # Name our project
 project('com.github.lainsce.timetable', ['vala', 'c'],
-    version: '1.0.6'
+    version: '1.0.7'
 )
 
 # Import main lib files
