@@ -39,8 +39,6 @@ namespace Timetable {
                 }
             });
 
-            column.drag_data_received.connect (tb.on_drag_data_received);
-
             build_drag_and_drop ();
 
             var column_style_context = column.get_style_context ();
@@ -170,21 +168,23 @@ namespace Timetable {
             Gtk.Widget row;
             TaskBox source;
             int newPos;
+            Gtk.Allocation alloc;
             
             target = (TaskBox) column.get_row_at_y (y);
+            target.get_allocation (out alloc);
+            row = ((Gtk.Widget[]) selection_data.get_data ())[0];
+            source = (TaskBox) row;
 
             if (target == null) {
                 newPos = -1;
             } else {
                 newPos = target.get_index ();
             }
-
-            row = ((Gtk.Widget[]) selection_data.get_data ())[0];
-    
-            source = (TaskBox) row.get_ancestor (typeof (TaskBox));
     
             column.remove (source);
             column.insert (source, newPos);
+            win.tm.save_notes ();
+            show_all ();
         }
     }
 }

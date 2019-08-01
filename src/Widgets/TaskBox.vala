@@ -71,6 +71,10 @@ namespace Timetable {
             evbox = new TaskEventBox (this);
 
             var task_grid = new Gtk.Grid ();
+            task_grid.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
+                                Gdk.EventMask.LEAVE_NOTIFY_MASK &
+                                Gdk.EventMask.BUTTON_PRESS_MASK &
+                                Gdk.EventMask.BUTTON_RELEASE_MASK;
             task_grid.hexpand = false;
             task_grid.row_spacing = 6;
             task_grid.row_homogeneous = true;
@@ -461,27 +465,6 @@ namespace Timetable {
                 Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             }
         }
-
-        public void on_drag_data_received (Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint target_type, uint time) {
-            int newPos;
-            Gtk.Allocation alloc;
-
-            if (this == null) {
-                newPos = -1;
-            } else {
-                this.get_allocation (out alloc);
-                newPos = this.get_index ();
-
-                if (y <= ((newPos * alloc.height) - (alloc.height / 2)) && newPos > 1) {
-                    newPos--;
-                }
-                debug ("Dropped: %i", newPos);
-            }
-
-            daycolumn.column.remove (this);
-            daycolumn.column.insert (this, newPos);
-            show_all ();
-        }
     
         private void build_drag_and_drop () {
             Gtk.drag_source_set (this, Gdk.ModifierType.BUTTON1_MASK, targetEntries, Gdk.DragAction.MOVE);
@@ -491,7 +474,7 @@ namespace Timetable {
         }
     
         private void on_drag_begin (Gtk.Widget widget, Gdk.DragContext context) {
-            var row = (Timetable.TaskBox) widget.get_ancestor (typeof (Timetable.TaskBox));
+            var row = (TaskBox) widget;
             Gtk.Allocation alloc;
             row.get_allocation (out alloc);
     
@@ -517,7 +500,7 @@ namespace Timetable {
         }
     
         private void on_drag_data_get (Gtk.Widget widget, Gdk.DragContext context, Gtk.SelectionData selection_data, uint target_type, uint time) {
-            uchar[] data = new uchar[(sizeof (Timetable.TaskBox))];
+            uchar[] data = new uchar[(sizeof (TaskBox))];
             ((Gtk.Widget[])data)[0] = widget;
     
             selection_data.set (
