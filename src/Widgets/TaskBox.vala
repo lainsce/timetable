@@ -43,46 +43,15 @@ namespace Timetable {
                 win.tm.save_notes ();
             });
 
-            task_label = new Gtk.Label ("");
-            task_label.halign = Gtk.Align.START;
-            task_label.wrap = true;
-            task_label.hexpand = true;
-            task_label.label = this.task_name;
-
-            task_time_from_label = new Gtk.Label ("");
-            task_time_from_label.halign = Gtk.Align.START;
-            task_time_from_label.label = this.time_from_text;
-
-            task_time_to_label = new Gtk.Label ("");
-            task_time_to_label.halign = Gtk.Align.START;
-            task_time_to_label.label = this.time_to_text;
-
-            if (this.task_allday) {
-                task_time_sep_label = new Gtk.Label ("");
-            } else {
-                task_time_sep_label = new Gtk.Label ("-");
-            }
-
-            var date_time_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
-            date_time_box.pack_start (task_time_from_label, false, true, 0);
-            date_time_box.pack_start (task_time_sep_label, false, true, 0);
-            date_time_box.pack_start (task_time_to_label, false, true, 0);
-
-            evbox = new TaskEventBox (this);
+            evbox = new TaskEventBox (this, task_name, time_from_text, time_to_text, task_allday);
 
             var task_grid = new Gtk.Grid ();
-            task_grid.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
-                                Gdk.EventMask.LEAVE_NOTIFY_MASK &
-                                Gdk.EventMask.BUTTON_PRESS_MASK &
-                                Gdk.EventMask.BUTTON_RELEASE_MASK;
             task_grid.hexpand = false;
             task_grid.row_spacing = 6;
             task_grid.row_homogeneous = true;
             task_grid.margin_top = task_grid.margin_bottom = 12;
             task_grid.margin_start = task_grid.margin_end = 12;
-            task_grid.attach (task_label, 0, 0, 1, 1);
-            task_grid.attach (date_time_box, 0, 1, 1, 1);
-            task_grid.attach (evbox, 1, 0, 1, 2);
+            task_grid.attach (evbox, 0, 0, 1, 2);
 
             evbox.settings_requested.connect (() => {
                 popover = new TaskPreferences (win, this);
