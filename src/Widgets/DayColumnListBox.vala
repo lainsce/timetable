@@ -67,7 +67,7 @@ namespace Timetable {
             if (target == null) {
                 newPos = -1;
             } else {
-                newPos = target.get_index();
+                newPos = target.get_index()+1;
             }
     
             if (this.get_children () != null) {
