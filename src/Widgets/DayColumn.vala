@@ -178,11 +178,16 @@ namespace Timetable {
             if (target == null) {
                 newPos = -1;
             } else {
-                newPos = target.get_index ();
+                newPos = target.get_index();
             }
     
-            column.remove (source);
-            column.insert (source, newPos);
+            if (column.get_children () != null) {
+                column.remove (source);
+                column.insert (source, newPos);
+            } else {
+                column.insert (source, newPos);
+            }
+            
             win.tm.save_notes ();
             show_all ();
         }
