@@ -1,9 +1,12 @@
 namespace Timetable {
     public class TaskEventBox : Gtk.EventBox {
+        public MainWindow win;
         public TaskBox tb;
         public Gtk.Button app_button;
         public Gtk.Button task_delete_button;
         public Gtk.Revealer revealer;
+        private int uid;
+        private static int uid_counter;
 
         public bool show_button = true;
         public bool show_popover = true;
@@ -15,21 +18,33 @@ namespace Timetable {
         public Gtk.Label task_time_to_label;
         public string task_name;
         public string color;
-        public string tcolor;
         public string time_to_text;
         public string time_from_text;
         public bool task_allday;
 
-        public signal void settings_requested ();
         public signal void delete_requested ();
+        public signal void prefs_requested ();
 
-        public TaskEventBox (TaskBox tb, string task_name, string time_from_text, string time_to_text, bool task_allday) {
+        public TaskEventBox (MainWindow win, TaskBox tb, string task_name, string color, string time_from_text, string time_to_text, bool task_allday) {
+            var settings = AppSettings.get_default ();
+            this.win = win;
+            this.uid = uid_counter++;
             this.tb = tb;
             this.task_name = task_name;
-            this.tcolor = color;
-            this.time_to_text = time_to_text;
+            this.color = color;
             this.time_from_text = time_from_text;
+            this.time_to_text = time_to_text;
             this.task_allday = task_allday;
+
+            change_theme ();
+            tb.update_theme ();
+            win.tm.save_notes ();
+
+            settings.changed.connect (() => {
+                change_theme ();
+                tb.update_theme ();
+                win.tm.save_notes ();
+            });
 
             task_label = new Gtk.Label ("");
             task_label.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
@@ -160,7 +175,7 @@ namespace Timetable {
             });
 
             app_button.clicked.connect(() => {
-                settings_requested ();
+                prefs_requested ();
             });
 
             this.enter_notify_event.connect ((event) => {
@@ -169,7 +184,7 @@ namespace Timetable {
             });
 
             this.leave_notify_event.connect ((event) => {
-                if (tb.popover != null && tb.popover.get_visible () == true) {
+                if (popover != null && popover.get_visible () == true) {
     	            return true;
     	        }
     	        revealer.set_reveal_child (this.show_button);
@@ -190,6 +205,23 @@ namespace Timetable {
                 revealer.set_reveal_child (this.show_button);
                 return false;
             });
+        }
+
+        private void change_theme () {
+            var settings = AppSettings.get_default ();
+            if (settings.theme == 0) {
+                var provider = new Gtk.CssProvider ();
+                provider.load_from_resource ("/com/github/lainsce/timetable/elementary.css");
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } else if (settings.theme == 1) {
+                var provider = new Gtk.CssProvider ();
+                provider.load_from_resource ("/com/github/lainsce/timetable/flat.css");
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } else if (settings.theme == 2) {
+                var provider = new Gtk.CssProvider ();
+                provider.load_from_resource ("/com/github/lainsce/timetable/nature.css");
+                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            }
         }
     }
 }

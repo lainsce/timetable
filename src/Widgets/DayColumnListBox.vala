@@ -13,8 +13,8 @@ namespace Timetable {
             this.activate_on_single_click = false;
             this.selection_mode = Gtk.SelectionMode.SINGLE;
             this.set_sort_func ((row1, row2) => {
-                string task1 = ((TaskBox) row1).time_from_text;
-                string task2 = ((TaskBox) row2).time_from_text;
+                string task1 = ((TaskEventBox) row1).time_from_text;
+                string task2 = ((TaskEventBox) row2).time_from_text;
 
                 int int1 = int.parse(task1);
                 int int2 = int.parse(task2);

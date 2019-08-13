@@ -1,18 +1,20 @@
 namespace Timetable {
     public class TaskPreferences : Gtk.Popover {
+        public weak TaskEventBox teb;
         public weak TaskBox tb;
         public MainWindow win;
 
-        public TaskPreferences (MainWindow win, TaskBox tb) {
+        public TaskPreferences (MainWindow win, TaskBox tb, TaskEventBox teb) {
             Object (
                 border_width: 6
             );
             this.win = win;
             this.tb = tb;
-            this.set_relative_to (tb.evbox.app_button);
+            this.teb = teb;
+            this.set_relative_to (teb.app_button);
 
             var settings = AppSettings.get_default ();
-            var task_prefs_label = new Gtk.Label (_("“%s” Preferences").printf(tb.task_name));
+            var task_prefs_label = new Gtk.Label (_("“%s” Preferences").printf(teb.task_name));
             task_prefs_label.halign = Gtk.Align.CENTER;
             task_prefs_label.wrap = true;
             var task_prefs_label_style_context = task_prefs_label.get_style_context ();
@@ -25,9 +27,9 @@ namespace Timetable {
 
             task_name_entry_buffer.inserted_text.connect (() => {
                 task_prefs_label.label = _("“%s” Preferences").printf(task_name_entry.get_text ());
-                tb.task_label.label = task_name_entry.get_text ();
-                tb.task_name = task_name_entry.get_text ();
-                task_name_entry.set_text (tb.task_name);
+                teb.task_label.label = task_name_entry.get_text ();
+                teb.task_name = task_name_entry.get_text ();
+                task_name_entry.set_text (teb.task_name);
                 win.tm.save_notes ();
             });
 
@@ -113,13 +115,13 @@ namespace Timetable {
             color_button_red.clicked.connect (() => {
                 if (settings.theme == 0) {
                     tb.color = "#ed5353";
-                    tb.tcolor = "#ed5353";
+                    
                 } else if (settings.theme == 1) {
                     tb.color = "#F33B61";
-                    tb.tcolor = "#F33B61";
+                    
                 } else if (settings.theme == 2) {
                     tb.color = "#ff5656";
-                    tb.tcolor = "#ff5656";
+                    
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -128,13 +130,13 @@ namespace Timetable {
             color_button_orange.clicked.connect (() => {
                 if (settings.theme == 0) {
                     tb.color = "#ffa154";
-                    tb.tcolor = "#ffa154";
+                    
                 } else if (settings.theme == 1) {
                     tb.color = "#ffa358";
-                    tb.tcolor = "#ffa358";
+                    
                 } else if (settings.theme == 2) {
                     tb.color = "#fa983a";
-                    tb.tcolor = "#fa983a";
+                    
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -143,13 +145,13 @@ namespace Timetable {
             color_button_yellow.clicked.connect (() => {
                 if (settings.theme == 0) {
                     tb.color = "#ffe16b";
-                    tb.tcolor = "#ffe16b";
+                    
                 } else if (settings.theme == 1) {
                     tb.color = "#FFE379";
-                    tb.tcolor = "#FFE379";
+                    
                 } else if (settings.theme == 2) {
                     tb.color = "#f6d95b";
-                    tb.tcolor = "#f6d95b";
+                    
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -158,13 +160,13 @@ namespace Timetable {
             color_button_green.clicked.connect (() => {
                 if (settings.theme == 0) {
                     tb.color = "#9bdb4d";
-                    tb.tcolor = "#9bdb4d";
+                    
                 } else if (settings.theme == 1) {
                     tb.color = "#9CCF81";
-                    tb.tcolor = "#9CCF81";
+                    
                 } else if (settings.theme == 2) {
                     tb.color = "#78e08f";
-                    tb.tcolor = "#78e08f";
+                    
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -173,13 +175,13 @@ namespace Timetable {
             color_button_blue.clicked.connect (() => {
                 if (settings.theme == 0) {
                     tb.color = "#64baff";
-                    tb.tcolor = "#64baff";
+                    
                 } else if (settings.theme == 1) {
                     tb.color = "#8ED0FF";
-                    tb.tcolor = "#8ED0FF";
+                    
                 } else if (settings.theme == 2) {
                     tb.color = "#82ccdd";
-                    tb.tcolor = "#82ccdd";
+                    
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -188,13 +190,13 @@ namespace Timetable {
             color_button_violet.clicked.connect (() => {
                 if (settings.theme == 0) {
                     tb.color = "#ad65d6";
-                    tb.tcolor = "#ad65d6";
+                    
                 } else if (settings.theme == 1) {
                     tb.color = "#C1AFF2";
-                    tb.tcolor = "#C1AFF2";
+                    
                 } else if (settings.theme == 2) {
                     tb.color = "#8498e6";
-                    tb.tcolor = "#8498e6";
+                    
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -203,13 +205,13 @@ namespace Timetable {
             color_button_clear.clicked.connect (() => {
                 if (settings.theme == 0) {
                     tb.color = "#d4d4d4";
-                    tb.tcolor = "#d4d4d4";
+                    
                 } else if (settings.theme == 1) {
                     tb.color = "#d4d4d4";
-                    tb.tcolor = "#d4d4d4";
+                    
                 } else if (settings.theme == 2) {
                     tb.color = "#d4d4d4";
-                    tb.tcolor = "#d4d4d4";
+                    
                 }
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -230,12 +232,12 @@ namespace Timetable {
             task_time_from_pop_label.halign = Gtk.Align.START;
 
             var time_from_picker = new Granite.Widgets.TimePicker.with_format ("%H:%M", "%H:%M");
-            time_from_picker.text = tb.time_from_text;
+            time_from_picker.text = teb.time_from_text;
 
             time_from_picker.time_changed.connect (() => {
-                tb.task_time_from_label.label = time_from_picker.time.format ("%H:%M").to_string ();
-                tb.time_from_text = time_from_picker.time.format ("%H:%M").to_string ();
-                tb.changed ();
+                teb.task_time_from_label.label = time_from_picker.time.format ("%H:%M").to_string ();
+                teb.time_from_text = time_from_picker.time.format ("%H:%M").to_string ();
+                //tb.changed ();
                 win.tm.save_notes ();
             });
 
@@ -243,12 +245,12 @@ namespace Timetable {
             task_time_to_pop_label.halign = Gtk.Align.START;
 
             var time_to_picker = new Granite.Widgets.TimePicker.with_format ("%H:%M", "%H:%M");
-            time_to_picker.text = tb.time_to_text;
+            time_to_picker.text = teb.time_to_text;
 
             time_to_picker.time_changed.connect (() => {
-                tb.task_time_to_label.label = time_to_picker.time.format ("%H:%M").to_string ();
-                tb.time_to_text = time_to_picker.time.format ("%H:%M").to_string ();
-                tb.changed ();
+                teb.task_time_to_label.label = time_to_picker.time.format ("%H:%M").to_string ();
+                teb.time_to_text = time_to_picker.time.format ("%H:%M").to_string ();
+                //tb.changed ();
                 win.tm.save_notes ();
             });
 
@@ -258,15 +260,15 @@ namespace Timetable {
             var task_allday_switch = new Gtk.Switch ();
             task_allday_switch.hexpand = false;
             task_allday_switch.halign = Gtk.Align.START;
-            if (tb.task_allday == true) {
+            if (teb.task_allday == true) {
                 task_allday_switch.set_active (true);
-                tb.task_time_sep_label.label = "";
+                teb.task_time_sep_label.label = "";
                 time_to_picker.sensitive = false;
                 time_from_picker.sensitive = false;
                 tb.update_theme ();
             } else {
                 task_allday_switch.set_active (false);
-                tb.task_time_sep_label.label = "-";
+                teb.task_time_sep_label.label = "-";
                 time_to_picker.sensitive = true;
                 time_from_picker.sensitive = true;
                 tb.update_theme ();
@@ -279,24 +281,24 @@ namespace Timetable {
 
             task_allday_switch.notify["active"].connect (() => {
 			    if (task_allday_switch.active) {
-                    tb.task_time_from_label.label = _("All Day");
-                    tb.time_from_text = _("All Day");
-                    tb.task_time_to_label.label = "";
-    				tb.time_to_text = "";
-                    tb.task_time_sep_label.label = "";
-                    tb.task_allday = true;
+                    teb.task_time_from_label.label = _("All Day");
+                    teb.time_from_text = _("All Day");
+                    teb.task_time_to_label.label = "";
+    				teb.time_to_text = "";
+                    teb.task_time_sep_label.label = "";
+                    teb.task_allday = true;
                     time_to_picker.sensitive = false;
                     time_from_picker.sensitive = false;
                     win.tm.save_notes ();
 			    } else {
-                    tb.task_time_from_label.label = "12:00";
+                    teb.task_time_from_label.label = "12:00";
                     time_from_picker.text = "12:00";
-                    tb.time_from_text = "12:00";
-                    tb.task_time_to_label.label = "12:00";
+                    teb.time_from_text = "12:00";
+                    teb.task_time_to_label.label = "12:00";
                     time_to_picker.text = "12:00";
-                    tb.time_to_text = "12:00";
-                    tb.task_time_sep_label.label = "-";
-                    tb.task_allday = false;
+                    teb.time_to_text = "12:00";
+                    teb.task_time_sep_label.label = "-";
+                    teb.task_allday = false;
                     time_to_picker.sensitive = true;
                     time_from_picker.sensitive = true;
                     win.tm.save_notes ();

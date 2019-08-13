@@ -1,49 +1,32 @@
 namespace Timetable {
     public class TaskBox : Gtk.ListBoxRow {
         private MainWindow win;
-        private int uid;
-        private static int uid_counter;
-
         public TaskPreferences popover;
-        public TaskEventBox evbox;
-        public Gtk.Label task_label;
-        public Gtk.Label task_time_from_label;
-        public Gtk.Label task_time_sep_label;
-        public Gtk.Label task_time_to_label;
+
         public string task_name;
         public string color;
-        public string tcolor;
         public string time_to_text;
         public string time_from_text;
         public bool task_allday;
 
+        private int uid;
+        private static int uid_counter;
         private const Gtk.TargetEntry[] targetEntries = {
             {"TASKBOX", Gtk.TargetFlags.SAME_APP, 0}
         };
 
         public TaskBox (MainWindow win, string task_name, string color, string time_from_text, string time_to_text, bool task_allday) {
-            var settings = AppSettings.get_default ();
             this.win = win;
             this.uid = uid_counter++;
-            this.task_name = task_name;
             this.color = color;
-            this.tcolor = color;
-            this.time_to_text = time_to_text;
+            this.task_name = task_name;
             this.time_from_text = time_from_text;
+            this.time_to_text = time_to_text;
             this.task_allday = task_allday;
 
-            change_theme ();
-            update_theme ();
-            win.tm.save_notes ();
             build_drag_and_drop ();
 
-            settings.changed.connect (() => {
-                change_theme ();
-                update_theme ();
-                win.tm.save_notes ();
-            });
-
-            evbox = new TaskEventBox (this, task_name, time_from_text, time_to_text, task_allday);
+            var evbox = new TaskEventBox (this.win, this, task_name, color, time_from_text, time_to_text, task_allday);
 
             var task_grid = new Gtk.Grid ();
             task_grid.hexpand = false;
@@ -53,13 +36,13 @@ namespace Timetable {
             task_grid.margin_start = task_grid.margin_end = 12;
             task_grid.attach (evbox, 0, 0, 1, 2);
 
-            evbox.settings_requested.connect (() => {
-                popover = new TaskPreferences (win, this);
-            });
-
             evbox.delete_requested.connect (() => {
                 this.destroy ();
                 win.tm.save_notes ();
+            });
+
+            evbox.prefs_requested.connect (() => {
+                popover = new TaskPreferences (win, this, evbox);
             });
 
             this.add (task_grid);
@@ -72,192 +55,191 @@ namespace Timetable {
             this.get_style_context ().add_class ("tt-box-%d".printf(uid));
             var settings = AppSettings.get_default ();
             string style = null;
-            string tcolor = null;
             if (settings.theme == 0) {
                 // Coming from Flat
                 if (color == "#F33B61") {
-                    tcolor = "#ed5353";
+                    color = "#ed5353";
                 }
                 if (color == "#ffa358") {
-                    tcolor = "#ffa154";
+                    color = "#ffa154";
                 }
                 if (color == "#FFE379") {
-                    tcolor = "#ffe16b";
+                    color = "#ffe16b";
                 }
                 if (color == "#9CCF81") {
-                    tcolor = "#9bdb4d";
+                    color = "#9bdb4d";
                 }
                 if (color == "#8ED0FF") {
-                    tcolor = "#64baff";
+                    color = "#64baff";
                 }
                 if (color == "#C1AFF2") {
-                    tcolor = "#ad65d6";
+                    color = "#ad65d6";
                 }
                 // Coming from Nature
                 if (color == "#ff5656") {
-                    tcolor = "#ed5353";
+                    color = "#ed5353";
                 }
                 if (color == "#fa983a") {
-                    tcolor = "#ffa154";
+                    color = "#ffa154";
                 }
                 if (color == "#f6d95b") {
-                    tcolor = "#ffe16b";
+                    color = "#ffe16b";
                 }
                 if (color == "#78e08f") {
-                    tcolor = "#9bdb4d";
+                    color = "#9bdb4d";
                 }
                 if (color == "#82ccdd") {
-                    tcolor = "#64baff";
+                    color = "#64baff";
                 }
                 if (color == "#ad65d6") {
-                    tcolor = "#ad65d6";
+                    color = "#ad65d6";
                 }
                 // Going to elementary
                 if (color == "#ed5353") {
-                    tcolor = "#ed5353";
+                    color = "#ed5353";
                 }
                 if (color == "#ffa154") {
-                    tcolor = "#ffa154";
+                    color = "#ffa154";
                 }
                 if (color == "#ffe16b") {
-                    tcolor = "#ffe16b";
+                    color = "#ffe16b";
                 }
                 if (color == "#9bdb4d") {
-                    tcolor = "#9bdb4d";
+                    color = "#9bdb4d";
                 }
                 if (color == "#64baff") {
-                    tcolor = "#64baff";
+                    color = "#64baff";
                 }
                 if (color == "#ad65d6") {
-                    tcolor = "#ad65d6";
+                    color = "#ad65d6";
                 }
                 // Resetted color
                 if (color == "#d4d4d4") {
-                    tcolor = "#d4d4d4";
+                    color = "#d4d4d4";
                 }
             } else if (settings.theme == 1) {
                 // Coming from elementary
                 if (color == "#ed5353") {
-                    tcolor = "#F33B61";
+                    color = "#F33B61";
                 }
                 if (color == "#ffa154") {
-                    tcolor = "#ffa358";
+                    color = "#ffa358";
                 }
                 if (color == "#ffe16b") {
-                    tcolor = "#FFE379";
+                    color = "#FFE379";
                 }
                 if (color == "#9bdb4d") {
-                    tcolor = "#9CCF81";
+                    color = "#9CCF81";
                 }
                 if (color == "#64baff") {
-                    tcolor = "#8ED0FF";
+                    color = "#8ED0FF";
                 }
                 if (color == "#ad65d6") {
-                    tcolor = "#C1AFF2";
+                    color = "#C1AFF2";
                 }
                 // Coming from Nature
                 if (color == "#ff5656") {
-                    tcolor = "#F33B61";
+                    color = "#F33B61";
                 }
                 if (color == "#fa983a") {
-                    tcolor = "#ffa358";
+                    color = "#ffa358";
                 }
                 if (color == "#f6d95b") {
-                    tcolor = "#FFE379";
+                    color = "#FFE379";
                 }
                 if (color == "#78e08f") {
-                    tcolor = "#9CCF81";
+                    color = "#9CCF81";
                 }
                 if (color == "#82ccdd") {
-                    tcolor = "#8ED0FF";
+                    color = "#8ED0FF";
                 }
                 if (color == "#8498e6") {
-                    tcolor = "#C1AFF2";
+                    color = "#C1AFF2";
                 }
                 // Going to Flat
                 if (color == "#F33B61") {
-                    tcolor = "#F33B61";
+                    color = "#F33B61";
                 }
                 if (color == "#ffa358") {
-                    tcolor = "#ffa358";
+                    color = "#ffa358";
                 }
                 if (color == "#FFE379") {
-                    tcolor = "#FFE379";
+                    color = "#FFE379";
                 }
                 if (color == "#9CCF81") {
-                    tcolor = "#9CCF81";
+                    color = "#9CCF81";
                 }
                 if (color == "#8ED0FF") {
-                    tcolor = "#8ED0FF";
+                    color = "#8ED0FF";
                 }
                 if (color == "#C1AFF2") {
-                    tcolor = "#C1AFF2";
+                    color = "#C1AFF2";
                 }
                 // Resetted color
                 if (color == "#d4d4d4") {
-                    tcolor = "#d4d4d4";
+                    color = "#d4d4d4";
                 }
             } else if (settings.theme == 2) {
                 // Coming from elementary
                 if (color == "#ed5353") {
-                    tcolor = "#ff5656";
+                    color = "#ff5656";
                 }
                 if (color == "#ffa154") {
-                    tcolor = "#fa983a";
+                    color = "#fa983a";
                 }
                 if (color == "#ffe16b") {
-                    tcolor = "#f6d95b";
+                    color = "#f6d95b";
                 }
                 if (color == "#9bdb4d") {
-                    tcolor = "#78e08f";
+                    color = "#78e08f";
                 }
                 if (color == "#64baff") {
-                    tcolor = "#82ccdd";
+                    color = "#82ccdd";
                 }
                 if (color == "#ad65d6") {
-                    tcolor = "#8498e6";
+                    color = "#8498e6";
                 }
                 // Coming from Flat
                 if (color == "#F33B61") {
-                    tcolor = "#ff5656";
+                    color = "#ff5656";
                 }
                 if (color == "#ffa358") {
-                    tcolor = "#fa983a";
+                    color = "#fa983a";
                 }
                 if (color == "#FFE379") {
-                    tcolor = "#f6d95b";
+                    color = "#f6d95b";
                 }
                 if (color == "#9CCF81") {
-                    tcolor = "#78e08f";
+                    color = "#78e08f";
                 }
                 if (color == "#8ED0FF") {
-                    tcolor = "#82ccdd";
+                    color = "#82ccdd";
                 }
                 if (color == "#C1AFF2") {
-                    tcolor = "#8498e6";
+                    color = "#8498e6";
                 }
                 // Going to Nature
                 if (color == "#ff5656") {
-                    tcolor = "#ff5656";
+                    color = "#ff5656";
                 }
                 if (color == "#fa983a") {
-                    tcolor = "#fa983a";
+                    color = "#fa983a";
                 }
                 if (color == "#f6d95b") {
-                    tcolor = "#f6d95b";
+                    color = "#f6d95b";
                 }
                 if (color == "#78e08f") {
-                    tcolor = "#78e08f";
+                    color = "#78e08f";
                 }
                 if (color == "#82ccdd") {
-                    tcolor = "#82ccdd";
+                    color = "#82ccdd";
                 }
                 if (color == "#8498e6") {
-                    tcolor = "#8498e6";
+                    color = "#8498e6";
                 }
                 // Resetted color
                 if (color == "#d4d4d4") {
-                    tcolor = "#d4d4d4";
+                    color = "#d4d4d4";
                 }
             }
             if (settings.high_contrast) {
@@ -295,7 +277,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: #666;
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, uid, uid, uid, uid, uid);
+                    """).printf(uid, color, color, color, uid, uid, uid, uid, uid);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -330,7 +312,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: #666;
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, uid, uid, uid, uid, uid);
+                    """).printf(uid, color, color, color, color, uid, uid, uid, uid, uid);
                 }
             } else {
                 if (settings.show_tasks_allday && this.task_allday) {
@@ -367,7 +349,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: shade (%s, 0.6);
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, color, color, color, color, color, uid, color, uid, color, uid, color, uid, color, uid, color);
                 } else {
                     style = ("""
                         .tt-box-%d {
@@ -402,7 +384,7 @@ namespace Timetable {
                         .tt-box-%d image:backdrop {
                             color: shade (%s, 0.88);
                         }
-                    """).printf(uid, tcolor, tcolor, tcolor, tcolor, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor, uid, tcolor);
+                    """).printf(uid, color, color, color, color, color, uid, color, uid, color, uid, color, uid, color, uid, color);
                 }
             }
             try {
@@ -416,23 +398,6 @@ namespace Timetable {
                 css_provider,
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-        }
-
-        private void change_theme () {
-            var settings = AppSettings.get_default ();
-            if (settings.theme == 0) {
-                var provider = new Gtk.CssProvider ();
-                provider.load_from_resource ("/com/github/lainsce/timetable/elementary.css");
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } else if (settings.theme == 1) {
-                var provider = new Gtk.CssProvider ();
-                provider.load_from_resource ("/com/github/lainsce/timetable/flat.css");
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } else if (settings.theme == 2) {
-                var provider = new Gtk.CssProvider ();
-                provider.load_from_resource ("/com/github/lainsce/timetable/nature.css");
-                Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            }
         }
     
         private void build_drag_and_drop () {

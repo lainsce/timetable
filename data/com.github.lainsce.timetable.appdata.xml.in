@@ -53,6 +53,14 @@
         <content_attribute id="money-gambling">none</content_attribute>
     </content_rating>
     <releases>
+        <release version="1.0.7" date="2019-08-16">
+            <description>
+                <p>Release: Tasked Tasks</p>
+                <ul>
+                    <li>Fixed: Task preferences weren't being set.</li>
+                </ul>
+            </description>
+        </release>
         <release version="1.0.7" date="2019-08-05">
             <description>
                 <p>Release: Draggy Days</p>
