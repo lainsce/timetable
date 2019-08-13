@@ -16,25 +16,15 @@ namespace Timetable {
         public Gtk.Label task_time_from_label;
         public Gtk.Label task_time_sep_label;
         public Gtk.Label task_time_to_label;
-        public string task_name;
-        public string color;
-        public string time_to_text;
-        public string time_from_text;
-        public bool task_allday;
 
         public signal void delete_requested ();
         public signal void prefs_requested ();
 
-        public TaskEventBox (MainWindow win, TaskBox tb, string task_name, string color, string time_from_text, string time_to_text, bool task_allday) {
+        public TaskEventBox (MainWindow win, TaskBox tb) {
             var settings = AppSettings.get_default ();
             this.win = win;
             this.uid = uid_counter++;
             this.tb = tb;
-            this.task_name = task_name;
-            this.color = color;
-            this.time_from_text = time_from_text;
-            this.time_to_text = time_to_text;
-            this.task_allday = task_allday;
 
             change_theme ();
             tb.update_theme ();
@@ -54,7 +44,7 @@ namespace Timetable {
             task_label.halign = Gtk.Align.START;
             task_label.wrap = true;
             task_label.hexpand = true;
-            task_label.label = this.task_name;
+            task_label.label = tb.task_name;
 
             task_time_from_label = new Gtk.Label ("");
             task_time_from_label.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
@@ -62,7 +52,7 @@ namespace Timetable {
                                Gdk.EventMask.BUTTON_PRESS_MASK &
                                Gdk.EventMask.BUTTON_RELEASE_MASK;
             task_time_from_label.halign = Gtk.Align.START;
-            task_time_from_label.label = this.time_from_text;
+            task_time_from_label.label = tb.time_from_text;
 
             task_time_to_label = new Gtk.Label ("");
             task_time_to_label.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
@@ -70,9 +60,9 @@ namespace Timetable {
                                Gdk.EventMask.BUTTON_PRESS_MASK &
                                Gdk.EventMask.BUTTON_RELEASE_MASK;
             task_time_to_label.halign = Gtk.Align.START;
-            task_time_to_label.label = this.time_to_text;
+            task_time_to_label.label = tb.time_to_text;
 
-            if (this.task_allday) {
+            if (tb.task_allday) {
                 task_time_sep_label = new Gtk.Label ("");
                 task_time_sep_label.events |= Gdk.EventMask.ENTER_NOTIFY_MASK &
                                               Gdk.EventMask.LEAVE_NOTIFY_MASK &

@@ -26,7 +26,7 @@ namespace Timetable {
 
             build_drag_and_drop ();
 
-            var evbox = new TaskEventBox (this.win, this, task_name, color, time_from_text, time_to_text, task_allday);
+            var evbox = new TaskEventBox (this.win, this);
 
             var task_grid = new Gtk.Grid ();
             task_grid.hexpand = false;
