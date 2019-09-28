@@ -228,11 +228,11 @@ namespace Timetable {
             grid.margin = 12;
             grid.set_column_homogeneous (true);
             grid.hexpand = true;
-            grid.attach (monday_column, 0, 0, 1, 1);
-            grid.attach (tuesday_column, 1, 0, 1, 1);
-            grid.attach (wednesday_column, 2, 0, 1, 1);
-            grid.attach (thursday_column, 3, 0, 1, 1);
-            grid.attach (friday_column, 4, 0, 1, 1);
+            grid.attach (monday_column, 0, 0, 1, 2);
+            grid.attach (tuesday_column, 1, 0, 1, 2);
+            grid.attach (wednesday_column, 2, 0, 1, 2);
+            grid.attach (thursday_column, 3, 0, 1, 2);
+            grid.attach (friday_column, 4, 0, 1, 2);
 
             weekend_columns ();
 
@@ -269,6 +269,7 @@ namespace Timetable {
                 grid.attach (sunday_column, 5, 1, 1, 1);
                 saturday_column.visible = true;
                 sunday_column.visible = true;
+                sunday_column.margin_top = 6;
             } else if (settings.weekend_show == false) {
                 saturday_column.visible = false;
                 sunday_column.visible = false;
