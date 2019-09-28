@@ -17,7 +17,7 @@
 * Boston, MA 02110-1301 USA
 */
 namespace Timetable {
-    public class MainWindow : Gtk.Window {
+    public class MainWindow : Gtk.ApplicationWindow {
         // Widgets
         public DayColumn monday_column;
         public DayColumn tuesday_column;
@@ -47,8 +47,6 @@ namespace Timetable {
             GLib.Object (
                 application: application,
                 icon_name: "com.github.lainsce.timetable",
-                height_request: 825,
-                width_request: 900,
                 title: (_("Timetable"))
             );
 
@@ -260,6 +258,7 @@ namespace Timetable {
             scrwindow.add (box);
 
             this.add (scrwindow);
+            this.set_size_request (600, 600);
             this.show_all ();
         }
 
@@ -267,7 +266,7 @@ namespace Timetable {
             var settings = AppSettings.get_default ();
             if (settings.weekend_show == true) {
                 grid.attach (saturday_column, 5, 0, 1, 1);
-                grid.attach (sunday_column, 6, 0, 1, 1);
+                grid.attach (sunday_column, 5, 1, 1, 1);
                 saturday_column.visible = true;
                 sunday_column.visible = true;
             } else if (settings.weekend_show == false) {
