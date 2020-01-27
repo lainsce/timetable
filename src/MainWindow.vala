@@ -43,9 +43,12 @@ namespace Timetable {
             { ACTION_EXPORT,                action_export                }
         };
 
+        public Gtk.Application app { get; construct; }
+
         public MainWindow (Gtk.Application application) {
             GLib.Object (
                 application: application,
+                app: application,
                 icon_name: "com.github.lainsce.timetable",
                 title: (_("Timetable"))
             );
@@ -68,11 +71,10 @@ namespace Timetable {
             actions.add_action_entries (action_entries, this);
             insert_action_group ("win", actions);
 
-            var settings = AppSettings.get_default ();
-            int x = settings.window_x;
-            int y = settings.window_y;
-            int h = settings.window_height;
-            int w = settings.window_width;
+            int x = Timetable.Application.gsettings.get_int("window-x");
+            int y = Timetable.Application.gsettings.get_int("window-y");
+            int h = Timetable.Application.gsettings.get_int("window-height");
+            int w = Timetable.Application.gsettings.get_int("window-width");
             if (x != -1 && y != -1) {
                 this.move (x, y);
             }
@@ -236,7 +238,7 @@ namespace Timetable {
 
             weekend_columns ();
 
-            settings.changed.connect (() => {
+            Timetable.Application.gsettings.changed.connect (() => {
                 weekend_columns ();
             });
             grid.show_all ();
@@ -263,14 +265,13 @@ namespace Timetable {
         }
 
         private void weekend_columns () {
-            var settings = AppSettings.get_default ();
-            if (settings.weekend_show == true) {
+            if (Timetable.Application.gsettings.get_boolean("weekend-show") == true) {
                 grid.attach (saturday_column, 5, 0, 1, 1);
                 grid.attach (sunday_column, 5, 1, 1, 1);
                 saturday_column.visible = true;
                 sunday_column.visible = true;
                 sunday_column.margin_top = 6;
-            } else if (settings.weekend_show == false) {
+            } else {
                 saturday_column.visible = false;
                 sunday_column.visible = false;
             }
@@ -311,11 +312,10 @@ namespace Timetable {
             get_position (out x, out y);
             get_size (out w, out h);
 
-            var settings = AppSettings.get_default ();
-            settings.window_x = x;
-            settings.window_y = y;
-            settings.window_width = w;
-            settings.window_height = h;
+            Timetable.Application.gsettings.set_int("window-x", x);
+            Timetable.Application.gsettings.set_int("window-y", y);
+            Timetable.Application.gsettings.set_int("window-width", w);
+            Timetable.Application.gsettings.set_int("window-height", h);
             return false;
         }
     }

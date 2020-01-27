@@ -21,7 +21,6 @@ namespace Timetable {
         public signal void prefs_requested ();
 
         public TaskEventBox (MainWindow win, TaskBox tb) {
-            var settings = AppSettings.get_default ();
             this.win = win;
             this.uid = uid_counter++;
             this.tb = tb;
@@ -30,7 +29,7 @@ namespace Timetable {
             tb.update_theme ();
             win.tm.save_notes ();
 
-            settings.changed.connect (() => {
+            Timetable.Application.gsettings.changed.connect (() => {
                 change_theme ();
                 tb.update_theme ();
                 win.tm.save_notes ();
@@ -198,16 +197,15 @@ namespace Timetable {
         }
 
         private void change_theme () {
-            var settings = AppSettings.get_default ();
-            if (settings.theme == 0) {
+            if (Timetable.Application.gsettings.get_int("theme") == 0) {
                 var provider = new Gtk.CssProvider ();
                 provider.load_from_resource ("/com/github/lainsce/timetable/elementary.css");
                 Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } else if (settings.theme == 1) {
+            } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                 var provider = new Gtk.CssProvider ();
                 provider.load_from_resource ("/com/github/lainsce/timetable/flat.css");
                 Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-            } else if (settings.theme == 2) {
+            } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                 var provider = new Gtk.CssProvider ();
                 provider.load_from_resource ("/com/github/lainsce/timetable/nature.css");
                 Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);

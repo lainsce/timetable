@@ -19,19 +19,26 @@
 */
 namespace Timetable {
     public class Application : Gtk.Application {
-        public MainWindow window;
+        public static MainWindow win = null;
+        public static GLib.Settings gsettings;
 
         public Application () {
-            Object (flags: ApplicationFlags.FLAGS_NONE,
-            application_id: "com.github.lainsce.timetable");
+            Object (
+                flags: ApplicationFlags.FLAGS_NONE,
+                application_id: "com.github.lainsce.timetable"
+            );
+        }
+
+        static construct {
+            gsettings = new GLib.Settings ("com.github.lainsce.timetable");
         }
 
         protected override void activate () {
-            if (window != null) {
-                window.present ();
+            if (win != null) {
+                win.present ();
                 return;
             }
-            window = new MainWindow (this);
+            win = new MainWindow (this);
         }
 
         public static int main (string[] args) {

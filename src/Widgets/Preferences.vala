@@ -30,11 +30,9 @@ namespace Timetable {
                 destroy_with_parent: true,
                 window_position: Gtk.WindowPosition.CENTER_ON_PARENT
             );
-            this.win = win;
         }
 
         construct {
-            var settings = AppSettings.get_default ();
             var main_grid = new Gtk.Grid ();
             main_grid.orientation = Gtk.Orientation.VERTICAL;
             main_grid.row_spacing = 6;
@@ -59,36 +57,11 @@ namespace Timetable {
             theme_type.append_text(_("elementary"));
             theme_type.append_text(_("Flat"));
             theme_type.append_text(_("Nature"));
-            switch (settings.theme) {
-                case 0:
-                    theme_type.set_active(0);
-                    break;
-                case 1:
-                    theme_type.set_active(1);
-                    break;
-                case 2:
-                    theme_type.set_active(2);
-                    break;
-                default:
-                    theme_type.set_active(0);
-                    break;
-            }
+
+            theme_type.set_active(Timetable.Application.gsettings.get_int("theme"));
 
             theme_type.changed.connect (() => {
-                switch (theme_type.get_active ()) {
-                    case 0:
-                        settings.theme = 0;
-                        break;
-                    case 1:
-                        settings.theme = 1;
-                        break;
-                    case 2:
-                        settings.theme = 2;
-                        break;
-                    default:
-                        settings.theme = 0;
-                        break;
-                }
+                Timetable.Application.gsettings.set_int("theme", theme_type.get_active ());
             });
 
             main_grid.attach (interface_header, 0, 1, 3, 1);
@@ -127,9 +100,8 @@ namespace Timetable {
 
         private class SettingsSwitch : Gtk.Switch {
             public SettingsSwitch (string setting) {
-                var settings = AppSettings.get_default ();
                 halign = Gtk.Align.START;
-                settings.schema.bind (setting, this, "active", SettingsBindFlags.DEFAULT);
+                Timetable.Application.gsettings.bind (setting, this, "active", SettingsBindFlags.DEFAULT);
             }
         }
     }

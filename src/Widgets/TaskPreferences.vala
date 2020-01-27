@@ -13,7 +13,6 @@ namespace Timetable {
             this.teb = teb;
             this.set_relative_to (teb.app_button);
 
-            var settings = AppSettings.get_default ();
             var task_prefs_label = new Gtk.Label (_("“%s” Preferences").printf(tb.task_name));
             task_prefs_label.halign = Gtk.Align.CENTER;
             task_prefs_label.wrap = true;
@@ -113,13 +112,13 @@ namespace Timetable {
             color_button_clear_context.add_class (Gtk.STYLE_CLASS_FLAT);
 
             color_button_red.clicked.connect (() => {
-                if (settings.theme == 0) {
+                if (Timetable.Application.gsettings.get_int("theme") == 0) {
                     tb.color = "#ed5353";
                     
-                } else if (settings.theme == 1) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                     tb.color = "#F33B61";
                     
-                } else if (settings.theme == 2) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                     tb.color = "#ff5656";
                     
                 }
@@ -128,13 +127,13 @@ namespace Timetable {
             });
 
             color_button_orange.clicked.connect (() => {
-                if (settings.theme == 0) {
+                if (Timetable.Application.gsettings.get_int("theme") == 0) {
                     tb.color = "#ffa154";
                     
-                } else if (settings.theme == 1) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                     tb.color = "#ffa358";
                     
-                } else if (settings.theme == 2) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                     tb.color = "#fa983a";
                     
                 }
@@ -143,13 +142,13 @@ namespace Timetable {
             });
 
             color_button_yellow.clicked.connect (() => {
-                if (settings.theme == 0) {
+                if (Timetable.Application.gsettings.get_int("theme") == 0) {
                     tb.color = "#ffe16b";
                     
-                } else if (settings.theme == 1) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                     tb.color = "#FFE379";
                     
-                } else if (settings.theme == 2) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                     tb.color = "#f6d95b";
                     
                 }
@@ -158,13 +157,13 @@ namespace Timetable {
             });
 
             color_button_green.clicked.connect (() => {
-                if (settings.theme == 0) {
+                if (Timetable.Application.gsettings.get_int("theme") == 0) {
                     tb.color = "#9bdb4d";
                     
-                } else if (settings.theme == 1) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                     tb.color = "#9CCF81";
                     
-                } else if (settings.theme == 2) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                     tb.color = "#78e08f";
                     
                 }
@@ -173,13 +172,13 @@ namespace Timetable {
             });
 
             color_button_blue.clicked.connect (() => {
-                if (settings.theme == 0) {
+                if (Timetable.Application.gsettings.get_int("theme") == 0) {
                     tb.color = "#64baff";
                     
-                } else if (settings.theme == 1) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                     tb.color = "#8ED0FF";
                     
-                } else if (settings.theme == 2) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                     tb.color = "#82ccdd";
                     
                 }
@@ -188,13 +187,13 @@ namespace Timetable {
             });
 
             color_button_violet.clicked.connect (() => {
-                if (settings.theme == 0) {
+                if (Timetable.Application.gsettings.get_int("theme") == 0) {
                     tb.color = "#ad65d6";
                     
-                } else if (settings.theme == 1) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                     tb.color = "#C1AFF2";
                     
-                } else if (settings.theme == 2) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                     tb.color = "#8498e6";
                     
                 }
@@ -203,13 +202,13 @@ namespace Timetable {
             });
 
             color_button_clear.clicked.connect (() => {
-                if (settings.theme == 0) {
+                if (Timetable.Application.gsettings.get_int("theme") == 0) {
                     tb.color = "#d4d4d4";
                     
-                } else if (settings.theme == 1) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                     tb.color = "#d4d4d4";
                     
-                } else if (settings.theme == 2) {
+                } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                     tb.color = "#d4d4d4";
                     
                 }

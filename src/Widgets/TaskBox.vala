@@ -53,9 +53,8 @@ namespace Timetable {
         public void update_theme () {
             var css_provider = new Gtk.CssProvider();
             this.get_style_context ().add_class ("tt-box-%d".printf(uid));
-            var settings = AppSettings.get_default ();
             string style = null;
-            if (settings.theme == 0) {
+            if (Timetable.Application.gsettings.get_int("theme") == 0) {
                 // Coming from Flat
                 if (color == "#F33B61") {
                     color = "#ed5353";
@@ -117,7 +116,7 @@ namespace Timetable {
                 if (color == "#d4d4d4") {
                     color = "#d4d4d4";
                 }
-            } else if (settings.theme == 1) {
+            } else if (Timetable.Application.gsettings.get_int("theme") == 1) {
                 // Coming from elementary
                 if (color == "#ed5353") {
                     color = "#F33B61";
@@ -179,7 +178,7 @@ namespace Timetable {
                 if (color == "#d4d4d4") {
                     color = "#d4d4d4";
                 }
-            } else if (settings.theme == 2) {
+            } else if (Timetable.Application.gsettings.get_int("theme") == 2) {
                 // Coming from elementary
                 if (color == "#ed5353") {
                     color = "#ff5656";
@@ -242,8 +241,8 @@ namespace Timetable {
                     color = "#d4d4d4";
                 }
             }
-            if (settings.high_contrast) {
-                if (settings.show_tasks_allday && this.task_allday) {
+            if (Timetable.Application.gsettings.get_boolean("high-contrast")) {
+                if (Timetable.Application.gsettings.get_boolean("show-tasks-allday") && this.task_allday) {
                     style = ("""
                         .tt-box-%d {
                             border-top: none;
@@ -315,7 +314,7 @@ namespace Timetable {
                     """).printf(uid, color, color, color, color, uid, uid, uid, uid, uid);
                 }
             } else {
-                if (settings.show_tasks_allday && this.task_allday) {
+                if (Timetable.Application.gsettings.get_boolean("show-tasks-allday") && this.task_allday) {
                     style = ("""
                         .tt-box-%d {
                             border-bottom: none;

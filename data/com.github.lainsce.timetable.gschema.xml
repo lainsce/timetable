@@ -21,7 +21,7 @@
 				<description>The width of the window</description>
 		</key>
         <key name="weekend-show" type="b">
-				<default>true</default>
+				<default>false</default>
 				<summary>Show the Weekend</summary>
 				<description>Display the weekend in the UI</description>
 		</key>
